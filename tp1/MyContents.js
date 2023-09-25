@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
+import { MyPlane } from './MyPlane.js';
+import { MyTable } from './MyTable.js';
 
 /**
  *  This class contains the contents of out application
@@ -17,7 +19,7 @@ class MyContents  {
         // box related attributes
         this.boxMesh = null
         this.boxMeshSize = 1.0
-        this.boxEnabled = true
+        this.boxEnabled = false
         this.lastBoxEnabled = null
         this.boxDisplacement = new THREE.Vector3(0,2,0)
 
@@ -27,6 +29,15 @@ class MyContents  {
         this.planeShininess = 30
         this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
             specular: this.diffusePlaneColor, emissive: "#000000", shininess: this.planeShininess, side: THREE.DoubleSide })
+
+        this.floorMesh = new MyPlane().getMesh();
+        this.wall1 = new MyPlane().getMesh();
+        this.wall2 = new MyPlane().getMesh();
+        this.wall3 = new MyPlane().getMesh();
+        this.wall4 = new MyPlane().getMesh();
+
+        this.table = new MyTable().getMesh();
+
     }
     
     /**
@@ -44,68 +55,31 @@ class MyContents  {
     }
 
     buildWalls(){
-        // Create a Plane Mesh with basic material
-        let plane = new THREE.PlaneGeometry( 10, 10 );
-        let planeMesh1 = new THREE.Mesh( plane, this.planeMaterial );
-        planeMesh1.rotation.x = -Math.PI / 2;
-        let planeMesh2 = new THREE.Mesh( plane, this.planeMaterial );
-        planeMesh2.position.y = 5;
-        planeMesh2.position.z = -5;
-        // let planeMesh3 = new THREE.Mesh( plane, this.planeMaterial );
-        // planeMesh3.position.y = 5;
-        // planeMesh3.position.z = 5;
-        let planeMesh4 = new THREE.Mesh( plane, this.planeMaterial );
-        planeMesh4.rotation.y = Math.PI/2;
-        planeMesh4.position.x = -5;
-        planeMesh4.position.y = 5;
-        // let planeMesh5 = new THREE.Mesh( plane, this.planeMaterial );
-        // planeMesh5.rotation.y = Math.PI/2;
-        // planeMesh5.position.x = 5;
-        // planeMesh5.position.y = 5;
+        // this.floorMesh.rotation.x = -Math.PI / 2;
 
-        return [planeMesh1,planeMesh2,/*planeMesh3,*/planeMesh4,/*planeMesh5*/]
+        this.wall1.position.y = 5;
+        this.wall1.position.z = -5;
+
+        // this.wall2.position.y = 5;
+        // this.wall2.position.z = 5;
+
+        this.wall3.rotation.y = Math.PI/2;
+        this.wall3.position.x = -5;
+        this.wall3.position.y = 5;
+
+        // this.wall4.rotation.y = Math.PI/2;
+        // this.wall4.position.x = 5;
+        // this.wall4.position.y = 5;
+
+    return [this.wall1,/*this.wall2,*/this.wall3/*,this.wall4*/]
     }
     
-    /**
-     * builds the table mesh with material assigned
-     */
     buildTable() {    
-        let tableMaterial1 = new THREE.MeshPhongMaterial({ color: "#4a4d2d", 
-        specular: "#000000", emissive: "#111111", shininess: 50 })
-        let tableMaterial2 = new THREE.MeshPhongMaterial({ color: "#ffe1c2", 
-        specular: "#eed0b1", emissive: "#000000", shininess: 500 })
-        let tableMaterial3 = new THREE.MeshPhongMaterial({ color: "#d1ab69", 
-        specular: "#000000", emissive: "#000000", shininess: 50 })
 
-        let table = new THREE.BoxGeometry(5,0.5,3);
-        let tableTop = new THREE.BoxGeometry(4.5,0.1,2.5);
-        let tableLeg = new THREE.CylinderGeometry(0.2,0.2,2,32);
-
-        let tableMesh = new THREE.Mesh( table, tableMaterial1 );
-        tableMesh.position.z = 3;
-        tableMesh.position.y = 2;
-        let tableTopMesh = new THREE.Mesh( tableTop, tableMaterial2 );
-        tableTopMesh.position.z = 3;
-        tableTopMesh.position.y = 2.25;
-
-        let tableLegMesh1 = new THREE.Mesh( tableLeg, tableMaterial3 ); 
-        tableLegMesh1.position.z = 4;
-        tableLegMesh1.position.y = 1;
-        tableLegMesh1.position.x = -2;
-        let tableLegMesh2 = new THREE.Mesh( tableLeg, tableMaterial3 ); 
-        tableLegMesh2.position.z = 4;
-        tableLegMesh2.position.y = 1;
-        tableLegMesh2.position.x = 2; 
-        let tableLegMesh3 = new THREE.Mesh( tableLeg, tableMaterial3 ); 
-        tableLegMesh3.position.z = 2;
-        tableLegMesh3.position.y = 1;
-        tableLegMesh3.position.x = -2;
-        let tableLegMesh4 = new THREE.Mesh( tableLeg, tableMaterial3 ); 
-        tableLegMesh4.position.z = 2;
-        tableLegMesh4.position.y = 1;
-        tableLegMesh4.position.x = 2;      
-        
-        return [tableMesh,tableTopMesh,tableLegMesh1,tableLegMesh2,tableLegMesh3,tableLegMesh4]
+        this.table.position.z = 3;
+        this.table.position.y = 1.5;
+            
+        return this.table
     }
 
     /**
@@ -134,9 +108,15 @@ class MyContents  {
         const ambientLight = new THREE.AmbientLight( 0x555555 );
         this.app.scene.add( ambientLight );
 
+        let plane = new THREE.PlaneGeometry( 10, 10 );
+        this.planeMesh = new THREE.Mesh( plane, this.planeMaterial );
+        this.planeMesh.rotation.x = -Math.PI / 2;
+        this.planeMesh.position.y = -0;
+        this.app.scene.add( this.planeMesh );
+
         this.buildBox();     
         this.app.scene.add(...this.buildWalls());
-        this.app.scene.add(...this.buildTable());
+        this.app.scene.add(this.buildTable());
     }
     
     /**
