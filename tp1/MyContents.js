@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
-import { MyPlane } from './MyPlane.js';
-import { MyTable } from './MyTable.js';
+import { MyCake } from './objects/MyCake.js';
+import { MyPlane } from './objects/MyPlane.js';
+import { MyPlate } from './objects/MyPlate.js';
+import { MyTable } from './objects/MyTable.js';
 
 /**
  *  This class contains the contents of out application
@@ -36,8 +38,9 @@ class MyContents  {
         this.wall3 = new MyPlane().getMesh();
         this.wall4 = new MyPlane().getMesh();
 
-        this.table = new MyTable().getMesh();
-
+        this.table = new MyTable(0, 3, 1.5).getMesh();
+        this.plate = new MyPlate(0, 1.65, 3).getMesh();
+        this.cake = new MyCake(0, 1.8, 3).getMesh();
     }
     
     /**
@@ -117,6 +120,8 @@ class MyContents  {
         this.buildBox();     
         this.app.scene.add(...this.buildWalls());
         this.app.scene.add(this.buildTable());
+        this.app.scene.add(this.plate)
+        this.app.scene.add(this.cake)
     }
     
     /**
