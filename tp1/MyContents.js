@@ -45,9 +45,9 @@ class MyContents {
       //new MyPlane(wallColor, 0, 5, 5),
     ];
 
-    this.table = new MyTable(-1.5, 0, 1.5);
-    this.plate = new MyPlate(0, 1.65, 3);
-    this.cake = new MyCake(0, 1.8, 3);
+    this.table = new MyTable(-1.5, 0, 2);
+    this.plate = new MyPlate(0, 1.62, 3);
+    this.cake = new MyCake(0, 1.77, 3);
   }
 
   /**
