@@ -4,6 +4,7 @@ import { MyCake } from "./objects/MyCake.js";
 import { MyPlane } from "./objects/MyPlane.js";
 import { MyPlate } from "./objects/MyPlate.js";
 import { MyTable } from "./objects/MyTable.js";
+import { MyBench } from "./objects/MyBench.js";
 
 /**
  *  This class contains the contents of out application
@@ -46,6 +47,7 @@ class MyContents {
     ];
 
     this.table = new MyTable(-1.5, 0, 2);
+    this.bench = new MyBench(0, 0, 0);
     this.plate = new MyPlate(0, 1.62, 3);
     this.cake = new MyCake(0, 1.77, 3);
   }
@@ -106,6 +108,7 @@ class MyContents {
     this.buildBox();
     this.app.scene.add(...this.walls.map((x) => x.getMesh()));
     this.app.scene.add(this.table.getMesh());
+    this.app.scene.add(this.bench.getMesh());
     this.app.scene.add(this.plate.getMesh());
     this.app.scene.add(this.cake.getMesh());
   }
