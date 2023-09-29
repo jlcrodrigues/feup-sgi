@@ -39,11 +39,20 @@ class MyContents {
 
     this.floorMesh = new MyPlane('#919090');
     const wallColor = '#ffebeb'
+    this.wall1 = new MyPlane(wallColor, 0, 5, -5).getMesh()
+    this.wall2 = new MyPlane(wallColor, 0, 5, 5).getMesh()
+    this.wall2.rotation.y = Math.PI;
+    this.wall3 = new MyPlane(wallColor, -5, 5, 0).getMesh()
+    this.wall3.rotation.y = Math.PI/2;
+    this.wall4 = new MyPlane(wallColor, 5, 5, 0).getMesh()
+    this.wall4.rotation.y = -Math.PI/2;
+
+
     this.walls = [
-      new MyPlane(wallColor, 0, 5, -5),
-      //new MyPlane(wallColor, 0, 5, 5),
-      new MyPlane(wallColor, -5, 5, 0, true),
-      //new MyPlane(wallColor, 0, 5, 5),
+      this.wall1,
+      this.wall2,
+      this.wall3,
+      this.wall4
     ];
 
     this.table = new MyTable(-1.5, 0, 2);
@@ -106,7 +115,7 @@ class MyContents {
     this.app.scene.add(this.planeMesh);
 
     this.buildBox();
-    this.app.scene.add(...this.walls.map((x) => x.getMesh()));
+    this.app.scene.add(...this.walls);
     this.app.scene.add(this.table.getMesh());
     this.app.scene.add(this.bench.getMesh());
     this.app.scene.add(this.plate.getMesh());
