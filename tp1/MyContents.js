@@ -5,6 +5,7 @@ import { MyPlane } from "./objects/MyPlane.js";
 import { MyPlate } from "./objects/MyPlate.js";
 import { MyTable } from "./objects/MyTable.js";
 import { MyBench } from "./objects/MyBench.js";
+import { PictureFrame } from "./objects/PictureFrame.js";
 
 /**
  *  This class contains the contents of out application
@@ -53,6 +54,17 @@ class MyContents {
     this.bench = new MyBench(0, 0, 0);
     this.plate = new MyPlate(0, 1.62, 3);
     this.cake = new MyCake(0, 1.77, 3);
+
+    this.pictures = new THREE.Group()
+    let pictureFrame1 = new PictureFrame(0, 4, 5, 'textures/feup_entry.jpg');
+    pictureFrame1.getMesh().rotation.y = Math.PI / 2
+    let pictureFrame2 = new PictureFrame(2, 4.5, 5, 'textures/feup_b.jpg');
+    pictureFrame2.getMesh().rotation.y = Math.PI / 2
+    this.pictures.add(pictureFrame1.getMesh(), pictureFrame2.getMesh())
+
+    let window = new PictureFrame(5, 4, -1, 'textures/window.png', 6, 4);
+    window.getMesh().rotation.y = Math.PI
+    this.pictures.add(window.getMesh())
   }
 
   /**
@@ -114,6 +126,7 @@ class MyContents {
     this.app.scene.add(this.bench.getMesh());
     this.app.scene.add(this.plate.getMesh());
     this.app.scene.add(this.cake.getMesh());
+    this.app.scene.add(this.pictures);
   }
 
   /**

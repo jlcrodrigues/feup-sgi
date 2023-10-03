@@ -5,17 +5,26 @@ class MyTable {
   constructor(x, y, z) {
     this.group = new THREE.Group();
 
+    this.woodenTexture = new THREE.TextureLoader().load("textures/wood.jpg");
+    this.woodenTexture.wrapS = THREE.RepeatWrapping;
+    this.woodenTexture.wrapT = THREE.RepeatWrapping;
+    let boxMaterial = new THREE.MeshPhongMaterial({
+      map: this.boxTexture,
+    });
+
     this.tableMaterialPrimary = new THREE.MeshPhongMaterial({
-      color: "#4a4d2d",
+      color: "#525826",
       specular: "#000000",
       emissive: "#000000",
       shininess: 50,
+      map: this.woodenTexture
     });
     this.tableMaterialSecondary = new THREE.MeshPhongMaterial({
       color: "#ffe1c2",
       specular: "#777777",
       emissive: "#000000",
       shininess: 60,
+      map: this.woodenTexture
     });
 
     const table = new THREE.BoxGeometry(3.5, 0.4, 2.5);
