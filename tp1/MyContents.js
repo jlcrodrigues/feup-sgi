@@ -6,6 +6,8 @@ import { MyPlate } from "./objects/MyPlate.js";
 import { MyTable } from "./objects/MyTable.js";
 import { MyBench } from "./objects/MyBench.js";
 import { PictureFrame } from "./objects/PictureFrame.js";
+import { Rug } from "./objects/Rug.js";
+import { Sofa } from "./objects/Sofa.js";
 
 /**
  *  This class contains the contents of out application
@@ -50,21 +52,40 @@ class MyContents {
 
     this.walls = [this.wall1, this.wall2, this.wall3, this.wall4];
 
-    this.table = new MyTable(-1.5, 0, 2);
-    this.bench = new MyBench(0, 0, 0);
-    this.plate = new MyPlate(0, 1.62, 3);
-    this.cake = new MyCake(0, 1.77, 3);
+    this.furnite = new THREE.Group()
 
-    this.pictures = new THREE.Group()
+    let table = new MyTable(-1.5, 0, 2)
+    this.furnite.add(table.getMesh())
+    //this.furnite.add(new MyBench(0, 0, 0).getMesh())
+    this.furnite.add(new MyPlate(0, table.getYTop() - 0.1, 3).getMesh())
+    this.furnite.add(new MyCake(0, table.getYTop() + 0.05, 3).getMesh())
+    let rug = new Rug(0, 0, 2).getMesh()
+    rug.rotation.y = Math.PI / 2
+    this.furnite.add(rug)
+    this.furnite.add(new Sofa(0, 0, 0).getMesh())
+    let smallSofa = new Sofa(3.5, 0, 3, 2, '#826563').getMesh()
+    smallSofa.rotation.y = - Math.PI / 2
+    this.furnite.add(smallSofa)
+
+    this.createPictures()
+  }
+
+  createPictures() {
+    let pictures = new THREE.Group()
     let pictureFrame1 = new PictureFrame(0, 4, 5, 'textures/feup_entry.jpg');
     pictureFrame1.getMesh().rotation.y = Math.PI / 2
     let pictureFrame2 = new PictureFrame(2, 4.5, 5, 'textures/feup_b.jpg');
     pictureFrame2.getMesh().rotation.y = Math.PI / 2
-    this.pictures.add(pictureFrame1.getMesh(), pictureFrame2.getMesh())
+    pictures.add(pictureFrame1.getMesh(), pictureFrame2.getMesh())
+
+    let blackboard = new PictureFrame(-5, 4.5, 2, 'textures/blackboard.png', 3, 2);
+    pictures.add(blackboard.getMesh())
 
     let window = new PictureFrame(5, 4, -1, 'textures/window.png', 6, 4);
     window.getMesh().rotation.y = Math.PI
-    this.pictures.add(window.getMesh())
+    pictures.add(window.getMesh())
+
+    this.furnite.add(pictures)
   }
 
   /**
@@ -122,11 +143,7 @@ class MyContents {
 
     this.buildBox();
     this.app.scene.add(...this.walls);
-    this.app.scene.add(this.table.getMesh());
-    this.app.scene.add(this.bench.getMesh());
-    this.app.scene.add(this.plate.getMesh());
-    this.app.scene.add(this.cake.getMesh());
-    this.app.scene.add(this.pictures);
+    this.app.scene.add(this.furnite)
   }
 
   /**

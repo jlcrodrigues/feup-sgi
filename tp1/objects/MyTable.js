@@ -27,25 +27,33 @@ class MyTable {
       map: this.woodenTexture
     });
 
-    const table = new THREE.BoxGeometry(3.5, 0.4, 2.5);
-    const tableTop = new THREE.BoxGeometry(3.2, 0.21, 2.2);
+    this.width = 3.5
+    this.height = 1
+    this.depth = 1.8
+
+    const table = new THREE.BoxGeometry(this.width, this.height - 0.8, this.depth);
+    const tableTop = new THREE.BoxGeometry(this.width - 0.3, this.height - 0.99, this.depth - 0.3);
 
     this.tableMesh = new THREE.Mesh(table, this.tableMaterialPrimary);
     this.tableTopMesh = new THREE.Mesh(tableTop, this.tableMaterialSecondary);
-    this.tableMesh.position.set(3.5 / 2, 1.4, 2.5 / 2)
-    this.tableTopMesh.position.set(3.5 / 2, 1.5, 2.5 / 2)
+    this.tableMesh.position.set(this.width / 2,  this.height, this.depth / 2)
+    this.tableTopMesh.position.set(this.width / 2, this.height + 0.1, this.depth / 2)
 
     this.group.add(this.tableMesh);
     this.group.add(this.tableTopMesh);
-    this.group.add(new MyTableLeg(3.2, 0, 2.2).getMesh());
-    this.group.add(new MyTableLeg(3.2, 0, 0.3).getMesh());
-    this.group.add(new MyTableLeg(0.3, 0, 2.2).getMesh());
-    this.group.add(new MyTableLeg(0.3, 0, 0.3).getMesh());
+    this.group.add(new MyTableLeg(this.width - 0.3, 0, this.depth - 0.3, this.height).getMesh());
+    this.group.add(new MyTableLeg(this.width - 0.3, 0, 0.3, this.height).getMesh());
+    this.group.add(new MyTableLeg(0.3, 0, this.depth - 0.3, this.height).getMesh());
+    this.group.add(new MyTableLeg(0.3, 0, 0.3, this.height).getMesh());
     this.group.position.set(x, y, z)
   }
 
   getMesh() {
     return this.group;
+  }
+
+  getYTop() {
+    return this.height + 0.2
   }
 }
 

@@ -58,12 +58,13 @@ class MyCake {
       shininess: 30,
       side: THREE.DoubleSide,
     });
-    this.candle = new THREE.CylinderGeometry(0.02, 0.02, 0.3);
+    const radius = 0.01
+    this.candle = new THREE.CylinderGeometry(radius, radius, 0.2);
     this.candleMesh = new THREE.Mesh(this.candle, this.candleMaterial);
 
     this.candleMesh.position.x = x;
     this.candleMesh.position.z = z;
-    this.candleMesh.position.y = y + this.cakeHeight;
+    this.candleMesh.position.y = y + this.cakeHeight - 0.08;
   };
 
   buildFlame(x, y, z) {
@@ -74,12 +75,12 @@ class MyCake {
       shininess: 50,
       side: THREE.DoubleSide,
     });
-    const flame = new THREE.ConeGeometry(0.03, 0.07, 32);
+    const flame = new THREE.ConeGeometry(0.01, 0.03, 32);
     flame.rotateX(Math.PI)
     
     this.flameMesh = new THREE.Mesh(flame, flameMaterial);
     
-    this.flameMesh.position.set(x, y + this.cakeHeight + 0.18, z);
+    this.flameMesh.position.set(x, y + this.cakeHeight + 0.04, z);
   }
 
   getMesh() {
