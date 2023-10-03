@@ -37,23 +37,17 @@ class MyContents {
       side: THREE.DoubleSide,
     });
 
-    this.floorMesh = new MyPlane('#919090');
-    const wallColor = '#ffebeb'
-    this.wall1 = new MyPlane(wallColor, 0, 5, -5).getMesh()
-    this.wall2 = new MyPlane(wallColor, 0, 5, 5).getMesh()
+    this.floorMesh = new MyPlane("#919090");
+    const wallColor = "#ffebeb";
+    this.wall1 = new MyPlane(wallColor, 0, 5, -5).getMesh();
+    this.wall2 = new MyPlane(wallColor, 0, 5, 5).getMesh();
     this.wall2.rotation.y = Math.PI;
-    this.wall3 = new MyPlane(wallColor, -5, 5, 0).getMesh()
-    this.wall3.rotation.y = Math.PI/2;
-    this.wall4 = new MyPlane(wallColor, 5, 5, 0).getMesh()
-    this.wall4.rotation.y = -Math.PI/2;
+    this.wall3 = new MyPlane(wallColor, -5, 5, 0).getMesh();
+    this.wall3.rotation.y = Math.PI / 2;
+    this.wall4 = new MyPlane(wallColor, 5, 5, 0).getMesh();
+    this.wall4.rotation.y = -Math.PI / 2;
 
-
-    this.walls = [
-      this.wall1,
-      this.wall2,
-      this.wall3,
-      this.wall4
-    ];
+    this.walls = [this.wall1, this.wall2, this.wall3, this.wall4];
 
     this.table = new MyTable(-1.5, 0, 2);
     this.bench = new MyBench(0, 0, 0);
@@ -65,11 +59,11 @@ class MyContents {
    * builds the box mesh with material assigned
    */
   buildBox() {
+    this.boxTexture = new THREE.TextureLoader().load("textures/feup_entry.jpg");
+    this.boxTexture.wrapS = THREE.RepeatWrapping;
+    this.boxTexture.wrapT = THREE.RepeatWrapping;
     let boxMaterial = new THREE.MeshPhongMaterial({
-      color: "#ffff77",
-      specular: "#000000",
-      emissive: "#000000",
-      shininess: 90,
+      map: this.boxTexture,
     });
 
     // Create a Cube Mesh with basic material
