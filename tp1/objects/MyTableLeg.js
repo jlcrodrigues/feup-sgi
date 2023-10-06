@@ -3,8 +3,8 @@ import * as THREE from "three";
 class MyTableLeg {
   constructor(x, y, z, height=1.2) {
     this.legMaterial = new THREE.MeshPhongMaterial({
-      color: "#4a4d2d",
-      specular: "#000000",
+      color: "#b58c46",
+      specular: "#b58c46",
       emissive: "#000000",
       shininess: 50,
     });

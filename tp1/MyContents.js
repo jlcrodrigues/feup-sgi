@@ -135,6 +135,16 @@ class MyContents {
     const ambientLight = new THREE.AmbientLight(0x555555);
     this.app.scene.add(ambientLight);
 
+    const spotLight = new THREE.SpotLight(0xffffff,20,5,20*Math.PI/180);
+    this.app.scene.add(spotLight.target);
+    this.app.scene.add(spotLight);
+    spotLight.position.set(0,3,3);
+    spotLight.target.position.set(0,0,3);
+    
+
+    const spotLightHelper = new THREE.PointLightHelper(spotLight, 0.1);
+    this.app.scene.add(spotLightHelper);
+
     let plane = new THREE.PlaneGeometry(10, 10);
     this.planeMesh = new THREE.Mesh(plane, this.planeMaterial);
     this.planeMesh.rotation.x = -Math.PI / 2;
