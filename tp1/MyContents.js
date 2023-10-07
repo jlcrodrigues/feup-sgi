@@ -9,6 +9,7 @@ import { Beetle } from "./objects/Beetle.js";
 import { PictureFrame } from "./objects/PictureFrame.js";
 import { Rug } from "./objects/Rug.js";
 import { Sofa } from "./objects/Sofa.js";
+import { Spring } from "./objects/Spring.js";
 
 /**
  *  This class contains the contents of out application
@@ -53,44 +54,53 @@ class MyContents {
 
     this.walls = [this.wall1, this.wall2, this.wall3, this.wall4];
 
-    this.furnite = new THREE.Group()
+    this.furnite = new THREE.Group();
 
-    let table = new MyTable(-1.5, 0, 2)
-    this.furnite.add(table.getMesh())
+    let table = new MyTable(-1.5, 0, 2);
+    this.furnite.add(table.getMesh());
     //this.furnite.add(new MyBench(0, 0, 0).getMesh())
-    this.furnite.add(new MyPlate(0, table.getYTop() - 0.1, 3).getMesh())
-    this.furnite.add(new MyCake(0, table.getYTop() + 0.05, 3).getMesh())
-    let rug = new Rug(0, 0, 2).getMesh()
-    rug.rotation.y = Math.PI / 2
-    this.furnite.add(rug)
-    this.furnite.add(new Sofa(0, 0, 0).getMesh())
-    let smallSofa = new Sofa(3.5, 0, 3, 2, '#826563').getMesh()
-    smallSofa.rotation.y = - Math.PI / 2
-    this.furnite.add(smallSofa)
+    this.furnite.add(new MyPlate(0, table.getYTop() - 0.1, 3).getMesh());
+    this.furnite.add(new MyCake(0, table.getYTop() + 0.05, 3).getMesh());
+    let rug = new Rug(0, 0, 2).getMesh();
+    rug.rotation.y = Math.PI / 2;
+    this.furnite.add(rug);
+    this.furnite.add(new Sofa(0, 0, 0).getMesh());
+    let smallSofa = new Sofa(3.5, 0, 3, 2, "#826563").getMesh();
+    smallSofa.rotation.y = -Math.PI / 2;
+    this.furnite.add(smallSofa);
 
-    this.createPictures()
+    this.furnite.add(new Spring(1, table.getYTop() + 0.05, 2.5).getMesh());
+
+    this.createPictures();
   }
 
   createPictures() {
-    let pictures = new THREE.Group()
-    let pictureFrame1 = new PictureFrame(0, 4, 5, 'textures/feup_entry.jpg');
-    pictureFrame1.getMesh().rotation.y = Math.PI / 2
-    let pictureFrame2 = new PictureFrame(2, 4.5, 5, 'textures/feup_b.jpg');
-    pictureFrame2.getMesh().rotation.y = Math.PI / 2
-    pictures.add(pictureFrame1.getMesh(), pictureFrame2.getMesh())
+    let pictures = new THREE.Group();
+    let pictureFrame1 = new PictureFrame(0, 4, 5, "textures/feup_entry.jpg");
+    pictureFrame1.getMesh().rotation.y = Math.PI / 2;
+    let pictureFrame2 = new PictureFrame(2, 4.5, 5, "textures/feup_b.jpg");
+    pictureFrame2.getMesh().rotation.y = Math.PI / 2;
+    pictures.add(pictureFrame1.getMesh(), pictureFrame2.getMesh());
 
-    let blackboard = new PictureFrame(-5, 4.5, 2, 'textures/blackboard.png', 3, 2);
-    pictures.add(blackboard.getMesh())
+    let blackboard = new PictureFrame(
+      -5,
+      4.5,
+      2,
+      "textures/blackboard.png",
+      3,
+      2
+    );
+    pictures.add(blackboard.getMesh());
 
-    let window = new PictureFrame(5, 4, -1, 'textures/window.png', 6, 4);
-    window.getMesh().rotation.y = Math.PI
-    pictures.add(window.getMesh())
+    let window = new PictureFrame(5, 4, -1, "textures/window.png", 6, 4);
+    window.getMesh().rotation.y = Math.PI;
+    pictures.add(window.getMesh());
 
-    let beetle = new Beetle(-5, 4, -3, 1.6, 1.1)
+    let beetle = new Beetle(-5, 4, -3, 1.6, 1.1);
     //beetle.getMesh().rotation.y = Math.PI / 2
-    pictures.add(beetle.getMesh())
+    pictures.add(beetle.getMesh());
 
-    this.furnite.add(pictures)
+    this.furnite.add(pictures);
   }
 
   /**
@@ -140,12 +150,18 @@ class MyContents {
     const ambientLight = new THREE.AmbientLight(0x555555);
     this.app.scene.add(ambientLight);
 
-    const spotLight = new THREE.SpotLight(0xffffff,20,5,20*Math.PI/180);
+    const spotLight = new THREE.SpotLight(
+      0xffffff,
+      20,
+      5,
+      (20 * Math.PI) / 180,
+      0.4,
+      1
+    );
     this.app.scene.add(spotLight.target);
     this.app.scene.add(spotLight);
-    spotLight.position.set(0,3,3);
-    spotLight.target.position.set(0,0,3);
-    
+    spotLight.position.set(0, 5, 3);
+    spotLight.target.position.set(0, 0, 3);
 
     const spotLightHelper = new THREE.PointLightHelper(spotLight, 0.1);
     this.app.scene.add(spotLightHelper);
@@ -158,7 +174,7 @@ class MyContents {
 
     this.buildBox();
     this.app.scene.add(...this.walls);
-    this.app.scene.add(this.furnite)
+    this.app.scene.add(this.furnite);
   }
 
   /**
