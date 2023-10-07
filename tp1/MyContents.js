@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
 import { MyCake } from "./objects/MyCake.js";
-import { MyPlane } from "./objects/MyPlane.js";
+import { Plane } from "./objects/Plane.js";
 import { MyPlate } from "./objects/MyPlate.js";
 import { MyTable } from "./objects/MyTable.js";
 import { MyBench } from "./objects/MyBench.js";
@@ -42,14 +42,14 @@ class MyContents {
       side: THREE.DoubleSide,
     });
 
-    this.floorMesh = new MyPlane("#919090");
+    this.floor = new Plane(0, 0, 0, {color: "#919090", texturePath: 'textures/floor.png'});
     const wallColor = "#ffebeb";
-    this.wall1 = new MyPlane(wallColor, 0, 5, -5).getMesh();
-    this.wall2 = new MyPlane(wallColor, 0, 5, 5).getMesh();
+    this.wall1 = new Plane(0, 5, -5, {color: wallColor, texturePath: 'textures/wallYellow.png'}).getMesh();
+    this.wall2 = new Plane(0, 5, 5, {color: wallColor}).getMesh();
     this.wall2.rotation.y = Math.PI;
-    this.wall3 = new MyPlane(wallColor, -5, 5, 0).getMesh();
+    this.wall3 = new Plane(-5, 5, 0, {color: "#dba79c", texturePath: 'textures/brick.jpg'}).getMesh();
     this.wall3.rotation.y = Math.PI / 2;
-    this.wall4 = new MyPlane(wallColor, 5, 5, 0).getMesh();
+    this.wall4 = new Plane(5, 5, 0, {color: wallColor}).getMesh();
     this.wall4.rotation.y = -Math.PI / 2;
 
     this.walls = [this.wall1, this.wall2, this.wall3, this.wall4];
@@ -87,12 +87,13 @@ class MyContents {
       4.5,
       2,
       "textures/blackboard.png",
+      "#ccc",
       3,
       2
     );
     pictures.add(blackboard.getMesh());
 
-    let window = new PictureFrame(5, 4, -1, "textures/window.png", 6, 4);
+    let window = new PictureFrame(5, 4, -1, "textures/window.png", "#becedc", 6, 4);
     window.getMesh().rotation.y = Math.PI;
     pictures.add(window.getMesh());
 
@@ -166,11 +167,8 @@ class MyContents {
     const spotLightHelper = new THREE.PointLightHelper(spotLight, 0.1);
     this.app.scene.add(spotLightHelper);
 
-    let plane = new THREE.PlaneGeometry(10, 10);
-    this.planeMesh = new THREE.Mesh(plane, this.planeMaterial);
-    this.planeMesh.rotation.x = -Math.PI / 2;
-    this.planeMesh.position.y = -0;
-    this.app.scene.add(this.planeMesh);
+    this.floor.getMesh().rotation.x = -Math.PI / 2;
+    this.app.scene.add(this.floor.getMesh());
 
     this.buildBox();
     this.app.scene.add(...this.walls);

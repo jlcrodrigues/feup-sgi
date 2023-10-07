@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 class PictureFrame {
-  constructor(x, y, z, texturePath, width=1.1, height=1.4) {
+  constructor(x, y, z, texturePath, color="#fff", width=1.1, height=1.4) {
     this.group = new THREE.Group();
 
     this.canvasTexture = new THREE.TextureLoader().load(texturePath);
@@ -9,6 +9,7 @@ class PictureFrame {
     this.canvasTexture.wrapT = THREE.RepeatWrapping;
 
     this.canvasMaterial = new THREE.MeshPhongMaterial({
+      color: color,
       map: this.canvasTexture,
     });
     this.frameMaterial = new THREE.MeshPhongMaterial({

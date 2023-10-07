@@ -7,6 +7,7 @@ class Rug {
     this.texture.wrapT = THREE.RepeatWrapping;
 
     this.material = new THREE.MeshPhongMaterial({
+      color: "#ecc",
       map: this.texture,
     });
 
