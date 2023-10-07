@@ -6,6 +6,7 @@ import { MyPlate } from "./objects/MyPlate.js";
 import { MyTable } from "./objects/MyTable.js";
 import { MyBench } from "./objects/MyBench.js";
 import { Beetle } from "./objects/Beetle.js";
+import { Counter } from "./objects/Counter.js";
 import { PictureFrame } from "./objects/PictureFrame.js";
 import { Rug } from "./objects/Rug.js";
 import { Sofa } from "./objects/Sofa.js";
@@ -70,6 +71,8 @@ class MyContents {
     this.furnite.add(smallSofa);
 
     this.furnite.add(new Spring(1, table.getYTop() + 0.05, 2.5).getMesh());
+
+    this.furnite.add(new Counter(-2.5, 0, -5).getMesh());
 
     this.createPictures();
   }
