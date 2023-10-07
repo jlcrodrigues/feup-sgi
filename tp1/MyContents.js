@@ -5,6 +5,7 @@ import { MyPlane } from "./objects/MyPlane.js";
 import { MyPlate } from "./objects/MyPlate.js";
 import { MyTable } from "./objects/MyTable.js";
 import { MyBench } from "./objects/MyBench.js";
+import { Beetle } from "./objects/Beetle.js";
 import { PictureFrame } from "./objects/PictureFrame.js";
 import { Rug } from "./objects/Rug.js";
 import { Sofa } from "./objects/Sofa.js";
@@ -84,6 +85,10 @@ class MyContents {
     let window = new PictureFrame(5, 4, -1, 'textures/window.png', 6, 4);
     window.getMesh().rotation.y = Math.PI
     pictures.add(window.getMesh())
+
+    let beetle = new Beetle(-5, 4, -3, 1.6, 1.1)
+    //beetle.getMesh().rotation.y = Math.PI / 2
+    pictures.add(beetle.getMesh())
 
     this.furnite.add(pictures)
   }
