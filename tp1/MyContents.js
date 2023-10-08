@@ -50,7 +50,7 @@ class MyContents {
     this.wall2.rotation.y = Math.PI;
     this.wall3 = new Plane(-5, 5, 0, {color: "#dba79c", texturePath: 'textures/brick.jpg'}).getMesh();
     this.wall3.rotation.y = Math.PI / 2;
-    this.wall4 = new Plane(5, 5, 0, {color: wallColor}).getMesh();
+    this.wall4 = new Plane(5, 5, 0, {color: wallColor, texturePath: 'textures/coffee_window.jpg'}).getMesh();
     this.wall4.rotation.y = -Math.PI / 2;
 
     this.walls = [this.wall1, this.wall2, this.wall3, this.wall4];
@@ -95,10 +95,6 @@ class MyContents {
       2
     );
     pictures.add(blackboard.getMesh());
-
-    let window = new PictureFrame(5, 4, -1, "textures/window.png", "#becedc", 6, 4);
-    window.getMesh().rotation.y = Math.PI;
-    pictures.add(window.getMesh());
 
     let beetle = new Beetle(-5, 4, -3, 1.6, 1.1);
     //beetle.getMesh().rotation.y = Math.PI / 2

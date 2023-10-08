@@ -11,6 +11,8 @@ class Plane {
     if (options.texturePath != null) {
       let canvasTexture = new THREE.TextureLoader().load(options.texturePath);
       canvasTexture.repeat.set(2, 2)
+      if(options.texturePath == 'textures/coffee_window.jpg')
+        canvasTexture.repeat.set(1,1)
       canvasTexture.wrapS = THREE.RepeatWrapping;
       canvasTexture.wrapT = THREE.RepeatWrapping;
       planeMaterial.map = canvasTexture;
