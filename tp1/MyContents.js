@@ -4,13 +4,13 @@ import { MyCake } from "./objects/MyCake.js";
 import { Plane } from "./objects/Plane.js";
 import { MyPlate } from "./objects/MyPlate.js";
 import { MyTable } from "./objects/MyTable.js";
-import { MyBench } from "./objects/MyBench.js";
 import { Beetle } from "./objects/Beetle.js";
 import { Counter } from "./objects/Counter.js";
 import { PictureFrame } from "./objects/PictureFrame.js";
 import { Rug } from "./objects/Rug.js";
 import { Sofa } from "./objects/Sofa.js";
 import { Spring } from "./objects/Spring.js";
+import { MyNewspaper } from "./objects/MyNewspaper.js";
 
 /**
  *  This class contains the contents of out application
@@ -55,24 +55,27 @@ class MyContents {
 
     this.walls = [this.wall1, this.wall2, this.wall3, this.wall4];
 
-    this.furnite = new THREE.Group();
+    this.furniture = new THREE.Group();
 
     let table = new MyTable(-1.5, 0, 2);
-    this.furnite.add(table.getMesh());
-    //this.furnite.add(new MyBench(0, 0, 0).getMesh())
-    this.furnite.add(new MyPlate(0, table.getYTop() - 0.1, 3).getMesh());
-    this.furnite.add(new MyCake(0, table.getYTop() + 0.05, 3).getMesh());
+    this.furniture.add(table.getMesh());
+    this.furniture.add(new MyPlate(0, table.getYTop() - 0.1, 3).getMesh());
+    this.furniture.add(new MyCake(0, table.getYTop() + 0.05, 3).getMesh());
     let rug = new Rug(0, 0, 2).getMesh();
     rug.rotation.y = Math.PI / 2;
-    this.furnite.add(rug);
-    this.furnite.add(new Sofa(0, 0, 0).getMesh());
+    this.furniture.add(rug);
+    this.furniture.add(new Sofa(0, 0, 0).getMesh());
     let smallSofa = new Sofa(3.5, 0, 3, 2, "#826563").getMesh();
     smallSofa.rotation.y = -Math.PI / 2;
-    this.furnite.add(smallSofa);
+    this.furniture.add(smallSofa);
 
-    this.furnite.add(new Spring(1, table.getYTop() + 0.05, 2.5).getMesh());
+    this.furniture.add(new Spring(1, table.getYTop() + 0.05, 2.5).getMesh());
 
-    this.furnite.add(new Counter(-2.5, 0, -5).getMesh());
+    this.furniture.add(new Counter(-2.5, 0, -5).getMesh());
+    
+    let newspaper = new MyNewspaper(-1.5, 0.89, -0.2).getMesh()
+    newspaper.rotateY(Math.PI / 7)
+    this.furniture.add(newspaper)
 
     this.createPictures();
   }
@@ -100,7 +103,7 @@ class MyContents {
     //beetle.getMesh().rotation.y = Math.PI / 2
     pictures.add(beetle.getMesh());
 
-    this.furnite.add(pictures);
+    this.furniture.add(pictures);
   }
 
   /**
@@ -171,7 +174,7 @@ class MyContents {
 
     this.buildBox();
     this.app.scene.add(...this.walls);
-    this.app.scene.add(this.furnite);
+    this.app.scene.add(this.furniture);
   }
 
   /**
