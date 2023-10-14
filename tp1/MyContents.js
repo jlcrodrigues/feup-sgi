@@ -4,6 +4,7 @@ import { MyCake } from "./objects/MyCake.js";
 import { Plane } from "./objects/Plane.js";
 import { MyPlate } from "./objects/MyPlate.js";
 import { MyTable } from "./objects/MyTable.js";
+import { MyFlowerVase } from "./objects/MyFlowerVase.js";
 import { Beetle } from "./objects/Beetle.js";
 import { Counter } from "./objects/Counter.js";
 import { PictureFrame } from "./objects/PictureFrame.js";
@@ -76,6 +77,9 @@ class MyContents {
     let newspaper = new MyNewspaper(-1.5, 0.89, -0.2).getMesh()
     newspaper.rotateY(Math.PI / 7)
     this.furniture.add(newspaper)
+
+    let vase = new MyFlowerVase(-0.8, table.getYTop(), 2.8).getMesh()
+    this.furniture.add(vase)
 
     this.createPictures();
   }
