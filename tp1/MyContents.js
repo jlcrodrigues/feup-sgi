@@ -13,6 +13,8 @@ import { Sofa } from "./objects/Sofa.js";
 import { Spring } from "./objects/Spring.js";
 import { MyNewspaper } from "./objects/MyNewspaper.js";
 import { MyWindowWall } from "./objects/MyWindowWall.js";
+import { MyCircularTable } from "./objects/MyCircularTable.js";
+import { MyBench } from "./objects/MyBench.js";
 
 /**
  *  This class contains the contents of out application
@@ -76,6 +78,7 @@ class MyContents {
 
     this.furniture = new THREE.Group();
 
+    // Coffee table section
     let table = new MyTable(-1.5, 0, 2);
     this.furniture.add(table.getMesh());
     this.furniture.add(new MyPlate(0, table.getYTop() - 0.1, 3).getMesh());
@@ -87,6 +90,23 @@ class MyContents {
     let smallSofa = new Sofa(3.5, 0, 3, 2, "#826563").getMesh();
     smallSofa.rotation.y = -Math.PI / 2;
     this.furniture.add(smallSofa);
+
+    // Counter side table section
+    this.furniture.add(new MyCircularTable(1.5, 0, -3.0).getMesh())
+    this.furniture.add(new MyBench(2, 0, -2.0, 1.5).getMesh())
+    this.furniture.add(new MyBench(2.5, 0, -3.5, 1.5).getMesh().rotateY(Math.PI / 5))
+    this.furniture.add(new MyBench(0.5, 0, -2.5, 1.5).getMesh().rotateY(-Math.PI / 10))
+    this.furniture.add(new MyBench(0.5, 0, -4, 1.5).getMesh().rotateY(-Math.PI / 15))
+    this.furniture.add(new Rug(1.5, 0, -3.0, 2.5, 3).getMesh().rotateY(Math.PI / 2 - Math.PI / 10))
+
+    // Window side section
+    this.furniture.add(new MyCircularTable(6.5, 0.5, 0.7, 1.5).getMesh())
+    this.furniture.add(new MyFlowerVase(6.5, 2.1, 0.7).getMesh().rotateY(Math.PI))
+    this.furniture.add(new MyBench(6.7, 0.5, -0.7, 0.7).getMesh().rotateY(-Math.PI / 20))
+    this.furniture.add(new MyBench(6.8, 0.5, 1.5, 0.7).getMesh().rotateY(Math.PI / 10))
+    this.furniture.add(new MyBench(5.8, 0.5, 0.5, 0.7).getMesh().rotateY(Math.PI / 3))
+    this.furniture.add(new Rug(6.5, 0.5, 1, 2, 3.5).getMesh().rotateY(-0.1))
+
 
     this.furniture.add(new Spring(1, table.getYTop() + 0.05, 2.5).getMesh());
 
@@ -109,6 +129,11 @@ class MyContents {
     let pictureFrame2 = new PictureFrame(2, 4.5, 5, "textures/martim.jpg");
     pictureFrame2.getMesh().rotation.y = Math.PI / 2;
     pictures.add(pictureFrame1.getMesh(), pictureFrame2.getMesh());
+
+    let painting1 = new PictureFrame(-1, 4.5, -5, "textures/painting1.jpg", "#bdd", 1.3, 2);
+    pictures.add(painting1.getMesh().rotateY(-Math.PI / 2));
+    let painting2 = new PictureFrame(3, 4, -5, "textures/painting2.jpg", "#eee", 2.5, 2);
+    pictures.add(painting2.getMesh().rotateY(-Math.PI / 2));
 
     let blackboard = new PictureFrame(
       -5,

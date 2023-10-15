@@ -1,34 +1,98 @@
 import * as THREE from "three";
-import { MyTableLeg } from "./MyTableLeg.js";
 
 class MyBench {
-  constructor(x, y, z) {
-    this.group = new THREE.Group();
+  static legSupport;
+  static top;
 
-    this.benchMaterial = new THREE.MeshPhongMaterial({
-      color: "#4a4d2d",
+  constructor(x, y, z, height = 1) {
+    this.group = new THREE.Group();
+    this.edge = 0.3;
+    this.height = height;
+
+    this.buildTop();
+    this.buildLegs();
+
+    this.group.position.set(x, y, z);
+    this.group.traverse((child) => {
+      child.castShadow = true;
+      child.receiveShadow = true;
+    });
+  }
+
+  buildTop() {
+    let clothTexture = new THREE.TextureLoader().load(
+      "textures/rose_cloth.jpg"
+    );
+    clothTexture.wrapS = THREE.RepeatWrapping;
+    clothTexture.wrapT = THREE.RepeatWrapping;
+
+    let topMaterial = new THREE.MeshPhongMaterial({
+      color: "#edd",
       specular: "#000000",
       emissive: "#000000",
       shininess: 50,
+      map: clothTexture,
     });
-    this.aabenchMaterial = new THREE.MeshPhongMaterial({
-      color: "#ffe1c2",
-      specular: "#777777",
+
+    let topHeight = 0.3;
+    if (this.top === undefined)
+      this.top = new THREE.BoxGeometry(this.edge * 2, topHeight, this.edge * 2);
+    let top = this.top;
+    let topMesh = new THREE.Mesh(top, topMaterial);
+    topMesh.position.set(0, this.height + topHeight / 2, 0);
+    this.group.add(topMesh);
+  }
+
+  buildLegs() {
+    let woodenTexture = new THREE.TextureLoader().load("textures/wood.jpg");
+    woodenTexture.wrapS = THREE.RepeatWrapping;
+    woodenTexture.wrapT = THREE.RepeatWrapping;
+
+    let legMaterial = new THREE.MeshPhongMaterial({
+      color: "#7d533e",
+      specular: "#000000",
       emissive: "#000000",
-      shininess: 60,
+      shininess: 50,
+      map: woodenTexture,
     });
 
-    let legHeight = 0.8
-    const top = new THREE.BoxGeometry(1, 0.2, 1);
-    this.topMesh = new THREE.Mesh(top, this.benchMaterial);
-    this.topMesh.position.set(1.3 / 2, legHeight - 0.1, 1.3 / 2)
+    let d = 0.1;
+    let dx = [-1, -1, 1, 1];
+    let dy = [-1, 1, -1, 1];
 
-    this.group.add(this.topMesh);
-    this.group.add(new MyTableLeg(1.1, 0, 1.1, legHeight).getMesh());
-    this.group.add(new MyTableLeg(1.1, 0, 0.2, legHeight).getMesh());
-    this.group.add(new MyTableLeg(0.2, 0, 1.1, legHeight).getMesh());
-    this.group.add(new MyTableLeg(0.2, 0, 0.2, legHeight).getMesh());
-    this.group.position.set(x, y, z)
+    let leg = new THREE.BoxGeometry(d, this.height, d);
+    for (let i = 0; i < 4; i++) {
+      let legMesh = new THREE.Mesh(leg, legMaterial);
+      legMesh.position.set(
+        dx[i] * (this.edge - d / 2),
+        this.height / 2,
+        dy[i] * (this.edge - d / 2)
+      );
+      this.group.add(legMesh);
+    }
+
+    let legSupportHeight = this.height * 0.4;
+    if (this.legSupport === undefined)
+      this.legSupport = new THREE.BoxGeometry(this.edge * 2, d, d);
+    let legSupport = this.legSupport;
+    let legSupportMesh1 = new THREE.Mesh(legSupport, legMaterial);
+    legSupportMesh1.position.set(0, legSupportHeight, this.edge / 2 + d);
+    this.group.add(legSupportMesh1);
+    this.group.add(legSupportMesh1.clone().translateZ(-this.edge - d * 2));
+    this.group.add(
+      legSupportMesh1
+        .clone()
+        .rotateY(Math.PI / 2)
+        .translateZ(-this.edge / 2 - d)
+        .translateX(this.edge / 2 + d)
+    );
+    this.group.add(
+      legSupportMesh1
+        .clone()
+        .rotateY(Math.PI / 2)
+        .translateZ(this.edge / 2 + d)
+        .translateX(this.edge / 2 + d)
+    );
   }
 
   getMesh() {
