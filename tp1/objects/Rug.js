@@ -15,6 +15,7 @@ class Rug {
     this.rugMesh = new THREE.Mesh(rug, this.material);
 
     this.rugMesh.position.set(x, y, z)
+    this.rugMesh.receiveShadow = true;
   }
 
   getMesh() {

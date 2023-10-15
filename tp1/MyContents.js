@@ -45,13 +45,28 @@ class MyContents {
       side: THREE.DoubleSide,
     });
 
-    this.floor = new Plane(0, 0, 0, {color: "#919090", texturePath: 'textures/floor.png'});
+    this.floor = new Plane(0, 0, 0, {
+      color: "#919090",
+      texturePath: "textures/floor.png",
+    });
+    this.roof = new Plane(1.5, 10, 0, {
+      color: "#919090",
+      texturePath: "textures/wallYellow.png",
+      width: 13,
+    });
+    this.roof.getMesh().rotateX(Math.PI / 2);
     const wallColor = "#ffebeb";
-    this.wall1 = new Plane(0, 5, -5, {color: wallColor, texturePath: 'textures/wallYellow.png'}).getMesh();
-    this.wall2 = new Plane(0, 5, 5, {color: wallColor, width: 13}).getMesh();
+    this.wall1 = new Plane(0, 5, -5, {
+      color: wallColor,
+      texturePath: "textures/wallYellow.png",
+    }).getMesh();
+    this.wall2 = new Plane(0, 5, 5, { color: wallColor, width: 13 }).getMesh();
     this.wall2.rotation.y = Math.PI;
     this.wall2.position.x = 1.5;
-    this.wall3 = new Plane(-5, 5, 0, {color: "#dba79c", texturePath: 'textures/brick.jpg'}).getMesh();
+    this.wall3 = new Plane(-5, 5, 0, {
+      color: "#dba79c",
+      texturePath: "textures/brick.jpg",
+    }).getMesh();
     this.wall3.rotation.y = Math.PI / 2;
     //this.wall4 = new Plane(5, 5, 0, {color: wallColor, texturePath: 'textures/coffee_window.jpg'}).getMesh();
     //this.wall4.rotation.y = -Math.PI / 2;
@@ -76,13 +91,13 @@ class MyContents {
     this.furniture.add(new Spring(1, table.getYTop() + 0.05, 2.5).getMesh());
 
     this.furniture.add(new Counter(-2.5, 0, -5).getMesh());
-    
-    let newspaper = new MyNewspaper(-1.5, 0.89, -0.2).getMesh()
-    newspaper.rotateY(Math.PI / 7)
-    this.furniture.add(newspaper)
 
-    let vase = new MyFlowerVase(-0.8, table.getYTop(), 2.8).getMesh()
-    this.furniture.add(vase)
+    let newspaper = new MyNewspaper(-1.5, 0.89, -0.2).getMesh();
+    newspaper.rotateY(Math.PI / 7);
+    this.furniture.add(newspaper);
+
+    let vase = new MyFlowerVase(-0.8, table.getYTop(), 2.8).getMesh();
+    this.furniture.add(vase);
 
     this.createPictures();
   }
@@ -145,29 +160,47 @@ class MyContents {
       this.axis = new MyAxis(this);
       this.app.scene.add(this.axis);
     }
+    this.initLights();
 
-    // add a point light on top of the model
-    const pointLight = new THREE.PointLight(0xffffff, 500, 0);
-    pointLight.position.set(0, 20, 0);
+    this.floor.getMesh().rotation.x = -Math.PI / 2;
+    this.app.scene.add(this.floor.getMesh());
+    this.app.scene.add(this.roof.getMesh());
+
+    this.buildBox();
+    this.app.scene.add(...this.walls);
+    this.app.scene.add(this.furniture);
+  }
+
+  initLights() {
+    // Ambient light
+    const ambientLight = new THREE.AmbientLight("#555");
+    this.app.scene.add(ambientLight);
+
+    // Point Light
+    const pointLight = new THREE.PointLight(0xffffff, 150, 0);
+    pointLight.position.set(0, 10, 0);
     this.app.scene.add(pointLight);
 
-    // add a point light helper for the previous point light
     const sphereSize = 0.5;
     const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize);
     this.app.scene.add(pointLightHelper);
 
-    // add an ambient light
-    const ambientLight = new THREE.AmbientLight(0x555555);
-    this.app.scene.add(ambientLight);
-
+    // Spot Light
     const spotLight = new THREE.SpotLight(
       0xffffff,
       20,
-      5,
+      6,
       (20 * Math.PI) / 180,
       0.4,
       1
     );
+    spotLight.castShadow = true;
+    spotLight.shadow.mapSize.width = 512; // default
+    spotLight.shadow.mapSize.height = 512; // default
+    spotLight.shadow.camera.near = 0.5; // default
+    spotLight.shadow.camera.far = 500; // default
+    spotLight.shadow.focus = 1; // default
+
     this.app.scene.add(spotLight.target);
     this.app.scene.add(spotLight);
     spotLight.position.set(0, 5, 3);
@@ -176,12 +209,30 @@ class MyContents {
     const spotLightHelper = new THREE.PointLightHelper(spotLight, 0.1);
     this.app.scene.add(spotLightHelper);
 
-    this.floor.getMesh().rotation.x = -Math.PI / 2;
-    this.app.scene.add(this.floor.getMesh());
+    // Directional Light
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+    directionalLight.position.set(16, 7, 3);
+    directionalLight.target.position.set(5, 0, 0);
 
-    this.buildBox();
-    this.app.scene.add(...this.walls);
-    this.app.scene.add(this.furniture);
+    directionalLight.castShadow = true;
+    directionalLight.shadow.mapSize.width = 2048;
+    directionalLight.shadow.mapSize.height = 6144;
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 30;
+    directionalLight.shadow.camera.left = -15;
+    directionalLight.shadow.camera.right = 15;
+    directionalLight.shadow.camera.bottom = -20;
+    directionalLight.shadow.camera.top = 30;
+    directionalLight.shadow.bias = 0.0007
+    directionalLight.shadow.radius = 8
+
+    this.app.scene.add(directionalLight);
+
+    const directionalLightHelper = new THREE.DirectionalLightHelper(
+      directionalLight,
+      5
+    );
+    this.app.scene.add(directionalLightHelper);
   }
 
   /**

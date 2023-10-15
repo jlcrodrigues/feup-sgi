@@ -39,6 +39,7 @@ class Sofa {
     this.group.add(this.armMesh1, this.armMesh2);
 
     this.group.position.set(x, y, z)
+    this.group.traverse((child) => {child.castShadow = true; child.receiveShadow = true})
   }
 
   getMesh() {

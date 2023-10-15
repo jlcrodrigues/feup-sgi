@@ -28,7 +28,7 @@ class PictureFrame {
     this.frameMesh = new THREE.Mesh(frame, this.frameMaterial);
     this.group.add(this.frameMesh);
     
-
+    this.group.traverse((child) => {child.receiveShadow = true})
     this.group.position.set(x, y, z)
   }
 

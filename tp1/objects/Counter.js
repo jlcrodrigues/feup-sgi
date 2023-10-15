@@ -57,6 +57,7 @@ class Counter {
     const top1 = new THREE.BoxGeometry(...t1);
     let top1Mesh = new THREE.Mesh(top1, topMaterial);
     top1Mesh.position.set(this.b1[0] / 2 - 0.01, 2, this.b1[2] / 2)
+    top1Mesh.receiveShadow = true;
     this.group.add(top1Mesh);
 
     let t2 = this.b2.map((x) => x + edgeWidth)
@@ -65,6 +66,7 @@ class Counter {
     let top2Mesh = new THREE.Mesh(top2, topMaterial);
     top2Mesh.position.set(0.115, 2, 2.67)
     top2Mesh.rotateY(- Math.PI / 4)
+    top2Mesh.receiveShadow = true;
     this.group.add(top2Mesh);
   }
 

@@ -19,6 +19,8 @@ class Plane {
     }
     this.plane = new THREE.PlaneGeometry(options.width ?? 10, options.height ?? 10);
     this.planeMesh = new THREE.Mesh(this.plane, planeMaterial);
+    this.planeMesh.receiveShadow = true;
+    this.planeMesh.castShadow = options.castShadow ?? true;
     this.planeMesh.position.set(x, y, z);
   }
 

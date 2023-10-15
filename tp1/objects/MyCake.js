@@ -48,6 +48,7 @@ class MyCake {
     cakeMesh.position.set(x, y, z);
 
     this.cake.add(cakeMesh, sliceMesh1, sliceMesh2)
+    this.cake.traverse((child) => {child.castShadow = false; child.receiveShadow = true})
   };
 
   buildCandle(x, y, z) {

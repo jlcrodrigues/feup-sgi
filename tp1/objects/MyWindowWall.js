@@ -26,6 +26,7 @@ class MyWindowWall {
       height: height,
       width: width,
       repeatTexture: false,
+      castShadow: false,
     }).getMesh();
     background.rotateY(-Math.PI / 2)
     this.group.add(background);
@@ -154,6 +155,8 @@ class MyWindowWall {
     const floor = new THREE.BoxGeometry(3, floorHeight, 10);
     let bottomMesh = new THREE.Mesh(floor, material);
     bottomMesh.position.set(3 / 2, floorHeight / 2, 0);
+    bottomMesh.receiveShadow = true;
+    bottomMesh.castShadow = true
     this.group.add(bottomMesh);
   }
 

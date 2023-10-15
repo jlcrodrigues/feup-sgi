@@ -46,6 +46,7 @@ class MyTable {
     this.group.add(new MyTableLeg(0.3, 0, this.depth - 0.3, this.height).getMesh());
     this.group.add(new MyTableLeg(0.3, 0, 0.3, this.height).getMesh());
     this.group.position.set(x, y, z)
+    this.group.traverse((child) => {child.castShadow = true; child.receiveShadow = true})
   }
 
   getMesh() {
