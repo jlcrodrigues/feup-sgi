@@ -1,9 +1,10 @@
 import * as THREE from "three";
 import { MyNurbsBuilder } from "../MyNurbsBuilder.js";
+import { MyObject } from "./MyObject.js";
 
-class MyNewspaper {
+class MyNewspaper extends MyObject {
   constructor(x, y, z) {
-    this.group = new THREE.Group();
+    super(x, y, z)
 
     const map = new THREE.TextureLoader().load("textures/newspaper.png");
     map.wrapS = map.wrapT = THREE.RepeatWrapping;
@@ -15,10 +16,6 @@ class MyNewspaper {
       map: map,
       side: THREE.DoubleSide,
     });
-
-    this.samplesU = 12;
-    this.samplesV = 12;
-
 
     this.createNurb();
 
@@ -48,22 +45,21 @@ class MyNewspaper {
       ],
     ];
 
-    let builder = new MyNurbsBuilder();
-    let surfaceData = builder.build(
+    const samplesU = 12;
+    const samplesV = 12;
+
+    const builder = new MyNurbsBuilder();
+    const surfaceData = builder.build(
       controlPoints,
       orderU,
       orderV,
-      this.samplesU,
-      this.samplesV,
+      samplesU,
+      samplesV,
       this.material
     );
 
-    let mesh = new THREE.Mesh(surfaceData, this.material);
+    const mesh = new THREE.Mesh(surfaceData, this.material);
     this.group.add(mesh);
-  }
-
-  getMesh() {
-    return this.group;
   }
 }
 

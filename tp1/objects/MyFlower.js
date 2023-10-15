@@ -1,37 +1,41 @@
 import * as THREE from "three";
 import { MyNurbsBuilder } from "../MyNurbsBuilder.js";
+import { MyObject } from "./MyObject.js";
 
-class MyFlower {
+class MyFlower extends MyObject {
+  static petalMesh;
+  static stemMesh;
+
   constructor(x, y, z, color = "#faa") {
+    super(x, y, z);
     this.color = color;
-    this.group = new THREE.Group();
 
     this.createMaterials();
 
-    this.createStem();
+    if (this.stemMesh === undefined) this.stemMesh = this.createStem();
+    this.group.add(this.stemMesh);
     this.createHead();
 
-    this.group.position.set(x, y, z);
-    this.group.translateY(0.45)
-    this.group.translateX(0.15)
+    this.group.translateY(0.45);
+    this.group.translateX(0.15);
   }
 
   /** Creates all the flower's petals and center */
   createHead() {
     const head = new THREE.Group();
     const center = new THREE.CylinderGeometry(0.03, 0.03, 0.02, 32);
-    let meshCenter = new THREE.Mesh(center, this.centerMaterial);
+    const meshCenter = new THREE.Mesh(center, this.centerMaterial);
     head.add(meshCenter);
 
-    let petal = this.createPetal();
+    if (this.petalMesh === undefined) this.petalMesh = this.createPetal();
 
-    let petals = 8;
+    const petals = 8;
     for (let i = 0; i < petals; i++) {
-      let mesh = petal.clone();
+      let mesh = this.petalMesh.clone();
       mesh.rotateY((Math.PI * 2 * i) / petals);
       head.add(mesh);
     }
-    head.rotateZ(- Math.PI / 7);
+    head.rotateZ(-Math.PI / 7);
 
     this.group.add(head);
   }
@@ -41,7 +45,7 @@ class MyFlower {
     this.samplesU = 12;
     this.samplesV = 20;
 
-    let controlPoints = [
+    const controlPoints = [
       // U = 0
       [
         // V = 0..1;
@@ -64,8 +68,8 @@ class MyFlower {
       ],
     ];
 
-    let builder = new MyNurbsBuilder();
-    let surfaceData = builder.build(
+    const builder = new MyNurbsBuilder();
+    const surfaceData = builder.build(
       controlPoints,
       controlPoints.length - 1,
       controlPoints[0].length - 1,
@@ -74,7 +78,7 @@ class MyFlower {
       this.material
     );
 
-    let mesh = new THREE.Mesh(surfaceData, this.petalMaterial);
+    const mesh = new THREE.Mesh(surfaceData, this.petalMaterial);
     mesh.scale.divideScalar(25);
     return mesh;
   }
@@ -90,7 +94,7 @@ class MyFlower {
 
     let mesh = new THREE.Mesh(geometry, this.stemMaterial);
     mesh.scale.divideScalar(5);
-    this.group.add(mesh);
+    return mesh;
   }
 
   createMaterials() {
@@ -115,10 +119,6 @@ class MyFlower {
       color: "#006c00",
       side: THREE.DoubleSide,
     });
-  }
-
-  getMesh() {
-    return this.group;
   }
 }
 

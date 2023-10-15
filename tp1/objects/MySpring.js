@@ -1,17 +1,16 @@
 import * as THREE from "three";
+import { MyObject } from "./MyObject.js";
 
-class Spring {
-  constructor(x, y, z, width = 1.1, height = 1.4) {
-    this.width = width;
-    this.height = height;
+class MySpring extends MyObject {
+  constructor(x, y, z) {
+    super(x, y, z)
     this.loops = 4;
-    this.group = new THREE.Group();
 
-    let dX = 0.2
-    let dY = 0.15
-    let dZ = 0.05
+    const dX = 0.2
+    const dY = 0.15
+    const dZ = 0.05
     for (let i = 0; i < 6; i++) {
-        let deltaZ = dZ * 2 * i
+        const deltaZ = dZ * 2 * i
       const curveTop = new THREE.CubicBezierCurve3(
         new THREE.Vector3(0, 0, deltaZ),
         new THREE.Vector3(0, dY, deltaZ),
@@ -36,17 +35,7 @@ class Spring {
       curveObject = new THREE.Line(geometry, material);
       this.group.add(curveObject);
     }
-
-    this.group.position.set(x, y, z);
-
-    this.createCurves();
-  }
-
-  createCurves() {}
-
-  getMesh() {
-    return this.group;
   }
 }
 
-export { Spring };
+export { MySpring };

@@ -1,10 +1,11 @@
 import * as THREE from "three";
+import { MyObject } from "./MyObject.js";
 
-class MyBeetle {
+class MyBeetle extends MyObject {
   constructor(x, y, z, width = 1.1, height = 1.4) {
+    super(x, y, z)
     this.width = width;
     this.height = height;
-    this.group = new THREE.Group();
 
     const canvasMaterial = new THREE.MeshPhongMaterial({
       color: "#fff",
@@ -28,8 +29,6 @@ class MyBeetle {
     const frame = new THREE.BoxGeometry(0.04, height, width);
     const frameMesh = new THREE.Mesh(frame, frameMaterial);
     this.group.add(frameMesh);
-
-    this.group.position.set(x, y, z);
 
     this.createCurves();
   }
@@ -97,10 +96,6 @@ class MyBeetle {
 
   getQuarterH(r) {
     return r * (4 / 3) * (Math.sqrt(2) - 1);
-  }
-
-  getMesh() {
-    return this.group;
   }
 }
 

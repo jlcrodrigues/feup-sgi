@@ -1,24 +1,16 @@
 import * as THREE from "three";
+import { MyObject } from "./MyObject.js";
 
-class MyPlate {
-  constructor(x, y, z) {
-    this.plateMaterial = new THREE.MeshPhongMaterial({
-      color: "#ffffff",
-      specular: "#777777",
-      emissive: "#000000",
-      shininess: 30,
+class MyPlate extends MyObject {
+  constructor(x, y, z, radius = 0.5, height = 0.05) {
+    super(x, y, z);
+    const plateMaterial = new THREE.MeshPhongMaterial({
+      color: "#aaa",
       side: THREE.DoubleSide,
     });
-    this.plate = new THREE.CylinderGeometry(0.5, 0.5, 0.05);
-    this.plateMesh = new THREE.Mesh(this.plate, this.plateMaterial);
-
-    this.plateMesh.position.x = x;
-    this.plateMesh.position.z = z;
-    this.plateMesh.position.y = y;
-  }
-
-  getMesh() {
-    return this.plateMesh;
+    const plate = new THREE.CylinderGeometry(radius, radius, height);
+    const plateMesh = new THREE.Mesh(plate, plateMaterial);
+    this.group.add(plateMesh);
   }
 }
 
