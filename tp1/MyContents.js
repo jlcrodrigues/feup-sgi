@@ -12,6 +12,7 @@ import { Rug } from "./objects/Rug.js";
 import { Sofa } from "./objects/Sofa.js";
 import { Spring } from "./objects/Spring.js";
 import { MyNewspaper } from "./objects/MyNewspaper.js";
+import { MyWindowWall } from "./objects/MyWindowWall.js";
 
 /**
  *  This class contains the contents of out application
@@ -47,12 +48,14 @@ class MyContents {
     this.floor = new Plane(0, 0, 0, {color: "#919090", texturePath: 'textures/floor.png'});
     const wallColor = "#ffebeb";
     this.wall1 = new Plane(0, 5, -5, {color: wallColor, texturePath: 'textures/wallYellow.png'}).getMesh();
-    this.wall2 = new Plane(0, 5, 5, {color: wallColor}).getMesh();
+    this.wall2 = new Plane(0, 5, 5, {color: wallColor, width: 13}).getMesh();
     this.wall2.rotation.y = Math.PI;
+    this.wall2.position.x = 1.5;
     this.wall3 = new Plane(-5, 5, 0, {color: "#dba79c", texturePath: 'textures/brick.jpg'}).getMesh();
     this.wall3.rotation.y = Math.PI / 2;
-    this.wall4 = new Plane(5, 5, 0, {color: wallColor, texturePath: 'textures/coffee_window.jpg'}).getMesh();
-    this.wall4.rotation.y = -Math.PI / 2;
+    //this.wall4 = new Plane(5, 5, 0, {color: wallColor, texturePath: 'textures/coffee_window.jpg'}).getMesh();
+    //this.wall4.rotation.y = -Math.PI / 2;
+    this.wall4 = new MyWindowWall(5, 0, 0).getMesh();
 
     this.walls = [this.wall1, this.wall2, this.wall3, this.wall4];
 

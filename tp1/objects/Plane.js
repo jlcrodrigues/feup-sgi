@@ -11,13 +11,13 @@ class Plane {
     if (options.texturePath != null) {
       let canvasTexture = new THREE.TextureLoader().load(options.texturePath);
       canvasTexture.repeat.set(2, 2)
-      if(options.texturePath == 'textures/coffee_window.jpg')
+      if (options.repeatTexture != null && options.repeatTexture == false)
         canvasTexture.repeat.set(1,1)
       canvasTexture.wrapS = THREE.RepeatWrapping;
       canvasTexture.wrapT = THREE.RepeatWrapping;
       planeMaterial.map = canvasTexture;
     }
-    this.plane = new THREE.PlaneGeometry(10, 10);
+    this.plane = new THREE.PlaneGeometry(options.width ?? 10, options.height ?? 10);
     this.planeMesh = new THREE.Mesh(this.plane, planeMaterial);
     this.planeMesh.position.set(x, y, z);
   }
