@@ -89,9 +89,9 @@ class MyContents {
 
   createPictures() {
     let pictures = new THREE.Group();
-    let pictureFrame1 = new PictureFrame(0, 4, 5, "textures/feup_entry.jpg");
+    let pictureFrame1 = new PictureFrame(0, 4, 5, "textures/luis.jpg");
     pictureFrame1.getMesh().rotation.y = Math.PI / 2;
-    let pictureFrame2 = new PictureFrame(2, 4.5, 5, "textures/feup_b.jpg");
+    let pictureFrame2 = new PictureFrame(2, 4.5, 5, "textures/martim.jpg");
     pictureFrame2.getMesh().rotation.y = Math.PI / 2;
     pictures.add(pictureFrame1.getMesh(), pictureFrame2.getMesh());
 
