@@ -5,7 +5,7 @@ import { Plane } from "./objects/Plane.js";
 import { MyPlate } from "./objects/MyPlate.js";
 import { MyTable } from "./objects/MyTable.js";
 import { MyFlowerVase } from "./objects/MyFlowerVase.js";
-import { Beetle } from "./objects/Beetle.js";
+import { MyBeetle } from "./objects/MyBeetle.js";
 import { Counter } from "./objects/Counter.js";
 import { PictureFrame } from "./objects/PictureFrame.js";
 import { Rug } from "./objects/Rug.js";
@@ -146,7 +146,7 @@ class MyContents {
     );
     pictures.add(blackboard.getMesh());
 
-    let beetle = new Beetle(-5, 4, -3, 1.6, 1.1);
+    let beetle = new MyBeetle(-5, 4, -3, 1.6, 1.1);
     //beetle.getMesh().rotation.y = Math.PI / 2
     pictures.add(beetle.getMesh());
 
