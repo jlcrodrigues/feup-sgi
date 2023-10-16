@@ -91,7 +91,7 @@ class MyContents {
     // Spot Light
     const spotLight = new THREE.SpotLight(
       0xffffff,
-      20,
+      15,
       6,
       (20 * Math.PI) / 180,
       0.4,
@@ -106,7 +106,7 @@ class MyContents {
 
     this.app.scene.add(spotLight.target);
     this.app.scene.add(spotLight);
-    spotLight.position.set(0, 5, 3);
+    spotLight.position.set(0, 5, 3.5);
     spotLight.target.position.set(0, 0, 3);
 
     const spotLightHelper = new THREE.PointLightHelper(spotLight, 0.1);

@@ -17,7 +17,7 @@ class MyTable extends MyObject {
     });
     const tableMaterialSecondary = new THREE.MeshPhongMaterial({
       color: "#ffe1c2",
-      specular: "#777777",
+      specular: "#333",
       shininess: 60,
       map: this.woodenTexture
     });

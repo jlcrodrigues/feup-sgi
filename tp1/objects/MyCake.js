@@ -19,12 +19,21 @@ class MyCake extends MyObject {
   buildCake() {
     const radius = 0.3;
 
+    let map = new THREE.TextureLoader().load("textures/cake.png");
+    map.wrapS = map.wrapT = THREE.RepeatWrapping;
+    map.repeat.set(2, 2);
     const cakeMaterial = new THREE.MeshPhongMaterial({
-      color: "#5c300e",
+      //color: "#5c300e",
+      color: "#64231a",
+      diffuse: "#964B00",
+      emissive: "#311",
+       map:map
     });
+    map = new THREE.TextureLoader().load("textures/cake_inside.jpg");
     const cakeInsideMaterial = new THREE.MeshPhongMaterial({
-      color: "#ff0000",
-      emissive: "#000000",
+      color: "#fdd",
+      emissive: "#311",
+      map: map,
       side: THREE.DoubleSide,
     });
 
@@ -52,9 +61,12 @@ class MyCake extends MyObject {
   }
 
   buildCandle() {
+    const map = new THREE.TextureLoader().load("textures/candle.webp");
+    map.wrapS = map.wrapT = THREE.RepeatWrapping;
     const candleMaterial = new THREE.MeshPhongMaterial({
       color: "#eeeeee",
       shininess: 30,
+      map: map
     });
     const radius = 0.01;
     const candle = new THREE.CylinderGeometry(radius, radius, 0.2);
@@ -66,18 +78,31 @@ class MyCake extends MyObject {
   }
 
   buildFlame() {
+    const map = new THREE.TextureLoader().load("textures/fire.avif");
+    map.wrapS = map.wrapT = THREE.RepeatWrapping;
     const flameMaterial = new THREE.MeshPhongMaterial({
       color: "#e25822",
       specular: "#e25822",
       emissive: "#e25822",
       shininess: 50,
+      transparent: true,
+      opacity: 1,
       side: THREE.DoubleSide,
+      map: map
     });
-    const flame = new THREE.ConeGeometry(0.01, 0.03, 32);
-    flame.rotateX(Math.PI);
-    const flameMesh = new THREE.Mesh(flame, flameMaterial);
-    flameMesh.translateY(this.height + 0.04);
-    this.group.add(flameMesh);
+    let h = 0.03, r = 0.008
+    const flame = new THREE.Group()
+    const top = new THREE.ConeGeometry(r, h, 32);
+    const topMesh = new THREE.Mesh(top, flameMaterial);
+    // draw half a sphere
+    const base = new THREE.SphereGeometry(r, 32, 32, 0, Math.PI);
+    const baseMesh = new THREE.Mesh(base, flameMaterial);
+    baseMesh.translateY(-h / 2);
+    baseMesh.rotateX(Math.PI / 2);
+    flame.add(topMesh, baseMesh);
+    flame.translateY(this.height + 0.04);
+    flame.translateZ(-0.01);
+    this.group.add(flame);
   }
 }
 
