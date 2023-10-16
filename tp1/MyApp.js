@@ -42,7 +42,7 @@ class MyApp {
     document.body.appendChild(this.stats.dom);
 
     this.initCameras();
-    this.setActiveCamera("Perspective");
+    this.setActiveCamera("DoorView");
 
     // Create a renderer with Antialiasing
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -71,8 +71,44 @@ class MyApp {
 
     // Create a basic perspective camera
     const perspective1 = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-    perspective1.position.set(7, 6, 7);
+    perspective1.position.set(7,6,7);
     this.cameras["Perspective"] = perspective1;
+
+    const DoorView = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
+    DoorView.position.set(7.5,3,-4);
+    this.cameras["DoorView"] = DoorView;
+
+    const _left = -1 * aspect;
+    const _right = 1 * aspect;
+    const _top = 1;
+    const _bottom = -1;
+    const _near = -4;
+    const _far = 10 ;
+
+    const TableObjects = new THREE.OrthographicCamera(
+      _left,
+      _right,
+      _top,
+      _bottom,
+      _near,
+      _far
+    );
+    // TableObjects.up = new THREE.Vector3(0, 1, 0);
+    TableObjects.position.set(0.2, 0.5, 1);
+    // TableObjects.lookAt(new THREE.Vector3(3, 0, 3));
+    this.cameras["TableObjects"] = TableObjects;
+
+    const Vase = new THREE.OrthographicCamera(
+      _left*3,
+      _right*3,
+      _top*3,
+      _bottom*3,
+      _near*3,
+      _far*3
+    );
+    Vase.position.set(-10,10,3);
+    Vase.zoom = 7
+    this.cameras["Vase"] = Vase;
 
     // defines the frustum size for the orthographic cameras
     const left = (-this.frustumSize / 2) * aspect;
@@ -163,6 +199,16 @@ class MyApp {
       } else {
         this.controls.object = this.activeCamera;
       }
+
+      if (this.activeCameraName == "Vase"){
+        this.controls.target = new THREE.Vector3(6.5, 2.3, 0.7);
+      }
+      else if (this.activeCameraName == "DoorView"){
+        this.controls.target = new THREE.Vector3(0, 3, 4.5);
+      }
+      else
+        this.controls.target = new THREE.Vector3(0, 0, 0);
+        
     }
   }
 
