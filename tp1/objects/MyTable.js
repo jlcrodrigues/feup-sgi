@@ -13,13 +13,13 @@ class MyTable extends MyObject {
     const tableMaterialPrimary = new THREE.MeshPhongMaterial({
       color: "#525826",
       shininess: 50,
-      map: this.woodenTexture
+      map: woodenTexture
     });
     const tableMaterialSecondary = new THREE.MeshPhongMaterial({
       color: "#ffe1c2",
       specular: "#333",
       shininess: 60,
-      map: this.woodenTexture
+      map: woodenTexture
     });
 
     this.width = 3.5

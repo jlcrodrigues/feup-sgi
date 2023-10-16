@@ -12,12 +12,13 @@
 
 ### [TP1 - ThreeJS Basics](tp1)
 
-- (items briefly describing main strong points)
-- Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
+This [scene](tp1/index.html) is based on the TV show [Friends](https://pt.wikipedia.org/wiki/Friends), more specifically the coffee shop [Central Perk](https://friends.fandom.com/wiki/Central_Perk).
+It includes the infamous couches and table, as well as some background table and chair sets and a counter.
 
------
+<p align="center">
+  <img src='tp1/screenshot/main1.png' width=400px>
+  <img src='tp1/screenshot/main2.png' width=400px>
+</p>
 
 ### [TP2 - ...](tp2)
 - (items briefly describing main strong points)
