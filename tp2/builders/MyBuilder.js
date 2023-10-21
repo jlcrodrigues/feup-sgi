@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { MyTextureBuilder } from "./MyTextureBuilder.js";
 import { MyMaterialBuilder } from "./MyMaterialBuilder.js";
+import { MyGraphBuilder } from "./MyGraphBuilder.js";
 
 class MyBuilder {
   constructor(data) {
@@ -37,7 +38,11 @@ class MyBuilder {
   }
 
   buildCameras() {}
-  buildNodes() {}
+
+  buildGraph() {
+    let graphBuilder = new MyGraphBuilder(this.data.nodes, this.materials);
+    return graphBuilder.build(this.data.rootId)
+  }
 }
 
 export { MyBuilder };

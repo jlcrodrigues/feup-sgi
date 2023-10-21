@@ -35,11 +35,12 @@ class MyContents {
    * @param {MySceneData} data the entire scene data object
    */
   onSceneLoaded(data) {
-    // create cube
     let builder = new MyBuilder(data);
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
-    var cube = new THREE.Mesh(geometry, builder.materials.get("tapeApp"));
-    this.app.scene.add(cube);
+    this.app.scene.add(builder.buildGraph());
+
+    const ambientLight = new THREE.AmbientLight("#ddd");
+    this.app.scene.add(ambientLight);
+
     console.info(
       "scene data loaded " +
         data +
