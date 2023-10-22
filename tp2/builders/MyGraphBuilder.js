@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { MyGeometryBuilder } from "./MyGeometryBuilder.js";
+import { MyLightBuilder } from "./MyLightBuilder.js";
+
+const LIGHTS = ['pointlight', 'spotlight', 'directionallight']
 
 /**
  * Builds the graph's nodes from parser data
@@ -58,6 +61,12 @@ class MyGraphBuilder {
         if (childData.materialIds.length == 0)
           childData.materialIds = nodeData.materialIds;
         child = this.visit(childData.id);
+      }
+      else if (LIGHTS.includes(childData.type)) {
+        child = MyLightBuilder.build(childData)
+      }
+      else {
+        console.warn('Unknown node type:', childData.type)
       }
       if (child !== undefined) {
         node.add(child);

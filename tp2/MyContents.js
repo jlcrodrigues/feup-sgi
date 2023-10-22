@@ -41,6 +41,11 @@ class MyContents {
 
     MyCamerasBuilder.build(this.app, data);
 
+    const ambientLight = new THREE.AmbientLight(data.options.ambient);
+    this.app.scene.add(ambientLight);
+
+    this.app.scene.background = data.options.background
+
     /*
     console.info(
       "scene data loaded " +
@@ -49,13 +54,6 @@ class MyContents {
     );
     */
     //this.onAfterSceneLoadedAndBeforeRender(data);
-
-    // TODO: remove this
-    const ambientLight = new THREE.AmbientLight("#ddd");
-    this.app.scene.add(ambientLight);
-    var light = new THREE.PointLight(0xffffff, 200, 100);
-    light.position.set(0, 5, 2);
-    this.app.scene.add(light);
 
     console.log(data);
   }
