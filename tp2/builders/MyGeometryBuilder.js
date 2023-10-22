@@ -1,6 +1,9 @@
 import * as THREE from "three";
 import { MyNurbsBuilder } from "./MyNurbsBuilder.js";
 
+/**
+ * Builds Three.js geometries from parser data (primitives)
+ */
 class MyGeometryBuilder {
   static build(nodeData) {
     //TODO: distance for all primitives
@@ -31,14 +34,19 @@ class MyGeometryBuilder {
   }
 
   static buildRectangleGeometry(nodeData) {
-    let representations = nodeData.representations;
-    return new THREE.PlaneGeometry(
-      // TODO: check if this is correct
-      Math.abs(representations[0].xy1[0] - representations[0].xy2[0]),
-      Math.abs(representations[0].xy1[1] - representations[0].xy2[1]),
+    const representations = nodeData.representations;
+    const xWidth = Math.abs(representations[0].xy1[0] - representations[0].xy2[0])
+    const yWidth = Math.abs(representations[0].xy1[1] - representations[0].xy2[1])
+    const geometry = new THREE.PlaneGeometry(
+      xWidth,
+      yWidth,
       representations[0].parts_x ?? 1,
       representations[0].parts_y ?? 1
     );
+    const xMin = Math.min(representations[0].xy1[0], representations[0].xy2[0])
+    const yMin = Math.min(representations[0].xy1[1], representations[0].xy2[1])
+    geometry.translate(xMin + xWidth / 2, yMin + yWidth / 2, 0)
+    return geometry
   }
 
   static buildTriangleGeometry(nodeData) {
@@ -57,10 +65,10 @@ class MyGeometryBuilder {
   }
 
   static buildCylinderGeometry(nodeData) {
-    let representations = nodeData.representations;
+    const representations = nodeData.representations;
     return new THREE.CylinderGeometry(
-      representations[0].base,
       representations[0].top,
+      representations[0].base,
       representations[0].height,
       representations[0].slices,
       representations[0].stacks,
@@ -71,20 +79,28 @@ class MyGeometryBuilder {
   }
 
   static buildBoxGeometry(nodeData) {
-    let representations = nodeData.representations;
-    return new THREE.BoxGeometry(
-      Math.abs(representations[0].xyz1[0] - representations[0].xyz2[0]),
-      Math.abs(representations[0].xyz1[1] - representations[0].xyz2[1]),
-      Math.abs(representations[0].xyz1[2] - representations[0].xyz2[2]),
+    const representations = nodeData.representations;
+    const xWidth = Math.abs(representations[0].xyz1[0] - representations[0].xyz2[0])
+    const yWidth = Math.abs(representations[0].xyz1[1] - representations[0].xyz2[1])
+    const zWidth = Math.abs(representations[0].xyz1[2] - representations[0].xyz2[2])
+    const geometry = new THREE.BoxGeometry(
+      xWidth,
+      yWidth,
+      zWidth,
       representations[0].parts_x ?? 1,
       representations[0].parts_y ?? 1,
       representations[0].parts_z ?? 1
     );
+    const xMin = Math.abs(representations[0].xyz1[0], representations[0].xyz2[0])
+    const yMin = Math.abs(representations[0].xyz1[1], representations[0].xyz2[1])
+    const zMin = Math.abs(representations[0].xyz1[2], representations[0].xyz2[2])
+    geometry.translate(xMin + xWidth / 2, yMin + yWidth / 2, zMin + zWidth / 2)
+    return geometry
   }
 
   static buildNurbsGeometry(nodeData) {
-    let representation = nodeData.representations[0];
-    let controlPoints = [];
+    const representation = nodeData.representations[0];
+    const controlPoints = [];
     for (let i in representation.controlpoints) {
       let p = representation.controlpoints[i];
       controlPoints.push([p.xx, p.yy, p.zz, 1]);

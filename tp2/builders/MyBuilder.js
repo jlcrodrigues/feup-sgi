@@ -3,6 +3,9 @@ import { MyTextureBuilder } from "./MyTextureBuilder.js";
 import { MyMaterialBuilder } from "./MyMaterialBuilder.js";
 import { MyGraphBuilder } from "./MyGraphBuilder.js";
 
+/**
+ * Builds the scene's contents from parser data
+ */
 class MyBuilder {
   constructor(data) {
     this.data = data;
@@ -10,9 +13,6 @@ class MyBuilder {
     this.buildTextures();
     this.buildMaterials();
   }
-
-  buildOptions() {}
-  buildFog() {}
 
   /**
    * Builds textures from texture parser data
@@ -33,14 +33,20 @@ class MyBuilder {
     this.materials = new Map();
     for (let key in this.data.materials) {
       let material = this.data.materials[key];
-      this.materials.set(material.id, MyMaterialBuilder.build(material, this.textures));
+      this.materials.set(
+        material.id,
+        MyMaterialBuilder.build(material, this.textures)
+      );
     }
   }
 
+  /**
+   * Builds the scene's object graph from parser data 
+   * @returns Three.js 3d object
+   */
   buildGraph() {
     let graphBuilder = new MyGraphBuilder(this.data.nodes, this.materials);
-    return graphBuilder.build(this.data.rootId)
-    //return graphBuilder.build('table')
+    return graphBuilder.build(this.data.rootId);
   }
 }
 

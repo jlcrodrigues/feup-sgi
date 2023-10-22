@@ -2,10 +2,16 @@ import * as THREE from "three";
 import { MyGeometryBuilder } from "./MyGeometryBuilder.js";
 
 /**
- * Builds nodes from material parser data
+ * Builds the graph's nodes from parser data
  */
 class MyGraphBuilder {
+  /**
+   *
+   * @param {} nodes Nodes data from parser
+   * @param {*} materials Array of already built Three.js materials
+   */
   constructor(nodes, materials) {
+    // Store node data in a map for O(1) access
     this.nodesData = new Map();
     for (let key in nodes) {
       this.nodesData.set(key, nodes[key]);
@@ -13,23 +19,37 @@ class MyGraphBuilder {
     this.materials = materials;
   }
 
+  /**
+   * Builds the graph's nodes from the root node
+   * @param {String} root Id of the root node
+   * @returns Three.js 3d object
+   */
   build(root) {
     this.nodes = new Map(); // keep built nodes
     return this.visit(root);
   }
 
+  /**
+   * Recursive visit of all nodes in the data
+   * @param {String} nodeId Current visiting node's id
+   * @returns Three.js 3d object
+   */
   visit(nodeId) {
-    if (this.nodes.has(nodeId)) return this.nodes.get(nodeId);
+    // Check if this node has already been built
+    if (this.nodes.has(nodeId)) {
+      return this.nodes.get(nodeId).clone();
+    }
+
     let nodeData = this.nodesData.get(nodeId);
     if (nodeData === undefined) {
       console.warn("Node not found: " + nodeId);
       return new THREE.Object3D();
     }
-    let node = new THREE.Object3D();
-    this.nodes.set(nodeId, node);
+
+    let node = new THREE.Group();
     for (let childKey in nodeData.children) {
-      let child;
       const childData = nodeData.children[childKey];
+      let child;
       if (childData.type === "primitive") {
         const geometry = this.buildGeometry(childData);
         const material = this.materials.get(nodeData.materialIds[0]);
@@ -39,7 +59,9 @@ class MyGraphBuilder {
           childData.materialIds = nodeData.materialIds;
         child = this.visit(childData.id);
       }
-      if (child !== undefined) node.add(child);
+      if (child !== undefined) {
+        node.add(child);
+      }
     }
     this.applyTransformations(node, nodeData.transformations);
     this.nodes.set(nodeId, node);
@@ -50,30 +72,44 @@ class MyGraphBuilder {
     return MyGeometryBuilder.build(nodeData);
   }
 
+  /**
+   * Applies transformations to an object
+   * @param {THREE.Object3D} node Already built node
+   * @param {Array} transformations Array of transformations from parser
+   */
   applyTransformations(node, transformations) {
+    // Make transformations in the order: translate, rotation, scale
+    let t = [[], [], []];
+    let ts = "TRS";
     for (let i in transformations) {
       let transformation = transformations[i];
-      switch (transformation.type) {
-        case "T":
-          node.translateX(transformation.translate[0]);
-          node.translateY(transformation.translate[1]);
-          node.translateZ(transformation.translate[2]);
-          break;
-        case "R":
-          node.rotation.set(
-            (transformation.rotation[0] * Math.PI) / 180,
-            (transformation.rotation[1] * Math.PI) / 180,
-            (transformation.rotation[2] * Math.PI) / 180
-          );
-          break;
-        case "S":
-          node.scale.set(
-            transformation.scale[0],
-            transformation.scale[1],
-            transformation.scale[2]
-          );
-          break;
-      }
+      t[ts.indexOf(transformation.type)].push(transformation);
+    }
+
+    // Translations
+    for (let i in t[0]) {
+      let transformation = t[0][i];
+      node.translateX(transformation.translate[0]);
+      node.translateY(transformation.translate[1]);
+      node.translateZ(transformation.translate[2]);
+    }
+    // Rotations
+    for (let i in t[1]) {
+      let transformation = t[1][i];
+      node.rotation.set(
+        (transformation.rotation[0] * Math.PI) / 180,
+        (transformation.rotation[1] * Math.PI) / 180,
+        (transformation.rotation[2] * Math.PI) / 180
+      );
+    }
+    // Scale
+    for (let i in t[2]) {
+      let transformation = t[2][i];
+      node.scale.set(
+        transformation.scale[0],
+        transformation.scale[1],
+        transformation.scale[2]
+      );
     }
   }
 }
