@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { MyNurbsBuilder } from "./MyNurbsBuilder.js";
 
 class MyGeometryBuilder {
   static build(nodeData) {
@@ -71,7 +72,6 @@ class MyGeometryBuilder {
 
   static buildBoxGeometry(nodeData) {
     let representations = nodeData.representations;
-    console.log(representations);
     return new THREE.BoxGeometry(
       Math.abs(representations[0].xyz1[0] - representations[0].xyz2[0]),
       Math.abs(representations[0].xyz1[1] - representations[0].xyz2[1]),
@@ -83,8 +83,21 @@ class MyGeometryBuilder {
   }
 
   static buildNurbsGeometry(nodeData) {
-    // TODO  : implement function
-    console.warn("Not implemented: buildNurbsGeometry");
+    let representation = nodeData.representations[0];
+    let controlPoints = [];
+    for (let i in representation.controlpoints) {
+      let p = representation.controlpoints[i];
+      controlPoints.push([p.xx, p.yy, p.zz, 1]);
+    }
+    const builder = new MyNurbsBuilder();
+    const surfaceData = builder.build(
+      controlPoints,
+      representation.degree_u,
+      representation.degree_v,
+      representation.parts_u,
+      representation.parts_v
+    );
+    return surfaceData;
   }
 }
 

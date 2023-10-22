@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { MyAxis } from "./MyAxis.js";
 import { MyBuilder } from "./builders/MyBuilder.js";
 import { MyFileReader } from "./parser/MyFileReader.js";
+import { MyCamerasBuilder } from "./builders/MyCamerasBuilder.js";
 /**
  *  This class contains the contents of out application
  */
@@ -38,17 +39,20 @@ class MyContents {
     let builder = new MyBuilder(data);
     this.app.scene.add(builder.buildGraph());
 
-    const ambientLight = new THREE.AmbientLight("#ddd");
-    this.app.scene.add(ambientLight);
+    MyCamerasBuilder.build(this.app, data);
 
+    /*
     console.info(
       "scene data loaded " +
         data +
         ". visit MySceneData javascript class to check contents for each data item."
     );
+    */
     //this.onAfterSceneLoadedAndBeforeRender(data);
 
-    // add a light
+    // TODO: remove this
+    const ambientLight = new THREE.AmbientLight("#ddd");
+    this.app.scene.add(ambientLight);
     var light = new THREE.PointLight(0xffffff, 200, 100);
     light.position.set(0, 5, 2);
     this.app.scene.add(light);

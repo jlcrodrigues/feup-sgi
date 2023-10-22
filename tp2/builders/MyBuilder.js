@@ -37,11 +37,10 @@ class MyBuilder {
     }
   }
 
-  buildCameras() {}
-
   buildGraph() {
     let graphBuilder = new MyGraphBuilder(this.data.nodes, this.materials);
     return graphBuilder.build(this.data.rootId)
+    //return graphBuilder.build('table')
   }
 }
 
