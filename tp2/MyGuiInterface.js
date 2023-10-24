@@ -29,9 +29,13 @@ class MyGuiInterface {
    */
   init() {
     // adds a folder to the gui interface for the camera
+    // TODO: fix cameras missing from interface
     const cameraFolder = this.datgui.addFolder("Camera");
-    let cameraNames = this.app.cameras.map((camera) => camera.custom_id);
-    console.log('>>>>>>>>>>><<', cameraNames)
+    let cameraNames = this.contents.app.cameras.map(
+      (camera) => camera.custom_id
+    );
+    console.log(">>>>>>>>>>><<", this.app.cameras);
+    console.log("---", this.contents.app.cameras);
     cameraFolder
       .add(this.app, "activeCameraName", cameraNames)
       .name("Active Camera");

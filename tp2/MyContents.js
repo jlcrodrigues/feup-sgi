@@ -36,15 +36,25 @@ class MyContents {
    * @param {MySceneData} data the entire scene data object
    */
   onSceneLoaded(data) {
+    // Build Materials and Textures
     let builder = new MyBuilder(data);
+    // Build scene graph
     this.app.scene.add(builder.buildGraph());
 
+    // Build Cameras
     MyCamerasBuilder.build(this.app, data);
+
+    // Set global settings: fov, ambient & background
+    this.app.scene.fog = new THREE.Fog(
+      data.fog.color,
+      data.fog.near,
+      data.fog.far
+    );
 
     const ambientLight = new THREE.AmbientLight(data.options.ambient);
     this.app.scene.add(ambientLight);
 
-    this.app.scene.background = data.options.background
+    this.app.scene.background = data.options.background;
 
     /*
     console.info(

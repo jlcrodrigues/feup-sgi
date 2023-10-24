@@ -8,11 +8,8 @@ class MyCamerasBuilder {
       let camera = this.buildCamera(cameraData);
       cameras[key] = camera
     }
-    // TODO: make cameras work
-    //app.cameras = cameras
-    //app.setActiveCamera('cam1')
-    //app.initCameras()
-    //app.setActiveCamera('Perspective')
+    app.cameras = cameras
+    app.setActiveCamera('cam1')
   }
 
   static buildCamera(cameraData) {

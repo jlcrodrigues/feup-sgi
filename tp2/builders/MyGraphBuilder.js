@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { MyGeometryBuilder } from "./MyGeometryBuilder.js";
 import { MyLightBuilder } from "./MyLightBuilder.js";
 
-const LIGHTS = ['pointlight', 'spotlight', 'directionallight']
+const LIGHTS = ["pointlight", "spotlight", "directionallight"];
 
 /**
  * Builds the graph's nodes from parser data
@@ -53,24 +53,29 @@ class MyGraphBuilder {
     for (let childKey in nodeData.children) {
       const childData = nodeData.children[childKey];
       let child;
+      // Primitives (Leafs)
       if (childData.type === "primitive") {
         const geometry = this.buildGeometry(childData);
         const material = this.materials.get(nodeData.materialIds[0]);
         child = new THREE.Mesh(geometry, material);
+        child.castShadow = true;
+        child.receiveShadow = true;
+
+        // Nodes
       } else if (childData.type === "node") {
         if (childData.materialIds.length == 0)
           childData.materialIds = nodeData.materialIds;
         child = this.visit(childData.id);
       }
+
+      // Lights (Leafs)
       else if (LIGHTS.includes(childData.type)) {
-        child = MyLightBuilder.build(childData)
+        child = MyLightBuilder.build(childData);
+      } else {
+        console.warn("Unknown node type:", childData.type);
       }
-      else {
-        console.warn('Unknown node type:', childData.type)
-      }
-      if (child !== undefined) {
-        node.add(child);
-      }
+
+      if (child !== undefined) node.add(child);
     }
     this.applyTransformations(node, nodeData.transformations);
     this.nodes.set(nodeId, node);

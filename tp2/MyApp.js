@@ -48,6 +48,8 @@ class MyApp {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setClearColor("#000000");
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.BasicShadowMap;
 
     // Configure renderer size
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -139,7 +141,6 @@ class MyApp {
   updateCameraIfRequired() {
     // camera changed?
     if (this.lastCameraName !== this.activeCameraName) {
-      console.log(this.activeCameraName);
       this.lastCameraName = this.activeCameraName;
       this.activeCamera = this.cameras[this.activeCameraName];
       document.getElementById("camera").innerHTML = this.activeCameraName;

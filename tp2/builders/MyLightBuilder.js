@@ -27,7 +27,7 @@ class MyLightBuilder {
     light.intensity = nodeData.intensity ?? 1.0;
     light.distance = nodeData.distance ?? 1000;
     light.decay = nodeData.decay ?? 2.0;
-    light.castShadow = nodeData.castShadow ?? false;
+    light.castShadow = nodeData.castshadow ?? false;
     light.shadow.camera.far = nodeData.shadowfar ?? 500.0;
     // TODO: shadow map size should be vector
     light.shadow.mapSize = new THREE.Vector2(
@@ -47,6 +47,10 @@ class MyLightBuilder {
 
   static buildPointLight(nodeData) {
     const light = new THREE.PointLight(nodeData.color);
+
+    const helper = new THREE.PointLightHelper(light);
+    light.add(helper);
+
     return light;
   }
 
@@ -57,6 +61,10 @@ class MyLightBuilder {
     light.target = target;
     light.angle = nodeData.angle;
     light.penumbra = nodeData.penumbra ?? 1.0;
+
+    const helper = new THREE.SpotLightHelper(light);
+    light.add(helper);
+
     return light;
   }
 
@@ -66,6 +74,10 @@ class MyLightBuilder {
     light.shadow.camera.right = nodeData.shadowright ?? 5;
     light.shadow.camera.bottom = nodeData.shadowbottom ?? -5;
     light.shadow.camera.top = nodeData.shadowtop ?? 5;
+
+    const helper = new THREE.DirectionalLightHelper(light);
+    light.add(helper);
+
     return light;
   }
 }
