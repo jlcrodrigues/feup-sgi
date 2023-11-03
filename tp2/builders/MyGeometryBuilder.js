@@ -60,8 +60,17 @@ class MyGeometryBuilder {
   }
 
   static buildSphereGeometry(nodeData) {
-    // TODO: implement function
-    console.warn("Not implemented: buildSphereGeometry");
+    const representations = nodeData.representations;
+    return new THREE.SphereGeometry(
+      representations[0].radius,
+      representations[0].slice,
+      representations[0].stacks,
+      representations[0].thetastart ?? 0,
+      representations[0].thetalength ?? 2 * Math.PI,
+      representations[0].phistart ?? 0,
+      representations[0].philength ?? 2 * Math.PI,
+      representations[0].distance ?? 0
+    )
   }
 
   static buildCylinderGeometry(nodeData) {

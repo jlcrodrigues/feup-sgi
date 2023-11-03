@@ -16,7 +16,7 @@ class MyContents {
     this.axis = null;
 
     this.reader = new MyFileReader(app, this, this.onSceneLoaded);
-    this.reader.open("scenes/demo/demo.xml");
+    this.reader.open("scenes/t08g10/SGI_TP2_XML_T08_G10_v01.xml");
   }
 
   /**
@@ -51,8 +51,8 @@ class MyContents {
       data.fog.far
     );
 
-    const ambientLight = new THREE.AmbientLight(data.options.ambient);
-    this.app.scene.add(ambientLight);
+    // const ambientLight = new THREE.AmbientLight(data.options.ambient);
+    // this.app.scene.add(ambientLight);
 
     this.app.scene.background = data.options.background;
 
