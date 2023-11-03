@@ -3,7 +3,7 @@
 	
     <globals background="0 0 0 1" ambient="0 0 0 1" /> 
 
-    <fog color="1.0 1.0 1.0 1.0" near="0.0" far="100.0" />
+    <fog color="0.5 0.5 0.5 1" near="0.0" far="100.0" />
 
     <cameras initial="cam1" > 
         <perspective id="cam1" 
