@@ -28,6 +28,7 @@
     <textures>        
         <texture id="wallsTex" filepath="scenes/t08g10/textures/wall.jpeg" />
         <texture id="floorTex" filepath="scenes/t08g10/textures/floor.jpg" />
+        <texture id="rugTex" filepath="scenes/t08g10/textures/rug.jpg" />
         <texture id="treeTex" filepath="scenes/t08g10/textures/tree.jpeg" />
         <texture id="woodTex" filepath="scenes/t08g10/textures/wood.jpeg" />
         <texture id="sofaTex" filepath="scenes/t08g10/textures/sofa.jpeg" />
@@ -54,6 +55,13 @@
             textureref="floorTex" 
             texlength_s="20" 
             texlength_t="30"/>
+        
+        <material id="rugApp" 
+            emissive="0 0 0 1" 
+            color="0.1 0.1 0.1 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="rugTex"/>
 
         <material id="santaPicApp" 
             emissive="0.0 0.0 0.0 1" 
@@ -303,7 +311,20 @@
                 <primitive>
                     <rectangle xy1="0 0" xy2="20 30" />
                 </primitive>
+                <noderef id="rug"/>
             </children>
+        </node>
+
+        <node id="rug">
+            <transforms>
+				<translate value3="5 9.5 0.1" />
+            </transforms> 
+            <materialref id="rugApp" />
+            <children>          
+                <primitive>        
+                    <rectangle xy1="0 0" xy2="10 15" />
+                </primitive>
+            </children> 
         </node>
         
         <node id="tree">
