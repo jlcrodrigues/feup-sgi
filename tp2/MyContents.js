@@ -3,6 +3,7 @@ import { MyAxis } from "./MyAxis.js";
 import { MyBuilder } from "./builders/MyBuilder.js";
 import { MyFileReader } from "./parser/MyFileReader.js";
 import { MyCamerasBuilder } from "./builders/MyCamerasBuilder.js";
+import { MySkyboxBuilder } from "./builders/MySkyboxBuilder.js";
 /**
  *  This class contains the contents of out application
  */
@@ -50,25 +51,24 @@ class MyContents {
       data.fog.near,
       data.fog.far
     );
-
-    // TODO: Skybox
-    // TODO: lod
-
-    // const ambientLight = new THREE.AmbientLight(data.options.ambient);
-    // this.app.scene.add(ambientLight);
-
+    const ambientLight = new THREE.AmbientLight(data.options.ambient);
+    this.app.scene.add(ambientLight);
     this.app.scene.background = data.options.background;
 
-    /*
+    // Build Skybox
+    for (let sbKey in data.skyboxes) {
+      this.app.scene.add(MySkyboxBuilder.build(data.skyboxes[sbKey]))
+    }
+
+    // TODO: lod
+    // Build LOD
+
     console.info(
       "scene data loaded " +
         data +
         ". visit MySceneData javascript class to check contents for each data item."
     );
-    */
-    //this.onAfterSceneLoadedAndBeforeRender(data);
-
-    console.log(data);
+    this.onAfterSceneLoadedAndBeforeRender(data);
   }
 
   output(obj, indent = 0) {
