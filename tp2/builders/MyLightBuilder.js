@@ -29,7 +29,6 @@ class MyLightBuilder {
     light.decay = nodeData.decay ?? 2.0;
     light.castShadow = nodeData.castshadow ?? false;
     light.shadow.camera.far = nodeData.shadowfar ?? 500.0;
-    // TODO: shadow map size should be vector
     light.shadow.mapSize = new THREE.Vector2(
       nodeData.shadowmapsize,
       nodeData.shadowmapsize

@@ -11,7 +11,6 @@ class MyMaterialBuilder {
    * @returns {THREE.Material} the material
    */
   static build(materialData, textures) {
-    // TODO: is this the material type?
     let material = new THREE.MeshPhongMaterial({
       color: materialData.color,
       specular: materialData.specular,
