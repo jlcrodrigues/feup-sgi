@@ -50,12 +50,12 @@ class MyGeometryBuilder {
   }
 
   static buildTriangleGeometry(nodeData) {
-    // TODO: implement function
+    // TODO: implement function triangle geometry
     console.warn("Not implemented: buildTriangleGeometry");
   }
 
   static buildModel3dGeometry(nodeData) {
-    // TODO: implement function
+    // TODO: implement function model 3d geometry
     console.warn("Not implemented: buildModel3dGeometry");
   }
 
@@ -66,7 +66,7 @@ class MyGeometryBuilder {
       representations[0].slice,
       representations[0].stacks,
       representations[0].thetastart ?? 0,
-      representations[0].thetalength ?? 2 * Math.PI,
+      representations[0].thetalength ?? Math.PI,
       representations[0].phistart ?? 0,
       representations[0].philength ?? 2 * Math.PI,
       representations[0].distance ?? 0

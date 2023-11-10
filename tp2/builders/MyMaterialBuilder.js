@@ -25,6 +25,7 @@ class MyMaterialBuilder {
       side: (materialData.side ?? false) ? THREE.DoubleSide : THREE.FrontSide,
       // TODO: bump_ref
       // TODO: bump_scale
+      // TODO: specular_ref
     });
     return material;
   }

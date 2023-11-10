@@ -51,6 +51,9 @@ class MyContents {
       data.fog.far
     );
 
+    // TODO: Skybox
+    // TODO: lod
+
     // const ambientLight = new THREE.AmbientLight(data.options.ambient);
     // this.app.scene.add(ambientLight);
 

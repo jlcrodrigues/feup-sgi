@@ -18,6 +18,7 @@ class MyTextureBuilder {
     texture.minFilter = THREE.LinearMipMapLinearFilter;
     texture.mipmaps = textureData.mipmaps ?? true;
     texture.anisotropy = textureData.anisotropy ?? 1;
+    // TODO: mipmaps
     return texture;
   }
 }
