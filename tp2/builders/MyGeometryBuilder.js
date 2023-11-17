@@ -6,7 +6,7 @@ import { MyNurbsBuilder } from "./MyNurbsBuilder.js";
  */
 class MyGeometryBuilder {
   static build(nodeData) {
-    //TODO: distance for all primitives
+    //TODO: distance - legacy; leave for now
     if (nodeData.type !== "primitive") {
       console.warn("Not a primitive: " + nodeData.id);
       return;

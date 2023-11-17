@@ -44,6 +44,7 @@ class MyGraphBuilder {
     }
 
     let nodeData = this.nodesData.get(nodeId);
+    if (nodeId == "rectangle2") console.log(nodeData);
     if (nodeData === undefined) {
       console.warn("Node not found: " + nodeId);
       return new THREE.Object3D();
@@ -53,24 +54,31 @@ class MyGraphBuilder {
     for (let childKey in nodeData.children) {
       const childData = nodeData.children[childKey];
       let child;
-      // Primitives (Leafs)
+      // Primitives
       if (childData.type === "primitive") {
         const geometry = this.buildGeometry(childData);
         const material = this.materials.get(nodeData.materialIds[0]);
         child = new THREE.Mesh(geometry, material);
+        // TODO: fix shadow: this is a node property
         child.castShadow = true;
         child.receiveShadow = true;
+      }
 
-        // Nodes
-      } else if (childData.type === "node") {
+      // Nodes
+      else if (childData.type === "node") {
         if (childData.materialIds.length == 0)
           childData.materialIds = nodeData.materialIds;
         child = this.visit(childData.id);
       }
 
-      // Lights (Leafs)
+      // Lights
       else if (LIGHTS.includes(childData.type)) {
         child = MyLightBuilder.build(childData);
+      }
+
+      // LOD
+      else if (childData.type === "lod") {
+        child = this.buildLod(childData);
       } else {
         console.warn("Unknown node type:", childData.type);
       }
@@ -125,6 +133,26 @@ class MyGraphBuilder {
         transformation.scale[2]
       );
     }
+  }
+
+  /**
+   * Builds a LOD node
+   * @param {*} nodeData LOD node data
+   * @returns Three.js LOD object
+   */
+  buildLod(nodeData) {
+    const lod = new THREE.LOD();
+    for (let i in nodeData.children) {
+      const child = nodeData.children[i];
+      if (child.type !== "lodnoderef") {
+        console.warn("Invalid LOD child: " + child.type);
+        continue;
+      }
+      console.log(child.node.id);
+      const node = this.visit(child.node.id);
+      lod.addLevel(node, child.mindist);
+    }
+    return lod;
   }
 }
 

@@ -60,15 +60,15 @@ class MyContents {
       this.app.scene.add(MySkyboxBuilder.build(data.skyboxes[sbKey]))
     }
 
-    // TODO: lod
-    // Build LOD
-
+    /*
     console.info(
       "scene data loaded " +
         data +
         ". visit MySceneData javascript class to check contents for each data item."
     );
     this.onAfterSceneLoadedAndBeforeRender(data);
+    */
+   console.log(data)
   }
 
   output(obj, indent = 0) {
