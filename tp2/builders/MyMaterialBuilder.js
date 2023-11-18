@@ -22,9 +22,9 @@ class MyMaterialBuilder {
       // TODO: texlength_s
       // TODO: texlength_t
       side: (materialData.twosided ?? false) ? THREE.DoubleSide : THREE.FrontSide,
-      // TODO: bump_ref
-      // TODO: bump_scale
-      // TODO: specular_ref
+      bumpMap: textures.get(materialData.bumpref) ?? null,
+      bumpScale: materialData.bumpscale ?? null,
+      specularMap: textures.get(materialData.specularref) ?? null,
     });
     return material;
   }

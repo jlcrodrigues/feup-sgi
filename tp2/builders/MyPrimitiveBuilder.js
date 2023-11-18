@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MyNurbsBuilder } from "./MyNurbsBuilder.js";
+import { MyTriangle } from "./objects/MyTriangle.js";
 
 /**
  * Builds Three.js objects from parser data (primitives)
@@ -83,14 +84,11 @@ class MyPrimitiveBuilder {
 
   static buildTriangleGeometry(nodeData) {
     const representations = nodeData.representations;
-    let vertices = new Float32Array([
+    const geometry = new MyTriangle(
       ...representations[0].xyz1,
       ...representations[0].xyz2,
       ...representations[0].xyz3,
-    ]);
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+    )
     return geometry;
   }
 
