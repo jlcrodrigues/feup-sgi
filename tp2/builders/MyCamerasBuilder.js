@@ -9,7 +9,7 @@ class MyCamerasBuilder {
       cameras[key] = camera
     }
     app.cameras = cameras
-    app.setActiveCamera('cam1')
+    app.setActiveCamera(data.activeCameraId)
   }
 
   static buildCamera(cameraData) {
@@ -37,7 +37,6 @@ class MyCamerasBuilder {
     // TODO: check target
     //camera.target = new THREE.Vector3(...cameraData.target);
     //camera.lookAt(camera.target);
-    camera.custom_id = cameraData.id;
     return camera;
   }
 }

@@ -23,7 +23,7 @@
             left="-5" 
             right="5" 
             bottom="-5" 
-            top="-5" /> 
+            top="5" /> 
     </cameras> 
 
     <skybox size="100 100 100" center="0 0 0" emissive="1.0 1.0 1.0 1.0" intensity="1.0" up="scenes/demo/textures/pine.jpg" down="scenes/demo/textures/pine.jpg" left="scenes/demo/textures/pine.jpg" right="scenes/demo/textures/pine.jpg" front="scenes/demo/textures/pine.jpg" back="scenes/demo/textures/pine.jpg"/>
