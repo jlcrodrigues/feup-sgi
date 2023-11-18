@@ -44,6 +44,7 @@ class MyContents {
 
     // TODO: video texture
     // TODO: buffer geometry
+    // TODO: fix weird white cube
 
     // Build Cameras
     MyCamerasBuilder.build(this.app, data);

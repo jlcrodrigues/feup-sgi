@@ -21,7 +21,7 @@ class MyMaterialBuilder {
       map: textures.get(materialData.textureref),
       // TODO: texlength_s
       // TODO: texlength_t
-      side: (materialData.side ?? false) ? THREE.DoubleSide : THREE.FrontSide,
+      side: (materialData.twosided ?? false) ? THREE.DoubleSide : THREE.FrontSide,
       // TODO: bump_ref
       // TODO: bump_scale
       // TODO: specular_ref

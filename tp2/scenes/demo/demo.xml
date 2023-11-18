@@ -156,6 +156,9 @@
 		
 		<node id="scene" castshadows = "true" receiveshadows="true"> 
             <children> 
+                <noderef id="motinha" />
+                <noderef id="carrinho" />
+                <noderef id="triangle" />
                 <noderef id="leftWall" /> 
 				<noderef id="rightWall" /> 
 				<noderef id="floor" /> 
@@ -212,6 +215,33 @@
                     position="2 2 4" 
                 /> 
             </children> 
+        </node>
+
+        <node id="motinha">
+            <transforms>
+				<translate value3="12 2 5" />
+				<rotate value3="0 30.0 0.0" />
+            </transforms> 
+
+            <children>
+                <primitive>
+                    <model3d filepath="scenes/demo/models/motinha.glb" />
+                </primitive>
+            </children>
+        </node>
+		
+        <node id="carrinho">
+            <transforms>
+				<translate value3="13 0 9" />
+				<rotate value3="0 30.0 0.0" />
+                <scale value3="0.01 0.01 0.01" />
+            </transforms> 
+
+            <children>
+                <primitive>
+                    <model3d filepath="scenes/demo/models/carrinho.glb" />
+                </primitive>
+            </children>
         </node>
 		
 		<node id="rectangle1"> 
@@ -295,6 +325,17 @@
                     <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" /> 
                 </primitive>
             </children> 
+        </node>
+
+        <node id="triangle">
+
+            <materialref id="tapeApp" />
+
+            <children>
+                <primitive>
+                    <triangle xyz1="5 5 5" xyz2="5 6 5" xyz3="5 6 6" />
+                </primitive>
+            </children>
         </node>
 		
 		<node id="unitCube">

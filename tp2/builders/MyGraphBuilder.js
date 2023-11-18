@@ -1,5 +1,6 @@
 import * as THREE from "three";
-import { MyGeometryBuilder } from "./MyGeometryBuilder.js";
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MyPrimitiveBuilder } from "./MyPrimitiveBuilder.js";
 import { MyLightBuilder } from "./MyLightBuilder.js";
 
 const LIGHTS = ["pointlight", "spotlight", "directionallight"];
@@ -44,7 +45,6 @@ class MyGraphBuilder {
     }
 
     let nodeData = this.nodesData.get(nodeId);
-    if (nodeId == "rectangle2") console.log(nodeData);
     if (nodeData === undefined) {
       console.warn("Node not found: " + nodeId);
       return new THREE.Object3D();
@@ -56,12 +56,11 @@ class MyGraphBuilder {
       let child;
       // Primitives
       if (childData.type === "primitive") {
-        const geometry = this.buildGeometry(childData);
         const material = this.materials.get(nodeData.materialIds[0]);
-        child = new THREE.Mesh(geometry, material);
+        child = MyPrimitiveBuilder.build(childData, material);
         // TODO: fix shadow: this is a node property
-        child.castShadow = true;
-        child.receiveShadow = true;
+        //child.castShadow = true;
+        //child.receiveShadow = true;
       }
 
       // Nodes
@@ -88,10 +87,6 @@ class MyGraphBuilder {
     this.applyTransformations(node, nodeData.transformations);
     this.nodes.set(nodeId, node);
     return node;
-  }
-
-  buildGeometry(nodeData) {
-    return MyGeometryBuilder.build(nodeData);
   }
 
   /**
@@ -148,7 +143,6 @@ class MyGraphBuilder {
         console.warn("Invalid LOD child: " + child.type);
         continue;
       }
-      console.log(child.node.id);
       const node = this.visit(child.node.id);
       lod.addLevel(node, child.mindist);
     }
