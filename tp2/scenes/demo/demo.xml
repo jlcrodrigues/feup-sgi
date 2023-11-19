@@ -194,6 +194,7 @@
 		
 		<node id="scene" castshadows = "true" receiveshadows="true"> 
             <children> 
+                <noderef id="poliguinho" />
                 <noderef id="motinha" />
                 <noderef id="carrinho" />
                 <noderef id="triangle" />
@@ -256,6 +257,18 @@
                 /> 
             </children> 
         </node>
+
+        <node id="poliguinho">
+            <transforms>
+				<translate value3="5 5 1" />
+            </transforms> 
+
+            <children>
+                <primitive>
+                    <polygon radius="2.0" slices="12" stacks="3" color_c="1 0 0 1" color_p="1 1 0 1" />
+            </primitive>
+        </children>
+    </node>
 
         <node id="motinha">
             <transforms>

@@ -42,7 +42,6 @@ class MyContents {
     // Build scene graph
     this.app.scene.add(builder.buildGraph());
 
-    // TODO: buffer geometry
     // TODO: fix weird white cube
 
     // Build Cameras

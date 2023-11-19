@@ -22,6 +22,10 @@ class MyPrimitiveBuilder {
 
     if (nodeData.subtype === "model3d") return this.buildModel3d(nodeData);
 
+    if (nodeData.subtype === "polygon") {
+      if (material === undefined) material = new THREE.MeshBasicMaterial();
+      material.vertexColors = true;
+    }
     return new THREE.Mesh(this.buildGeometry(nodeData), material);
   }
 
@@ -31,7 +35,7 @@ class MyPrimitiveBuilder {
    * Builds a geometry from node data <br>
    * This function simply calls specific geometry builders.
    * All of these follow the same prototype.
-   * @param {*} nodeData 
+   * @param {*} nodeData
    * @returns {THREE.Geometry}
    */
   static buildGeometry(nodeData) {
@@ -43,6 +47,7 @@ class MyPrimitiveBuilder {
       this.geometryBuilders.set("sphere", this.buildSphereGeometry);
       this.geometryBuilders.set("nurbs", this.buildNurbsGeometry);
       this.geometryBuilders.set("box", this.buildBoxGeometry);
+      this.geometryBuilders.set("polygon", this.buildPolygonGeometry);
     }
 
     return this.geometryBuilders.get(nodeData.subtype)(nodeData);
@@ -87,8 +92,8 @@ class MyPrimitiveBuilder {
     const geometry = new MyTriangle(
       ...representations[0].xyz1,
       ...representations[0].xyz2,
-      ...representations[0].xyz3,
-    )
+      ...representations[0].xyz3
+    );
     return geometry;
   }
 
@@ -159,9 +164,70 @@ class MyPrimitiveBuilder {
     return geometry;
   }
 
+  static buildPolygonGeometry(nodeData) {
+    const representation = nodeData.representations[0];
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+    const colors = [];
+    for (let i = 0; i <= representation.stacks; i++) {
+      const height = (i / representation.stacks) * representation.radius;
+      const heightNext =
+        ((i + 1) / representation.stacks) * representation.radius;
+
+      for (let j = 0; j <= representation.slices; j++) {
+        const theta = (j / representation.slices) * 2 * Math.PI;
+        const thetaNext = ((j + 1) / representation.slices) * 2 * Math.PI;
+
+        // first triangle
+        vertices.push(
+          height * Math.cos(theta),
+          height * Math.sin(theta),
+          1,
+          heightNext * Math.cos(theta),
+          heightNext * Math.sin(theta),
+          1,
+          heightNext * Math.cos(thetaNext),
+          heightNext * Math.sin(thetaNext),
+          1
+        );
+
+        // second triangle
+        vertices.push(
+          height * Math.cos(theta),
+          height * Math.sin(theta),
+          1,
+          heightNext * Math.cos(thetaNext),
+          heightNext * Math.sin(thetaNext),
+          1,
+          height * Math.cos(thetaNext),
+          height * Math.sin(thetaNext),
+          1
+        );
+
+        const color = new THREE.Color().lerpColors(
+          representation.color_c,
+          representation.color_p,
+          i / representation.stacks
+        );
+
+        for (let i = 0; i < 6; i++) colors.push(color.r, color.g, color.b);
+      }
+    }
+
+    const verticesArray = new Float32Array(vertices);
+    const colorsArray = new Float32Array(colors);
+
+    geometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(verticesArray, 3)
+    );
+    geometry.setAttribute("color", new THREE.BufferAttribute(colorsArray, 3));
+    return geometry;
+  }
+
   /**
    * Builds a Three.js object from 3d model node data <br>
-   * @param {*} nodeData 
+   * @param {*} nodeData
    * @returns {THREE.Object3D}
    */
   static buildModel3d(nodeData) {
@@ -172,7 +238,7 @@ class MyPrimitiveBuilder {
 
   /**
    * Loads 3d model from file
-   * @param {*} nodeData 
+   * @param {*} nodeData
    * @returns {Promise<GLTFLoader>}
    */
   static async load3dModel(nodeData) {
