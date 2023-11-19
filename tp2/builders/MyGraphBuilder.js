@@ -58,15 +58,16 @@ class MyGraphBuilder {
       if (childData.type === "primitive") {
         const material = this.materials.get(nodeData.materialIds[0]);
         child = MyPrimitiveBuilder.build(childData, material);
-        // TODO: fix shadow: this is a node property
-        //child.castShadow = true;
-        //child.receiveShadow = true;
+        child.castShadow = nodeData.castShadows ?? false;
+        child.receiveShadow = nodeData.receiveShadows ?? false;
       }
 
       // Nodes
       else if (childData.type === "node") {
         if (childData.materialIds.length == 0)
           childData.materialIds = nodeData.materialIds;
+        if (nodeData.castShadows ?? false) childData.castShadows = true;
+        if (nodeData.receiveShadows ?? false) childData.receiveShadows = true;
         child = this.visit(childData.id);
       }
 
