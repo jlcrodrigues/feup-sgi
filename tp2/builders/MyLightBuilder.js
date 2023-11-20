@@ -48,6 +48,7 @@ class MyLightBuilder {
     const light = new THREE.PointLight(nodeData.color);
 
     const helper = new THREE.PointLightHelper(light);
+    helper.visible = false;
     light.add(helper);
 
     return light;
@@ -62,6 +63,7 @@ class MyLightBuilder {
     light.penumbra = nodeData.penumbra ?? 1.0;
 
     const helper = new THREE.SpotLightHelper(light);
+    helper.visible = false;
     light.add(helper);
 
     return light;
@@ -75,6 +77,7 @@ class MyLightBuilder {
     light.shadow.camera.top = nodeData.shadowtop ?? 5;
 
     const helper = new THREE.DirectionalLightHelper(light);
+    helper.visible = false;
     light.add(helper);
 
     return light;

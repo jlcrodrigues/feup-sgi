@@ -28,6 +28,7 @@ class MyContents {
     if (this.axis === null) {
       // create and attach the axis to the scene
       this.axis = new MyAxis(this);
+      this.axis.visible = false;
       this.app.scene.add(this.axis);
     }
   }
@@ -38,11 +39,9 @@ class MyContents {
    */
   onSceneLoaded(data) {
     // Build Materials and Textures
-    let builder = new MyBuilder(data);
+    this.builder = new MyBuilder(data);
     // Build scene graph
-    this.app.scene.add(builder.buildGraph());
-
-    // TODO: fix weird white cube
+    this.app.scene.add(this.builder.buildGraph());
 
     // Build Cameras
     MyCamerasBuilder.build(this.app, data);
@@ -58,8 +57,11 @@ class MyContents {
     this.app.scene.background = data.options.background;
 
     // Build Skybox
+    this.skyboxes = [];
     for (let sbKey in data.skyboxes) {
-      this.app.scene.add(MySkyboxBuilder.build(data.skyboxes[sbKey]))
+      const skybox = MySkyboxBuilder.build(data.skyboxes[sbKey]);
+      this.app.scene.add(skybox);
+      this.skyboxes.push(skybox);
     }
 
     /*
@@ -70,7 +72,7 @@ class MyContents {
     );
     this.onAfterSceneLoadedAndBeforeRender(data);
     */
-   console.log(data)
+    console.log(data);
   }
 
   output(obj, indent = 0) {
@@ -138,6 +140,52 @@ class MyContents {
           this.output(child, 2);
         }
       }
+    }
+  }
+
+  /**
+   * Called to toggle light helpers
+   * @param {Boolean} value True to show light helpers, False otherwise
+   */
+  updateLightHelpers(value) {
+    if (this.builder == undefined) return;
+    const lights = this.builder.getGraphBuilder().getLights();
+    for (let i = 0; i < lights.length; i++) {
+      lights[i].children[0].visible = value;
+    }
+  }
+
+  /**
+   * Called to toggle lights
+   * @param {Boolean} value True to show lights, False otherwise
+   */
+  updateLights(value) {
+    if (this.builder == undefined) return;
+    const lights = this.builder.getGraphBuilder().getLights();
+    for (let i = 0; i < lights.length; i++) {
+      lights[i].visible = value;
+    }
+  }
+
+  updateWireframes(value) {
+    this.app.scene.traverse((node) => {
+      if (node instanceof THREE.Mesh) {
+        if (value)
+          node.material.wireframe = true;
+        else {
+          node.material.wireframe = node.material.wireframeOriginal;
+        }
+      }
+    });
+  }
+
+  /**
+   * Called to toggle skybox
+   * @param {Boolean} value True to show skybox, False otherwise
+   */
+  viewSkybox(value) {
+    for (let i = 0; i < this.skyboxes.length; i++) {
+      this.skyboxes[i].visible = value;
     }
   }
 

@@ -28,15 +28,55 @@ class MyGuiInterface {
    * Initialize the gui interface
    */
   init() {
+    this.initCamerasFolder();
+
+    const viewFolder = this.datgui.addFolder("View");
+
+    viewFolder.add(this.app.config.getVar("axis"), "active").name("Axis");
+    viewFolder.add(this.app.config.getVar("wireframe"), "active").name("Wireframes");
+    viewFolder.add(this.app.config.getVar("shadows"), "active").name("Shadows");
+    viewFolder.add(this.app.config.getVar("skybox"), "active").name("Skybox");
+
+    const lightsFolder = viewFolder.addFolder("Lights");
+    lightsFolder.open();
+    lightsFolder.add(this.app.config.getVar("lights"), "active").name("Lights");
+    lightsFolder
+      .add(this.app.config.getVar("lightHelpers"), "active")
+      .name("Light Helpers");
+  }
+
+  initCamerasFolder() {
     const cameraFolder = this.datgui.addFolder("Camera");
     let cameraNames = Object.keys(this.app.cameras);
     cameraFolder
-      .add(this.app, "activeCameraName", cameraNames)
+      .add(this.app.config.getVar("cameraName"), "active", cameraNames)
       .name("Active Camera");
     cameraFolder.open();
-  }
 
-  // TODO: add interface items (e.g. lights, wireframes)
+    const positionFolder = cameraFolder.addFolder("Position");
+    const cDelta = 50;
+    positionFolder
+      .add(this.app.config.getVar("cameraPosX"), "active", -cDelta, cDelta)
+      .name("X").listen();
+    positionFolder
+      .add(this.app.config.getVar("cameraPosY"), "active", -cDelta, cDelta)
+      .name("Y").listen();
+    positionFolder
+      .add(this.app.config.getVar("cameraPosZ"), "active", -cDelta, cDelta)
+      .name("Z").listen();
+
+    const targetFolder = cameraFolder.addFolder("Target");
+    targetFolder.close();
+    targetFolder
+      .add(this.app.config.getVar("cameraTargetX"), "active", -cDelta, cDelta)
+      .name("X").listen();
+    targetFolder
+      .add(this.app.config.getVar("cameraTargetY"), "active", -cDelta, cDelta)
+      .name("Y").listen();
+    targetFolder
+      .add(this.app.config.getVar("cameraTargetZ"), "active", -cDelta, cDelta)
+      .name("Z").listen();
+  }
 }
 
 export { MyGuiInterface };
