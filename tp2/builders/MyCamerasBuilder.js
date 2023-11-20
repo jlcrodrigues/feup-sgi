@@ -34,9 +34,7 @@ class MyCamerasBuilder {
     camera.near = cameraData.near;
     camera.far = cameraData.far;
     camera.position.set(...cameraData.location);
-    // TODO: check target
-    //camera.target = new THREE.Vector3(...cameraData.target);
-    //camera.lookAt(camera.target);
+    camera.target = cameraData.target;
     return camera;
   }
 }

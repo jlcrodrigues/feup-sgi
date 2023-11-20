@@ -161,6 +161,9 @@ class MyApp {
       } else {
         this.controls.object = this.activeCamera;
       }
+
+      // console.log(...this.activeCamera.target)
+      this.controls.target = new THREE.Vector3(...this.activeCamera.target);
     }
   }
 
