@@ -233,6 +233,8 @@ class MyApp {
     this.config.set("cameraPosY", this.activeCamera.position.y, true);
     this.config.set("cameraPosZ", this.activeCamera.position.z, true);
 
+    this.controls.target = new THREE.Vector3(...this.activeCamera.target);
+
     this.config.set("cameraTargetX", this.controls.target.x, true);
     this.config.set("cameraTargetY", this.controls.target.y, true);
     this.config.set("cameraTargetZ", this.controls.target.z, true);
