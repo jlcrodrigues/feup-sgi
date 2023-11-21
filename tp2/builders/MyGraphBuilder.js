@@ -17,6 +17,7 @@ class MyGraphBuilder {
   constructor(nodes, materials) {
     // Store node data in a map for O(1) access
     this.nodesData = new Map();
+    this.lights = [];
     for (let key in nodes) {
       this.nodesData.set(key, nodes[key]);
     }
@@ -74,6 +75,7 @@ class MyGraphBuilder {
       // Lights
       else if (LIGHTS.includes(childData.type)) {
         child = MyLightBuilder.build(childData);
+        this.lights.push(child);
       }
 
       // LOD
@@ -148,6 +150,10 @@ class MyGraphBuilder {
       lod.addLevel(node, child.mindist);
     }
     return lod;
+  }
+
+  getLights() {
+    return this.lights;
   }
 }
 

@@ -45,8 +45,12 @@ class MyBuilder {
    * @returns Three.js 3d object
    */
   buildGraph() {
-    let graphBuilder = new MyGraphBuilder(this.data.nodes, this.materials);
-    return graphBuilder.build(this.data.rootId);
+    this.graphBuilder = new MyGraphBuilder(this.data.nodes, this.materials);
+    return this.graphBuilder.build(this.data.rootId);
+  }
+
+  getGraphBuilder() {
+    return this.graphBuilder;
   }
 }
 

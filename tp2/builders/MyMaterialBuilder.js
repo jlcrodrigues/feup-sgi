@@ -28,6 +28,7 @@ class MyMaterialBuilder {
     }
     material.color = materialData.color;
     material.wireframe = materialData.wireframe ?? false;
+    material.wireframeOriginal = materialData.wireframe ?? false;
 
     material.map = textures.get(materialData.textureref);
     material.side =
