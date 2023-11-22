@@ -218,7 +218,7 @@
         <node id="scene">
             <children>
                 <noderef id="house"/>
-                <noderef id="sled"/>
+                <noderef id="outside"/>
 
                 <pointlight id="light1" enabled="true" 
                     color="1 0.2 0 1" 
@@ -256,6 +256,29 @@
             </children>
         </node>
 
+        <node id="outside">
+            <transforms>
+            </transforms> 
+
+            <children>
+                <noderef id="sled" />
+                <noderef id="outsideTrees" />
+            </children>
+        </node>
+
+        <node id="outsideTrees">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="treePatch1" />
+                <noderef id="treePatch2" />
+                <noderef id="treePatch3" />
+                <noderef id="treePatch4" />
+                <noderef id="treePatch5" />
+                <noderef id="treePatch6" />
+            </children>
+        </node>
+
         <node id="sled">
             <transforms>
 				<translate value3="5 0 -25" />
@@ -283,7 +306,7 @@
             <children>
                 <noderef id="lrWalls"/>
                 <noderef id="lrFloor"/>
-                <noderef id="tree"/>
+                <noderef id="xmasTree"/>
                 <noderef id="sofa"/>
                 <noderef id="fireplace"/>
             </children>
@@ -900,19 +923,130 @@
             </children> 
         </node>
         
-        <node id="tree">
+        <node id="xmasTree">
 			<transforms>
 				<translate value3="5 0 5" />
                 <rotate value3="0 -60 0"/>
                 <scale value3="1.2 1.3 1.2"/>
             </transforms> 
             <children>             
+                <noderef id="tree" />
+                <noderef id="pineTree" />
+                <noderef id="starObj" />
+                <noderef id="balls" />
+            </children> 
+        </node>
+
+        <node id="treePatch">
+			<transforms>
+            </transforms> 
+            <children>             
+                <noderef id="treePatchTree1" />
+                <noderef id="treePatchTree2" />
+                <noderef id="treePatchTree3" />
+            </children> 
+        </node>
+
+        <node id="treePatch1">
+            <transforms>
+                <translate value3="60 0 0" />
+                <scale value3="1.0 1.2 1.0"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch2">
+            <transforms>
+                <translate value3="55 0 30" />
+                <scale value3="1.2 1.4 1.2"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch3">
+            <transforms>
+                <translate value3="20 0 50" />
+                <scale value3="1.3 1.2 1.3"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch4">
+            <transforms>
+                <translate value3="50 0 50" />
+                <scale value3="1.2 1.3 1.2"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch5">
+            <transforms>
+                <translate value3="-40 0 -10" />
+                <scale value3="1.2 1.3 1.2"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch6">
+            <transforms>
+                <translate value3="-45 0 -30" />
+                <scale value3="1.2 1.3 1.2"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatchTree1">
+            <transforms>
+                <translate value3="13 0 5" />
+                <scale value3="1.2 1.4 1.2"/>
+            </transforms> 
+            <children>
+                <noderef id="tree" />
+            </children>
+        </node>
+
+        <node id="treePatchTree2">
+            <transforms>
+                <translate value3="0 0 0" />
+                <scale value3="1.2 1.0 1.2"/>
+            </transforms> 
+            <children>
+                <noderef id="tree" />
+            </children>
+        </node>
+
+        <node id="treePatchTree3">
+            <transforms>
+                <translate value3="0 0 10" />
+                <scale value3="1.2 1.3 1.2"/>
+            </transforms> 
+            <children>
+                <noderef id="tree" />
+            </children>
+        </node>
+
+        <node id="tree">
+			<transforms>
+            </transforms> 
+            <children>             
 				<noderef id="trunk" />
 				<noderef id="treeSeg1" />
 				<noderef id="treeSeg2" />
 				<noderef id="treeSeg3" />
-                <noderef id="starObj" />
-                <noderef id="balls" />
+				<noderef id="treeSeg4" />
+				<noderef id="treeSeg5" />
             </children> 
         </node>
 
@@ -935,7 +1069,7 @@
 			<materialref id="treeApp" />
             <children>             
                 <primitive>
-                    <cylinder base="3" top="1.2" height="4" slices="64" stacks="64" />
+                    <cylinder base="3" top="1.2" height="4" slices="10" stacks="64" />
                 </primitive>
             </children> 
         </node>
@@ -947,7 +1081,7 @@
 			<materialref id="treeApp" />
             <children>
                 <primitive >
-                    <cylinder base="2.3" top="0.8" height="3" slices="64" stacks="64" />
+                    <cylinder base="2.3" top="0.8" height="3" slices="7" stacks="64" />
                 </primitive>
             </children> 
         </node>
@@ -959,7 +1093,31 @@
 			<materialref id="treeApp" />
             <children>             
                 <primitive>
-                    <cylinder base="1.5" top="0" height="3" slices="64" stacks="64" />
+                    <cylinder base="1.5" top="0" height="3" slices="10" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+		
+		<node id="treeSeg4">
+			<transforms>
+				<translate value3="0 8 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="2.3" top="0" height="3" slices="6" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+		
+		<node id="treeSeg5">
+			<transforms>
+				<translate value3="0 9.8 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="1.7" top="0" height="3" slices="6" stacks="64" />
                 </primitive>
             </children> 
         </node>
