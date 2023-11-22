@@ -20,13 +20,7 @@ class MyPrimitiveBuilder {
       return;
     }
 
-    if (nodeData.subtype === "model3d") return this.buildModel3d(nodeData);
-
-    if (nodeData.subtype === "polygon") {
-      if (material === undefined) material = new THREE.MeshBasicMaterial();
-      material.vertexColors = true;
-    }
-    return new THREE.Mesh(this.buildGeometry(nodeData), material);
+    return this.buildPrimitive(nodeData, material);
   }
 
   static geometryBuilders;
@@ -38,24 +32,25 @@ class MyPrimitiveBuilder {
    * @param {*} nodeData
    * @returns {THREE.Geometry}
    */
-  static buildGeometry(nodeData) {
+  static buildPrimitive(nodeData, material) {
     if (this.geometryBuilders === undefined) {
       this.geometryBuilders = new Map();
-      this.geometryBuilders.set("cylinder", this.buildCylinderGeometry);
-      this.geometryBuilders.set("rectangle", this.buildRectangleGeometry);
-      this.geometryBuilders.set("triangle", this.buildTriangleGeometry);
-      this.geometryBuilders.set("sphere", this.buildSphereGeometry);
-      this.geometryBuilders.set("nurbs", this.buildNurbsGeometry);
-      this.geometryBuilders.set("box", this.buildBoxGeometry);
-      this.geometryBuilders.set("polygon", this.buildPolygonGeometry);
+      this.geometryBuilders.set("cylinder", this.buildCylinder);
+      this.geometryBuilders.set("rectangle", this.buildRectangle);
+      this.geometryBuilders.set("triangle", this.buildTriangle);
+      this.geometryBuilders.set("sphere", this.buildSphere);
+      this.geometryBuilders.set("nurbs", this.buildNurbs);
+      this.geometryBuilders.set("box", this.buildBox);
+      this.geometryBuilders.set("polygon", this.buildPolygon);
+      this.geometryBuilders.set("model3d", this.buildModel3d);
     }
 
-    return this.geometryBuilders.get(nodeData.subtype)(nodeData);
+    return this.geometryBuilders.get(nodeData.subtype)(nodeData, material);
   }
 
-  static buildCylinderGeometry(nodeData) {
+  static buildCylinder(nodeData, material) {
     const representations = nodeData.representations;
-    return new THREE.CylinderGeometry(
+    const geometry = new THREE.CylinderGeometry(
       representations[0].top,
       representations[0].base,
       representations[0].height,
@@ -65,41 +60,55 @@ class MyPrimitiveBuilder {
       representations[0].thetastart ?? 0,
       representations[0].thetalength ?? 2 * Math.PI
     );
+    return new THREE.Mesh(geometry, material);
   }
 
-  static buildRectangleGeometry(nodeData) {
+  static buildRectangle(nodeData, material) {
     const representations = nodeData.representations;
-    const xWidth = Math.abs(
+    const width = Math.abs(
       representations[0].xy1[0] - representations[0].xy2[0]
     );
-    const yWidth = Math.abs(
+    const height = Math.abs(
       representations[0].xy1[1] - representations[0].xy2[1]
     );
     const geometry = new THREE.PlaneGeometry(
-      xWidth,
-      yWidth,
+      width,
+      height,
       representations[0].parts_x ?? 1,
       representations[0].parts_y ?? 1
     );
     const xMin = Math.min(representations[0].xy1[0], representations[0].xy2[0]);
     const yMin = Math.min(representations[0].xy1[1], representations[0].xy2[1]);
-    geometry.translate(xMin + xWidth / 2, yMin + yWidth / 2, 0);
-    return geometry;
+    geometry.translate(xMin + width / 2, yMin + height / 2, 0);
+
+    // Adjust texture
+    if (material !== undefined && material.map !== undefined) {
+      const texture = material.map;
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(
+        width / material.texlength_s,
+        height / material.texlength_t
+      );
+      material.map = texture;
+    }
+    return new THREE.Mesh(geometry, material);
   }
 
-  static buildTriangleGeometry(nodeData) {
+  static buildTriangle(nodeData, material) {
     const representations = nodeData.representations;
     const geometry = new MyTriangle(
+      material,
       ...representations[0].xyz1,
       ...representations[0].xyz2,
       ...representations[0].xyz3
     );
-    return geometry;
+
+    return new THREE.Mesh(geometry, material);
   }
 
-  static buildSphereGeometry(nodeData) {
+  static buildSphere(nodeData, material) {
     const representations = nodeData.representations;
-    return new THREE.SphereGeometry(
+    const geometry = new THREE.SphereGeometry(
       representations[0].radius,
       representations[0].slice,
       representations[0].stacks,
@@ -109,9 +118,10 @@ class MyPrimitiveBuilder {
       representations[0].philength ?? 2 * Math.PI,
       representations[0].distance ?? 0
     );
+    return new THREE.Mesh(geometry, material);
   }
 
-  static buildNurbsGeometry(nodeData) {
+  static buildNurbs(nodeData, material) {
     const representation = nodeData.representations[0];
     const controlPoints = [];
     for (let i in representation.controlpoints) {
@@ -126,10 +136,10 @@ class MyPrimitiveBuilder {
       representation.parts_u,
       representation.parts_v
     );
-    return surfaceData;
+    return new THREE.Mesh(surfaceData, material);
   }
 
-  static buildBoxGeometry(nodeData) {
+  static buildBox(nodeData, material) {
     const representations = nodeData.representations;
     const xWidth = Math.abs(
       representations[0].xyz1[0] - representations[0].xyz2[0]
@@ -161,10 +171,10 @@ class MyPrimitiveBuilder {
       representations[0].xyz2[2]
     );
     geometry.translate(xMin + xWidth / 2, yMin + yWidth / 2, zMin + zWidth / 2);
-    return geometry;
+    return new THREE.Mesh(geometry, material);
   }
 
-  static buildPolygonGeometry(nodeData) {
+  static buildPolygon(nodeData, material) {
     const representation = nodeData.representations[0];
     const geometry = new THREE.BufferGeometry();
     const vertices = [];
@@ -222,7 +232,9 @@ class MyPrimitiveBuilder {
       new THREE.BufferAttribute(verticesArray, 3)
     );
     geometry.setAttribute("color", new THREE.BufferAttribute(colorsArray, 3));
-    return geometry;
+    if (material === undefined) material = new THREE.MeshBasicMaterial();
+    material.vertexColors = true;
+    return new THREE.Mesh(geometry, material);
   }
 
   /**
@@ -230,9 +242,11 @@ class MyPrimitiveBuilder {
    * @param {*} nodeData
    * @returns {THREE.Object3D}
    */
-  static buildModel3d(nodeData) {
+  static buildModel3d(nodeData, material) {
     const obj = new THREE.Object3D();
-    this.load3dModel(nodeData).then((result) => obj.add(result.scene));
+    MyPrimitiveBuilder.load3dModel(nodeData).then((result) =>
+      obj.add(result.scene)
+    );
     return obj;
   }
 

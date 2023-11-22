@@ -2,6 +2,7 @@ import * as THREE from 'three';
 /**
  * MyTriangle
  * @constructor
+ * @param material Material (used for UV mapping)
  * @param x1 - x coordinate vertex 1
  * @param y1 - y coordinate vertex 1
  * @param x2 - x coordinate vertex 2
@@ -12,9 +13,11 @@ import * as THREE from 'three';
  * @param aft - aft texture coordinate
  */
 class MyTriangle extends THREE.BufferGeometry {
-	constructor(x1, y1, z1, x2, y2, z2, x3, y3, z3, afs = 1, aft = 1) {
+	constructor(material, x1, y1, z1, x2, y2, z2, x3, y3, z3, afs = 1, aft = 1) {
 		super();
 		
+		this.material = material	
+
         this.p1 = new THREE.Vector3(x1, y1, z1)
 		this.p2 = new THREE.Vector3(x2, y2, z2)
 		this.p3 = new THREE.Vector3(x3, y3, z3)
@@ -22,7 +25,6 @@ class MyTriangle extends THREE.BufferGeometry {
 	}
 
 	initBuffers() {
-
         //CALCULATING NORMALS 
         var vectorAx = this.p2.x - this.p1.x
 		var vectorAy = this.p2.y - this.p1.y
@@ -65,17 +67,13 @@ class MyTriangle extends THREE.BufferGeometry {
 			...normal.toArray(),
 		];
 
-/* 		const uvs = [
+		const length_u = (this.material === undefined) ? 1 : this.material.texlength_s;
+		const length_v = (this.material === undefined) ? 1 : this.material.texlength_t;
+ 		const uvs = [
 			0, 0,
-			a , 0,
-			c * cos_ac, c * sin_ac
-		] */
-
-		const uvs = [
-			0, 0,
-			1 , 0,
-			1 * cos_ac, 1 * sin_ac
-		]
+			a /  length_u, 0,
+			c * cos_ac / length_u, c * sin_ac / length_v
+		] 
 
         this.setIndex( indices );
         this.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );

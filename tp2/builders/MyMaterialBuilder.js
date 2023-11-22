@@ -19,8 +19,6 @@ class MyMaterialBuilder {
         specular: materialData.specular,
         emissive: materialData.emissive,
         shininess: materialData.shininess,
-        // TODO: texlength_s
-        // TODO: texlength_t
         bumpMap: textures.get(materialData.bumpref) ?? null,
         bumpScale: materialData.bumpscale ?? null,
         flatShading: materialData.shading === "flat",
@@ -29,6 +27,8 @@ class MyMaterialBuilder {
     material.color = materialData.color;
     material.wireframe = materialData.wireframe ?? false;
     material.wireframeOriginal = materialData.wireframe ?? false;
+    material.texlength_s = materialData.texlength_s ?? 1;
+    material.texlength_t = materialData.texlength_t ?? 1;
 
     material.map = textures.get(materialData.textureref);
     material.side =
