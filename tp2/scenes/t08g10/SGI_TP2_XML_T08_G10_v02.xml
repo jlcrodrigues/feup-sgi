@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-16" standalone="yes"?>
 <yaf> 
 	
-    <globals background="0 0 0 1" ambient="0.9 0.9 0.9 1" /> 
+    <globals background="0 0 0 1" ambient="0.3 0.3 0.3 1" /> 
 
     <fog color="0.5 0.5 0.5 1" near="0.0" far="300.0" />
 
@@ -44,6 +44,8 @@
         <texture id="redPresentTex" filepath="scenes/t08g10/textures/red_present.jpeg" />
         <texture id="plateTex" filepath="scenes/t08g10/textures/plate.jpeg" />
         <texture id="cookieTex" filepath="scenes/t08g10/textures/cookie.jpeg" />
+        <texture id="lampBaseTex" filepath="scenes/t08g10/textures/lampBase.jpg" />
+        <texture id="lampTopTex" filepath="scenes/t08g10/textures/lampTop.jpg" />
     </textures> 
 
     <materials> 
@@ -162,7 +164,7 @@
             textureref="treeTex" 
             texlength_s="1" 
             texlength_t="1"
-            wireframe = "true" />
+            wireframe = "false" />
         
         <material id="starApp" 
             color="1 1 0 1.0" 
@@ -212,6 +214,21 @@
 			specular="0 0 0 0" 
             shininess="10"  />
 			
+        <material id="lampBaseApp" 
+            color="0.0 0.0 0.0 1.0" 
+            emissive="0.0 0.0 0.0 0.0" 
+			specular="0 0 0 0" 
+            shininess="10"
+            textureref="lampBaseTex" 
+        />
+			
+        <material id="lampTopApp" 
+            color="0.5 0.5 0.2 1.0" 
+            emissive="0.5 0.5 0.2 0.0" 
+			specular="0 0 0 0" 
+            shininess="20"
+            textureref="lampTopTex" 
+        />
     </materials> 
 
     <graph rootid="scene">
@@ -263,6 +280,7 @@
             <children>
                 <noderef id="sled" />
                 <noderef id="outsideTrees" />
+                <noderef id="roadLamp" />
             </children>
         </node>
 
@@ -1533,6 +1551,71 @@
                 </primitive>
             </children> 
         </node>
+
+        <node id="roadLamp">
+            <transforms>
+                <translate value3="-20 0 30" />
+            </transforms>
+            <children>             
+                <noderef id="roadLampBase" />
+                <noderef id="roadLampTop" />
+                <noderef id="roadLampCover" />
+            </children> 
+        </node>
+
+        <node id="roadLampBase">
+            <transforms>
+            </transforms>
+
+            <materialref id="lampBaseApp" />
+
+            <children>             
+                <primitive>
+                    <cylinder base="1.2" top="1.0" height="5" slices="64" stacks="64" />
+                </primitive>
+                <primitive>
+                    <cylinder base="0.6" top="0.4" height="27" slices="64" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="roadLampTop">
+            <transforms>
+                <translate value3="0 15 0" />
+            </transforms>
+
+            <materialref id="lampTopApp" />
+
+            <children>             
+                <primitive>
+                    <cylinder base="0.8" top="1" height="3" slices="64" stacks="64" />
+                </primitive>
+
+                <pointlight id="lampLight" enabled="true" 
+                    color="0.8 0.6 0 1" 
+                    intensity="3"
+                    distance="20"
+                    decay="0"
+                    castshadow="true"
+                    position="0 0 0" 
+                />
+            </children> 
+        </node>
+
+        <node id="roadLampCover">
+            <transforms>
+                <translate value3="0 16.5 0" />
+            </transforms>
+
+            <materialref id="lampBaseApp" />
+
+            <children>             
+                <primitive>
+                    <cylinder base="1.5" top="1" height="0.5" slices="10" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+
 
     </graph>
               
