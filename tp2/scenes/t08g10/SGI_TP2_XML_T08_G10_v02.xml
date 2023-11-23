@@ -1066,7 +1066,7 @@
                 <scale value3="1.2 1.3 1.2"/>
             </transforms> 
             <children>             
-                <noderef id="tree" />
+                <noderef id="tree1" />
                 <noderef id="starObj" />
                 <noderef id="balls" />
             </children> 
@@ -1159,7 +1159,7 @@
                 <scale value3="1.2 1.4 1.2"/>
             </transforms> 
             <children>
-                <noderef id="tree" />
+                <lodref id="treeLod" />
             </children>
         </node>
 
@@ -1169,7 +1169,7 @@
                 <scale value3="1.2 1.0 1.2"/>
             </transforms> 
             <children>
-                <noderef id="tree" />
+                <lodref id="treeLod" />
             </children>
         </node>
 
@@ -1179,11 +1179,17 @@
                 <scale value3="1.2 1.3 1.2"/>
             </transforms> 
             <children>
-                <noderef id="tree" />
+                <lodref id="treeLod" />
             </children>
         </node>
 
-        <node id="tree">
+        <lod id="treeLod">
+            <noderef id="tree1" mindist= "50"/>
+            <noderef id="tree2" mindist="100"/>
+            <noderef id="tree3" mindist="150"/>
+        </lod>
+
+        <node id="tree1">
 			<transforms>
             </transforms> 
             <children>             
@@ -1193,6 +1199,36 @@
 				<noderef id="treeSeg3" />
 				<noderef id="treeSeg4" />
 				<noderef id="treeSeg5" />
+            </children> 
+        </node>
+
+        <node id="tree2">
+			<transforms>
+            </transforms> 
+            <children>             
+				<noderef id="trunk" />
+				<noderef id="treeSeg1" />
+				<noderef id="treeSeg2" />
+				<noderef id="treeSeg3" />
+            </children> 
+        </node>
+
+        <node id="tree3">
+            <children>             
+				<noderef id="trunk" />
+                <noderef id="tree3Special"/>
+            </children> 
+        </node>
+
+        <node id="tree3Special">
+			<transforms>
+				<translate value3="0 6 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="3" top="0" height="8" slices="10" stacks="64" />
+                </primitive>
             </children> 
         </node>
 
