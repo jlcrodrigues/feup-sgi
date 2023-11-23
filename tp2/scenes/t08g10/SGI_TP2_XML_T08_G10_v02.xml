@@ -5,23 +5,57 @@
 
     <fog color="0.5 0.5 0.5 1" near="0.0" far="300.0" />
 
-    <cameras initial="cam1" > 
-        <perspective id="cam1" 
+    <cameras initial="Free Camera" > 
+        <perspective id="Free Camera" 
             angle="60" 
             near="0.1" 
             far="1000" 
-            location="25 60 50" 
-            target="20 10 15" /> 
+            location="-15 60 20" 
+            target="15 8 20" /> 
 
-        <orthogonal id="cam2" 
+        <perspective id="Santa's Bag" 
+            angle="60" 
             near="0.1" 
             far="1000" 
-            location="0 15 15" 
-            target="0.0 15 0.0" 
-            left="-5" 
-            right="5" 
-            bottom="-5" 
-            top="-5" /> 
+            location="30 7 0" 
+            target="20 3 15"     />
+
+        <perspective id="Sofa View" 
+            angle="100" 
+            near="0.1" 
+            far="1000" 
+            location="18 8 15" 
+            target="0 8 15" /> 
+        
+        <orthogonal id="Side View" 
+            near="0" 
+            far="100"
+            location="20 8 0" 
+            target="20 8 10" 
+            left="-30" 
+            right="30" 
+            bottom="-30" 
+            top="30" /> 
+
+        <orthogonal id="Corner View" 
+            near="0" 
+            far="200"
+            location="50 75 50" 
+            target="0 10 0" 
+            left="-75" 
+            right="75" 
+            bottom="-75" 
+            top="75" /> 
+        
+        <orthogonal id="Top View" 
+            near="0" 
+            far="150"
+            location="10 50 0" 
+            target="10 0 0" 
+            left="-75" 
+            right="75" 
+            bottom="-75" 
+            top="75" />
     </cameras> 
 
     <skybox size="150 150 150" center="10 74.9 15" emissive="0.5 0.5 0.5 1" intensity="0" up="scenes/t08g10/textures/sky.jpeg" down="scenes/t08g10/textures/snow_floor.jpeg" left="scenes/t08g10/textures/snow_landscape.jpeg" right="scenes/t08g10/textures/snow_landscape.jpeg" front="scenes/t08g10/textures/snow_landscape.jpeg" back="scenes/t08g10/textures/snow_landscape.jpeg"/>
@@ -298,13 +332,13 @@
                 <spotlight id="light2" enabled="true" 
                     color="1.0 1.0 1.0 1" 
                     intensity="100.0"
-                    distance="1000"
+                    distance="100"
                     decay="1"
                     castshadow="true"
                     position="30 10 7.5" 
                     target="30 0 7.5"
                     penumbra="0.4"
-                    angle="125.0" 
+                    angle="124.9" 
                     shadowmapsize="1028"
                 /> 
 
@@ -479,7 +513,7 @@
                 <translate value3="20 0 0"/>
             </transforms>            
             <children>
-                <noderef id="walls"/>
+                <noderef id="hWalls"/>
                 <noderef id="floor"/>
                 <noderef id="hallDoor"/>
                 <noderef id="santaBag"/>
@@ -489,17 +523,17 @@
             </children>
         </node>
 
-        <node id="walls">
+        <node id="hWalls">
             <materialref id="wallsApp" />
             <children>
-                <noderef id="wall1" />
-                <noderef id="wall2" />
-                <noderef id="wall3" />
-                <noderef id="wall4" />
+                <noderef id="hWall1" />
+                <noderef id="hWall2" />
+                <noderef id="hWall3" />
+                <noderef id="hWall4" />
             </children>
         </node>
 
-        <node id="wall1">
+        <node id="hWall1">
             <transforms>
                 <translate value3="0 0 15" />
                 <rotate value3="0 90 0" />
@@ -511,7 +545,7 @@
             </children>
         </node>
 
-        <node id="wall2">
+        <node id="hWall2">
             <transforms>
                 <translate value3="0 0 0" />
                 <rotate value3="0 0 0" />
@@ -523,7 +557,7 @@
             </children>
         </node>
 
-        <node id="wall3">
+        <node id="hWall3">
             <transforms>
                 <translate value3="20 0 0" />
                 <rotate value3="0 -90 0" />
@@ -535,7 +569,7 @@
             </children>
         </node>
 
-        <node id="wall4">
+        <node id="hWall4">
             <transforms>
                 <translate value3="20 0 15" />
                 <rotate value3="0 -180 0" />
@@ -575,7 +609,7 @@
 
         <node id="santaBag">
 			<transforms>
-				<translate value3="6.5 3.9 12" />
+				<translate value3="6 3.9 12" />
                 <rotate value3="20 0 110"/>
             </transforms> 
             <children>             
@@ -642,9 +676,95 @@
                 <translate value3="20 0 15"/>
             </transforms>            
             <children>
-                <noderef id="walls"/>
-                <noderef id="floor"/>
+                <noderef id="kWalls"/>
+                <noderef id="kFloor"/>
+                <noderef id="kCeiling"/>
                 <noderef id="table"/>
+            </children>
+        </node>
+
+        <node id="kWalls">
+            <materialref id="wallsApp" />
+            <children>
+                <noderef id="kWall1" />
+                <noderef id="kWall2" />
+                <noderef id="kWall3" />
+                <noderef id="kWall4" />
+            </children>
+        </node>
+
+        <node id="kWall1">
+            <transforms>
+                <translate value3="0 0 30" />
+                <rotate value3="0 90 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="30 20" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="kWall2">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 20" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="kWall3">
+            <transforms>
+                <translate value3="20 0 0" />
+                <rotate value3="0 -90 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="30 20" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="kWall4">
+            <transforms>
+                <translate value3="20 0 30" />
+                <rotate value3="0 -180 0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 20" />
+                </primitive>
+            </children>
+        </node>
+
+        <!--kitchen floor  -->
+        <node id="kFloor">
+            <transforms>
+                <translate value3="0 -0.01 30" />
+                <rotate value3="-90 0 0" />
+            </transforms>
+            <materialref id="floorApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 30" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="kCeiling">
+            <transforms>
+                <rotate value3="90 0 0" />
+                <translate value3="0 20.01 10" />
+            </transforms>
+            <materialref id="ceilingApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 20" />
+                </primitive>
             </children>
         </node>
 
@@ -1018,7 +1138,7 @@
                 <scale value3="1.2 1.3 1.2"/>
             </transforms> 
             <children>             
-                <noderef id="tree" />
+                <noderef id="tree1" />
                 <noderef id="starObj" />
                 <noderef id="balls" />
             </children> 
@@ -1056,7 +1176,7 @@
 
         <node id="treePatch3">
             <transforms>
-                <translate value3="20 0 50" />
+                <translate value3="20 0 55" />
                 <scale value3="1.3 1.2 1.3"/>
             </transforms> 
             <children>
@@ -1111,7 +1231,7 @@
                 <scale value3="1.2 1.4 1.2"/>
             </transforms> 
             <children>
-                <noderef id="tree" />
+                <lodref id="treeLod" />
             </children>
         </node>
 
@@ -1121,7 +1241,7 @@
                 <scale value3="1.2 1.0 1.2"/>
             </transforms> 
             <children>
-                <noderef id="tree" />
+                <lodref id="treeLod" />
             </children>
         </node>
 
@@ -1131,11 +1251,17 @@
                 <scale value3="1.2 1.3 1.2"/>
             </transforms> 
             <children>
-                <noderef id="tree" />
+                <lodref id="treeLod" />
             </children>
         </node>
 
-        <node id="tree">
+        <lod id="treeLod">
+            <noderef id="tree1" mindist= "50"/>
+            <noderef id="tree2" mindist="100"/>
+            <noderef id="tree3" mindist="150"/>
+        </lod>
+
+        <node id="tree1">
 			<transforms>
             </transforms> 
             <children>             
@@ -1145,6 +1271,36 @@
 				<noderef id="treeSeg3" />
 				<noderef id="treeSeg4" />
 				<noderef id="treeSeg5" />
+            </children> 
+        </node>
+
+        <node id="tree2">
+			<transforms>
+            </transforms> 
+            <children>             
+				<noderef id="trunk" />
+				<noderef id="treeSeg1" />
+				<noderef id="treeSeg2" />
+				<noderef id="treeSeg3" />
+            </children> 
+        </node>
+
+        <node id="tree3">
+            <children>             
+				<noderef id="trunk" />
+                <noderef id="tree3Special"/>
+            </children> 
+        </node>
+
+        <node id="tree3Special">
+			<transforms>
+				<translate value3="0 6 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="3" top="0" height="8" slices="10" stacks="64" />
+                </primitive>
             </children> 
         </node>
 
@@ -1332,7 +1488,7 @@
 
         <node id="ball1">
 			<transforms>
-				<translate value3="1.4 7 0.5" />
+				<translate value3="1.4 7.7 0.7" />
             </transforms> 
 			<materialref id="redBallApp" />
             <children>             
@@ -1356,7 +1512,7 @@
         
         <node id="ball3">
 			<transforms>
-				<translate value3="-1.2 3 2.5" />
+				<translate value3="-1 3 2.5" />
             </transforms> 
 			<materialref id="redBallApp" />
             <children>             
@@ -1380,7 +1536,7 @@
         
         <node id="ball5">
 			<transforms>
-				<translate value3="0.6 9 -0.8" />
+				<translate value3="1.3 9 -0.8" />
             </transforms> 
 			<materialref id="goldBallApp" />
             <children>             
@@ -1404,7 +1560,7 @@
 
         <node id="ball7">
 			<transforms>
-				<translate value3="1.6 5.5 -1.6" />
+				<translate value3="1.3 5.5 -1.6" />
             </transforms> 
 			<materialref id="blueBallApp" />
             <children>             
@@ -1416,7 +1572,7 @@
 
         <node id="ball8">
 			<transforms>
-				<translate value3="-1.4 7 0" />
+				<translate value3="-2 7 -0.5" />
             </transforms> 
 			<materialref id="blueBallApp" />
             <children>             
