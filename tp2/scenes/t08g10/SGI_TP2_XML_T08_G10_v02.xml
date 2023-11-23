@@ -1871,11 +1871,12 @@
                 </primitive>
 
                 <pointlight id="lampLight" enabled="true" 
-                    color="0.8 0.6 0 1" 
-                    intensity="150"
+                    color="0.8 0.6 0.05 1" 
+                    intensity="130"
                     distance="200"
                     castshadow="true"
                     position="0 0 0" 
+                    decay="2"
                 />
             </children> 
         </node>
