@@ -5,12 +5,12 @@
 
     <fog color="0.5 0.5 0.5 1" near="0.0" far="300.0" />
 
-    <cameras initial="Counter View" > 
+    <cameras initial="Free Camera" > 
         <perspective id="Free Camera" 
             angle="60" 
             near="0.1" 
             far="1000" 
-            location="-15 60 20" 
+            location="-30 60 20" 
             target="20 0 20" /> 
 
         <perspective id="Santa's Bag" 
@@ -38,8 +38,8 @@
             angle="60" 
             near="0.1" 
             far="100" 
-            location="33 13 50" 
-            target="33 8 20" />
+            location="33 13 15" 
+            target="33 8 30" />
         
         <orthogonal id="Side View" 
             near="0" 
@@ -83,7 +83,10 @@
         <texture id="woodTex" filepath="scenes/t08g10/textures/wood.png" />
         <texture id="blackWoodTex" filepath="scenes/t08g10/textures/black_wood.jpeg" />
         <texture id="counterTex" filepath="scenes/t08g10/textures/counter.jpeg" />
-        <texture id="sofaTex" filepath="scenes/t08g10/textures/sofa.jpeg" />
+        <texture id="sofaTex" filepath="scenes/t08g10/textures/sofa.png" />
+        <texture id="sofaBumpTex" filepath="scenes/t08g10/textures/sofa_bump.png" />
+        <texture id="santaHatTex" filepath="scenes/t08g10/textures/santa_hat.jpg" />
+        <texture id="santaHatBumpTex" filepath="scenes/t08g10/textures/santa_hat_bump.png" />
         <texture id="fireplaceTex" filepath="scenes/t08g10/textures/fireplace.jpeg" />
         <texture id="santaPicTex" filepath="scenes/t08g10/textures/santa.jpeg" />
         <texture id="videoTex" isVideo="true" filepath="scenes/t08g10/textures/oceans.mp4" />
@@ -140,7 +143,20 @@
             shininess="0" 
             textureref="santaBagTex" 
             texlength_s="1" 
-            texlength_t="1" />
+            texlength_t="1"
+             />
+
+        <material id="santaHatApp" 
+            emissive="0.0 0.0 0.0 1" 
+            color="0.7 0.4 0.3 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="santaHatTex" 
+            bumpref="santaHatBumpTex" 
+            bumpscale="0.05"
+            texlength_s="2" 
+            texlength_t="2.5" 
+             />
         
         <material id="greenPresentApp" 
             emissive="0.0 0.0 0.0 1" 
@@ -209,7 +225,23 @@
             shininess="0" 
             textureref="santaPicTex"
             texlength_s="4"
-            texlength_t="4" />
+            texlength_t="4"
+             />
+
+        <material id="poliguinhoApp" 
+            emissive="0.0 0.0 0.0 1" 
+			color="1.0 1.0 1.0 1"
+            specular="0 0 0 0"
+            shininess="0" 
+            wireframe="true"
+             />
+
+        <material id="poliguinho2App" 
+            emissive="0.0 0.0 0.0 1" 
+			color="1.0 1.0 1.0 1"
+            specular="0 0 0 0"
+            shininess="0" 
+             />
 
         <material id="woodApp" 
             color="0.8 0.8 0.8 1.0" 
@@ -278,8 +310,9 @@
 			specular="0 0 0 0" 
             shininess="10" 
             textureref="sofaTex" 
-            texlength_s="1" 
-            texlength_t="1" />
+            bumpref="sofaBumpTex" 
+            bumpscale="0.1"
+            />
         
         <material id="fireplaceApp" 
             color="0.8 0.8 0.8 1.0" 
@@ -306,7 +339,7 @@
 			
         <material id="lampTopApp" 
             color="0.5 0.5 0.2 1.0" 
-            emissive="0.2 0.2 0.05 0.4" 
+            emissive="0.5 0.5 0.05 0.4" 
 			specular="0 0 0 0" 
             shininess="20"
             textureref="lampTopTex" 
@@ -346,10 +379,10 @@
                     color="1 0.2 0 1" 
                     intensity="3"
                     distance="30"
-                    decay="0.3"
+                    decay="0.2"
                     castshadow="true"
                     position="10 2 28" 
-                    shadowmapsize="4096"
+                    shadowmapsize="1028"
                 />
 
                 <spotlight id="hall" enabled="true" 
@@ -362,7 +395,7 @@
                     target="30 0 7.5"
                     penumbra="0.4"
                     angle="125" 
-                    shadowmapsize="4096"
+                    shadowmapsize="1028"
                 /> 
 
                 <spotlight id="kitchen" enabled="true" 
@@ -375,7 +408,7 @@
                     target="30 0 22.5"
                     penumbra="0.6"
                     angle="124.8" 
-                    shadowmapsize="4096"
+                    shadowmapsize="1028"
                 />  
 
                 <spotlight id="counter1" enabled="true" 
@@ -384,11 +417,11 @@
                     distance="10"
                     decay="0.2"
                     castshadow="true"
-                    position="28.8 7 30"
-                    target="28.8 0 35.5"
+                    position="30 7 30"
+                    target="30 0 35.5"
                     penumbra="1"
                     angle="0.6"  
-                    shadowmapsize="4096"
+                    shadowmapsize="1028"
                 />
 
                 <spotlight id="counter2" enabled="true" 
@@ -397,37 +430,11 @@
                     distance="10"
                     decay="0.2"
                     castshadow="true"
-                    position="31.6 7 30"
-                    target="31.6 0 35.5"
+                    position="36 7 30"
+                    target="36 0 35.5"
                     penumbra="1"
                     angle="0.6"  
-                    shadowmapsize="4096"
-                />
-
-                <spotlight id="counter3" enabled="true" 
-                    color="1 0 0 1" 
-                    intensity="10"
-                    distance="10"
-                    decay="0.2"
-                    castshadow="true"
-                    position="34.4 7 30"
-                    target="34.4 0 35.5"
-                    penumbra="1"
-                    angle="0.6"  
-                    shadowmapsize="4096"
-                />
-
-                <spotlight id="counter4" enabled="true" 
-                    color="0 1 0 1" 
-                    intensity="10"
-                    distance="10"
-                    decay="0.2"
-                    castshadow="true"
-                    position="37.2 7 30"
-                    target="37.2 0 35.5"
-                    penumbra="1"
-                    angle="0.6"  
-                    shadowmapsize="4096"
+                    shadowmapsize="1028"
                 />
 
             </children>
@@ -461,7 +468,7 @@
 
         <node id="sled">
             <transforms>
-				<translate value3="5 0 -25" />
+				<translate value3="10 0 -30" />
                 <rotate value3="0 170 0" />
 				<scale value3="0.2 0.2 0.2" />
             </transforms> 
@@ -488,6 +495,7 @@
                 <noderef id="lrFloor"/>
                 <noderef id="xmasTree"/>
                 <noderef id="sofa"/>
+                <noderef id="santaHat"/>
                 <noderef id="fireplace"/>
             </children>
         </node>
@@ -592,6 +600,8 @@
                 <noderef id="hallDoor"/>
                 <noderef id="santaBag"/>
                 <noderef id="present2" />
+                <noderef id="poliguinho"/>
+                <noderef id="poliguinho2"/>
             </children>
         </node>
 
@@ -805,7 +815,7 @@
 
         <node id="beerTap1">
             <transforms>
-				<translate value3="11 -6.5 7" />
+				<translate value3="11.5 -6.5 7" />
 				<scale value3="10 10 10" />
             </transforms> 
             <children>
@@ -1328,6 +1338,7 @@
             <transforms>
                 <translate value3="-40 0 -10" />
                 <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 10 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -1336,8 +1347,9 @@
 
         <node id="treePatch6">
             <transforms>
-                <translate value3="-45 0 -30" />
+                <translate value3="-45 0 -40" />
                 <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 -10 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -1345,6 +1357,17 @@
         </node>
 
         <node id="treePatch7">
+            <transforms>
+                <translate value3="-15 0 -45" />
+                <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 -70 0"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch8">
             <transforms>
                 <translate value3="78 0 -48" />
                 <scale value3="1.2 1.3 1.2"/>
@@ -1712,6 +1735,37 @@
             </children> 
         </node>
 
+        <node id="santaHat">
+            <transforms>
+                <translate value3="14 2.51 15" />
+                <rotate value3="90 0 20" />
+            </transforms>
+            <materialref id="santaHatApp" />
+            <children>
+                <primitive>
+                    <triangle 
+                                    xyz1="1.2 2 0"
+                                    xyz2="2.2 0 0"
+                                    xyz3="0 0 0"
+                                     />
+                </primitive>
+                <noderef id="santaHatTip"/>
+            </children>
+        </node>
+
+        <node id="santaHatTip">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms>
+            <materialref id="plateApp" />
+            <children>
+                <primitive>
+                    <sphere radius="0.3" slices="32" stacks="32" />
+                </primitive>
+            </children>
+        </node>
+
+
         <node id="sofa">
             <transforms>
                 <translate value3="13 0 10" />
@@ -1987,6 +2041,9 @@
                 <noderef id="roadLamp1" />
                 <noderef id="roadLamp2" />
                 <noderef id="roadLamp3" />
+                <noderef id="roadLamp4" />
+                <noderef id="roadLamp5" />
+                <noderef id="roadLamp6" />
             </children> 
         </node>
 
@@ -2017,29 +2074,109 @@
             </children> 
         </node>
 
+        <node id="roadLamp4">
+            <transforms>
+                <translate value3="25 0 -7" />
+            </transforms>
+            <children>             
+                <noderef id="roadLamp" />
+            </children> 
+        </node>
+
+        <node id="roadLamp5">
+            <transforms>
+                <translate value3="-5 0 -25" />
+            </transforms>
+            <children>             
+                <noderef id="roadLamp" />
+            </children> 
+        </node>
+
+        <node id="roadLamp6">
+            <transforms>
+                <translate value3="-35 0 -7" />
+            </transforms>
+            <children>             
+                <noderef id="roadLamp" />
+            </children> 
+        </node>
+
         <node id="road">
             <transforms>
                 <translate value3="40 0 -40"/>
             </transforms>
             <materialref id="roadApp" />
             <children>
-                <noderef id="roadPath" />
+                <noderef id="roadSeg1" />
+                <noderef id="roadSeg2" />
+                <noderef id="roadSeg3" />
+                <noderef id="roadSeg4" />
+                <noderef id="roadSeg5" />
+                <noderef id="roadSeg6" />
+                <noderef id="roadSquare" />
             </children>
         </node>
 
-        <node id="roadPath">
-            <transforms>
-            </transforms>
-            <children>
-                <noderef id="roadPathSeg1" />
-                <noderef id="roadPathSeg2" />
-                <noderef id="roadPathSeg3" />
-            </children>
-        </node>
-
-        <node id="roadPathSeg1">
+        <node id="roadSeg1">
             <transforms>
                 <translate value3="0 0 -20"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy1" />
+            </children>
+        </node>
+
+        <node id="roadSeg2">
+            <transforms>
+                <translate value3="0 0 10"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy2" />
+            </children>
+        </node>
+
+        <node id="roadSeg3">
+            <transforms>
+                <translate value3="-30 0 30"/>
+                <rotate value3="0 90 0"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy1" />
+            </children>
+        </node>
+
+        <node id="roadSeg4">
+            <transforms>
+                <translate value3="-60 0 30"/>
+                <rotate value3="0 90 0"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy2" />
+            </children>
+        </node>
+
+        <node id="roadSeg5">
+            <transforms>
+                <translate value3="-90 0 30"/>
+                <rotate value3="0 90 0"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy1" />
+            </children>
+        </node>
+
+        <node id="roadSeg6">
+            <transforms>
+                <translate value3="-120 0 30"/>
+                <rotate value3="0 90 0"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy2" />
+            </children>
+        </node>
+
+        <node id="roadCurvy1">
+            <transforms>
             </transforms>
             <children>
                 <primitive>
@@ -2047,8 +2184,8 @@
                         <controlpoint xx="0" yy="0" zz="0" />
                         <controlpoint xx="15" yy="0" zz="0" />
 
-                        <controlpoint xx="8" yy="0" zz="10" />
-                        <controlpoint xx="23" yy="0" zz="10" />
+                        <controlpoint xx="5" yy="0" zz="10" />
+                        <controlpoint xx="20" yy="0" zz="10" />
 
                         <controlpoint xx="0" yy="0" zz="30" />
                         <controlpoint xx="15" yy="0" zz="30" />
@@ -2057,9 +2194,8 @@
             </children>
         </node>
 
-        <node id="roadPathSeg2">
+        <node id="roadCurvy2">
             <transforms>
-                <translate value3="0 0 10"/>
             </transforms>
             <children>
                 <primitive>
@@ -2077,7 +2213,7 @@
             </children>
         </node>
 
-        <node id="roadPathSeg3">
+        <node id="roadSquare">
             <transforms>
                 <translate value3="0 0 40"/>
                 <rotate value3="-90 0 -90" />
@@ -2089,5 +2225,31 @@
             </children>
         </node>
 
+        <node id="poliguinho">
+            <transforms>
+                <translate value3="10 13 -1"/>
+            </transforms>
+            <materialref id="poliguinhoApp" />
+            <children>
+                <primitive>
+                    <polygon radius="2" stacks="3" slices="5"
+                             color_c="1.0 0.6 0.6 1" color_p="1.0 0.1 0.1 1" /> 
+                </primitive>
+            </children>
+        </node>
+
+        <node id="poliguinho2">
+            <transforms>
+                <translate value3="15 0.001 7"/>
+                <rotate value3="-90 0 0"/>
+            </transforms>
+            <materialref id="poliguinho2App" />
+            <children>
+                <primitive>
+                    <polygon radius="3" stacks="30" slices="30"
+                             color_c="1.0 0.6 0.6 1" color_p="1.0 0.1 0.1 1" /> 
+                </primitive>
+            </children>
+        </node>
     </graph>
 </yaf> 
