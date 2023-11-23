@@ -124,10 +124,20 @@ class MyPrimitiveBuilder {
   static buildNurbs(nodeData, material) {
     const representation = nodeData.representations[0];
     const controlPoints = [];
-    for (let i in representation.controlpoints) {
-      let p = representation.controlpoints[i];
-      controlPoints.push([p.xx, p.yy, p.zz, 1]);
+    for (let i = 0; i <= representation.degree_u; i++) {
+      controlPoints.push([]);
+      for (let j = 0; j <= representation.degree_v; j++) {
+        let controlPoint =
+          representation.controlpoints[i * (representation.degree_v + 1) + j];
+        controlPoints[i].push([
+          controlPoint.xx,
+          controlPoint.yy,
+          controlPoint.zz,
+          1,
+        ]);
+      }
     }
+
     const builder = new MyNurbsBuilder();
     const surfaceData = builder.build(
       controlPoints,

@@ -40,12 +40,10 @@ class MyGraphBuilder {
    * @returns Three.js 3d object
    */
   visit(nodeId) {
-    // Check if this node has already been built
-    if (this.nodes.has(nodeId)) {
-      return this.nodes.get(nodeId).clone();
-    }
-
     let nodeData = this.nodesData.get(nodeId);
+
+    // Check if this node has already been built
+
     if (nodeData === undefined) {
       console.warn("Node not found: " + nodeId);
       return new THREE.Object3D();

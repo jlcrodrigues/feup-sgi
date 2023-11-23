@@ -33,6 +33,8 @@ class MyLightBuilder {
       nodeData.shadowmapsize,
       nodeData.shadowmapsize
     );
+    light.shadow.bias = -0.005;
+    console.log(light.shadow.mapSize)
 
     // Add spotlight target
     if (nodeData.type === "spotlight") {
