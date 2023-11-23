@@ -10,15 +10,15 @@
             angle="60" 
             near="0.1" 
             far="1000" 
-            location="-15 60 20" 
-            target="15 8 20" /> 
+            location="-30 60 20" 
+            target="20 0 20" /> 
 
         <perspective id="Santa's Bag" 
             angle="60" 
             near="0.1" 
             far="1000" 
             location="30 7 0" 
-            target="20 3 15"     />
+            target="20 3 15" />
 
         <perspective id="Sofa View" 
             angle="100" 
@@ -26,6 +26,20 @@
             far="1000" 
             location="18 8 15" 
             target="0 8 15" /> 
+        
+        <perspective id="Cookies" 
+            angle="60" 
+            near="0.1" 
+            far="100" 
+            location="33 7 24" 
+            target="33 6 20.5" />
+        
+        <perspective id="Counter View" 
+            angle="60" 
+            near="0.1" 
+            far="100" 
+            location="33 13 15" 
+            target="33 8 30" />
         
         <orthogonal id="Side View" 
             near="0" 
@@ -67,13 +81,15 @@
         <texture id="rugTex" filepath="scenes/t08g10/textures/rug.jpg" />
         <texture id="treeTex" filepath="scenes/t08g10/textures/tree.jpeg" />
         <texture id="woodTex" filepath="scenes/t08g10/textures/wood.png" />
+        <texture id="blackWoodTex" filepath="scenes/t08g10/textures/black_wood.jpeg" />
+        <texture id="counterTex" filepath="scenes/t08g10/textures/counter.jpeg" />
         <texture id="sofaTex" filepath="scenes/t08g10/textures/sofa.png" />
         <texture id="sofaBumpTex" filepath="scenes/t08g10/textures/sofa_bump.png" />
         <texture id="santaHatTex" filepath="scenes/t08g10/textures/santa_hat.jpg" />
         <texture id="santaHatBumpTex" filepath="scenes/t08g10/textures/santa_hat_bump.png" />
         <texture id="fireplaceTex" filepath="scenes/t08g10/textures/fireplace.jpeg" />
         <texture id="santaPicTex" filepath="scenes/t08g10/textures/santa.jpeg" />
-        <texture id="videoTex" isVideo="true" filepath="scenes/demo/textures/oceans.mp4" />
+        <texture id="videoTex" isVideo="true" filepath="scenes/t08g10/textures/oceans.mp4" />
         <texture id="doorTex" filepath="scenes/t08g10/textures/door.jpeg" />
         <texture id="hallDoorTex" filepath="scenes/t08g10/textures/hall_door.jpeg" />
         <texture id="santaBagTex" filepath="scenes/t08g10/textures/santa_bag.jpg" />
@@ -85,6 +101,16 @@
         <texture id="lampTopTex" filepath="scenes/t08g10/textures/lampTop.jpg" />
         <texture id="roadTex" filepath="scenes/t08g10/textures/road.jpg" />
         <texture id="roadBumpTex" filepath="scenes/t08g10/textures/roadBump.png" />
+        <texture id="painting" filepath="scenes/t08g10/textures/caravaggio/caravaggio.jpg" 
+            mipmap0="scenes/t08g10/textures/caravaggio/caravaggio1024.jpg"
+            mipmap1="scenes/t08g10/textures/caravaggio/caravaggio512.jpg"
+            mipmap2="scenes/t08g10/textures/caravaggio/caravaggio256.jpg"
+            mipmap3="scenes/t08g10/textures/caravaggio/caravaggio128.jpg"
+            mipmap4="scenes/t08g10/textures/caravaggio/caravaggio64.jpg"
+            mipmap5="scenes/t08g10/textures/caravaggio/caravaggio32.jpg"
+            mipmap6="scenes/t08g10/textures/caravaggio/caravaggio16.jpg"
+            mipmap7="scenes/t08g10/textures/caravaggio/caravaggio8.jpg"
+        />
     </textures> 
 
     <materials> 
@@ -225,6 +251,24 @@
             textureref="woodTex" 
             texlength_s="1" 
             texlength_t="1" />
+        
+        <material id="blackWoodApp" 
+            color="0.8 0.8 0.8 1.0" 
+            emissive="0.0 0.0 0.0 0.0" 
+			specular="0 0 0 0" 
+            shininess="10" 
+            textureref="blackWoodTex" 
+            texlength_s="1" 
+            texlength_t="1" />
+        
+        <material id="counterApp" 
+            color="0.8 0.8 0.8 1.0" 
+            emissive="0.0 0.0 0.0 0.0" 
+			specular="0 0 0 0" 
+            shininess="100" 
+            textureref="counterTex" 
+            texlength_s="1" 
+            texlength_t="1" />
 
         <material id="treeApp" 
             emissive="0.0 0.0 0.0 1" 
@@ -311,6 +355,18 @@
             texlength_s="4"
             texlength_t="4"
         />
+
+        <material id="paintingApp" 
+            emissive="0.0 0.0 0.0 1" 
+			color="0.8 0.8 0.8 1.0" 
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="paintingTex" 
+            texlength_s="15" 
+            texlength_t="8"
+            twosided="true"
+            />
+        
     </materials> 
 
     <graph rootid="scene">
@@ -319,7 +375,7 @@
                 <noderef id="house"/>
                 <noderef id="outside"/>
 
-                <pointlight id="light1" enabled="true" 
+                <pointlight id="fireplace" enabled="true" 
                     color="1 0.2 0 1" 
                     intensity="3"
                     distance="30"
@@ -329,7 +385,7 @@
                     shadowmapsize="1028"
                 />
 
-                <spotlight id="light2" enabled="true" 
+                <spotlight id="hall" enabled="true" 
                     color="1.0 1.0 1.0 1" 
                     intensity="100.0"
                     distance="100"
@@ -338,22 +394,48 @@
                     position="30 10 7.5" 
                     target="30 0 7.5"
                     penumbra="0.4"
-                    angle="124.9" 
+                    angle="125" 
                     shadowmapsize="1028"
                 /> 
 
-                <spotlight id="light3" enabled="true" 
+                <spotlight id="kitchen" enabled="true" 
                     color="1.0 1.0 1.0 1" 
                     intensity="100.0"
                     distance="1000"
-                    decay="1"
+                    decay="1.3"
                     castshadow="true"
                     position="30 10 22.5" 
                     target="30 0 22.5"
-                    penumbra="0.4"
-                    angle="125.0" 
+                    penumbra="0.6"
+                    angle="124.8" 
                     shadowmapsize="1028"
                 />  
+
+                <spotlight id="counter1" enabled="true" 
+                    color="1 0 0 1" 
+                    intensity="10"
+                    distance="10"
+                    decay="0.2"
+                    castshadow="true"
+                    position="30 7 30"
+                    target="30 0 35.5"
+                    penumbra="1"
+                    angle="0.6"  
+                    shadowmapsize="1028"
+                />
+
+                <spotlight id="counter2" enabled="true" 
+                    color="0 1 0 1" 
+                    intensity="10"
+                    distance="10"
+                    decay="0.2"
+                    castshadow="true"
+                    position="36 7 30"
+                    target="36 0 35.5"
+                    penumbra="1"
+                    angle="0.6"  
+                    shadowmapsize="1028"
+                />
 
             </children>
         </node>
@@ -583,7 +665,7 @@
 
         <node id="floor">
             <transforms>
-                <translate value3="0 -0.01 15" />
+                <translate value3="0 0.01 15" />
                 <rotate value3="-90 0 0" />
             </transforms>
             <materialref id="floorApp" />
@@ -680,6 +762,78 @@
                 <noderef id="kFloor"/>
                 <noderef id="kCeiling"/>
                 <noderef id="table"/>
+                <noderef id="counter"/>
+                <noderef id="painting"/>
+            </children>
+        </node>
+
+        <node id="painting">
+            <transforms>
+				<translate value3="19.99 10 12" />
+				<rotate value3="0 90 0" />
+            </transforms> 
+            <materialref id="paintingApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="7.5 7.5" /> 
+                </primitive>
+            </children>
+        </node>
+
+        <node id="counter">
+            <transforms>
+                <translate value3="6 0 17"/>
+            </transforms>            
+            <children>
+                <noderef id="counterBot"/>
+                <noderef id="counterTop"/>
+            </children>
+        </node>
+
+        <node id="counterBot">
+            <materialref id="blackWoodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="14 6.5 4" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="counterTop">
+            <transforms>
+                <translate value3="-0.5 6.5 -0.5"/>
+            </transforms>
+            <materialref id="counterApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="14.5 0.5 5" />
+                </primitive>
+                <noderef id="beerTap1"/>
+                <noderef id="beerTap2"/>
+            </children>
+        </node>
+
+        <node id="beerTap1">
+            <transforms>
+				<translate value3="11.5 -6.5 7" />
+				<scale value3="10 10 10" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <model3d filepath="scenes/t08g10/models/beer_tap.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="beerTap2">
+            <transforms>
+				<translate value3="18 -6.5 7" />
+				<scale value3="10 10 10" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <model3d filepath="scenes/t08g10/models/beer_tap.glb" />
+                </primitive>
             </children>
         </node>
 
@@ -791,26 +945,12 @@
                     <box xyz1="0 0 0" xyz2="11 1 6" />
                 </primitive>
                 <noderef id="plate"/>
-                <noderef id="beerTap"/>
-            </children>
-        </node>
-
-        <node id="beerTap">
-            <transforms>
-				<translate value3="11 -6 8" />
-				<scale value3="10 10 10" />
-            </transforms> 
-
-            <children>
-                <primitive>
-                    <model3d filepath="scenes/t08g10/models/beer_tap.glb" />
-                </primitive>
             </children>
         </node>
 
         <node id="plate">
             <transforms>
-                <translate value3="8 1.2 3"/>
+                <translate value3="7 1.2 3"/>
             </transforms> 
             <materialref id="plateApp"/>           
             <children>
