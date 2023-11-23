@@ -101,7 +101,7 @@
         <texture id="lampTopTex" filepath="scenes/t08g10/textures/lampTop.jpg" />
         <texture id="roadTex" filepath="scenes/t08g10/textures/road.jpg" />
         <texture id="roadBumpTex" filepath="scenes/t08g10/textures/roadBump.png" />
-        <texture id="painting" filepath="scenes/t08g10/textures/caravaggio/caravaggio.jpg" 
+        <texture id="paintingTex" filepath="scenes/t08g10/textures/caravaggio/caravaggio.jpg" 
             mipmap0="scenes/t08g10/textures/caravaggio/caravaggio1024.jpg"
             mipmap1="scenes/t08g10/textures/caravaggio/caravaggio512.jpg"
             mipmap2="scenes/t08g10/textures/caravaggio/caravaggio256.jpg"
@@ -362,8 +362,8 @@
             specular="0 0 0 0" 
             shininess="0" 
             textureref="paintingTex" 
-            texlength_s="15" 
-            texlength_t="8"
+            texlength_s="7.5" 
+            texlength_t="7.5"
             twosided="true"
             />
         
@@ -2011,11 +2011,12 @@
                 </primitive>
 
                 <pointlight id="lampLight" enabled="true" 
-                    color="0.8 0.6 0 1" 
-                    intensity="150"
+                    color="0.8 0.6 0.05 1" 
+                    intensity="130"
                     distance="200"
                     castshadow="true"
                     position="0 0 0" 
+                    decay="2"
                 />
             </children> 
         </node>
