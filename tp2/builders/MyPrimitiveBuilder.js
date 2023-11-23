@@ -242,6 +242,7 @@ class MyPrimitiveBuilder {
       new THREE.BufferAttribute(verticesArray, 3)
     );
     geometry.setAttribute("color", new THREE.BufferAttribute(colorsArray, 3));
+    geometry.computeVertexNormals();
     if (material === undefined) material = new THREE.MeshBasicMaterial();
     material.vertexColors = true;
     return new THREE.Mesh(geometry, material);

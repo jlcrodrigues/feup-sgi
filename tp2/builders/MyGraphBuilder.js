@@ -41,9 +41,6 @@ class MyGraphBuilder {
    */
   visit(nodeId) {
     let nodeData = this.nodesData.get(nodeId);
-
-    // Check if this node has already been built
-
     if (nodeData === undefined) {
       console.warn("Node not found: " + nodeId);
       return new THREE.Object3D();

@@ -33,7 +33,10 @@
         <texture id="rugTex" filepath="scenes/t08g10/textures/rug.jpg" />
         <texture id="treeTex" filepath="scenes/t08g10/textures/tree.jpeg" />
         <texture id="woodTex" filepath="scenes/t08g10/textures/wood.png" />
-        <texture id="sofaTex" filepath="scenes/t08g10/textures/sofa.jpeg" />
+        <texture id="sofaTex" filepath="scenes/t08g10/textures/sofa.png" />
+        <texture id="sofaBumpTex" filepath="scenes/t08g10/textures/sofa_bump.png" />
+        <texture id="santaHatTex" filepath="scenes/t08g10/textures/santa_hat.jpg" />
+        <texture id="santaHatBumpTex" filepath="scenes/t08g10/textures/santa_hat_bump.png" />
         <texture id="fireplaceTex" filepath="scenes/t08g10/textures/fireplace.jpeg" />
         <texture id="santaPicTex" filepath="scenes/t08g10/textures/santa.jpeg" />
         <texture id="videoTex" isVideo="true" filepath="scenes/demo/textures/oceans.mp4" />
@@ -80,7 +83,20 @@
             shininess="0" 
             textureref="santaBagTex" 
             texlength_s="1" 
-            texlength_t="1" />
+            texlength_t="1"
+             />
+
+        <material id="santaHatApp" 
+            emissive="0.0 0.0 0.0 1" 
+            color="0.7 0.4 0.3 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="santaHatTex" 
+            bumpref="santaHatBumpTex" 
+            bumpscale="0.05"
+            texlength_s="2" 
+            texlength_t="2.5" 
+             />
         
         <material id="greenPresentApp" 
             emissive="0.0 0.0 0.0 1" 
@@ -147,7 +163,25 @@
 			color="1.0 1.0 1.0 1"
             specular="0 0 0 0"
             shininess="0" 
-            textureref="santaPicTex" />
+            textureref="santaPicTex"
+            texlength_s="4"
+            texlength_t="4"
+             />
+
+        <material id="poliguinhoApp" 
+            emissive="0.0 0.0 0.0 1" 
+			color="1.0 1.0 1.0 1"
+            specular="0 0 0 0"
+            shininess="0" 
+            wireframe="true"
+             />
+
+        <material id="poliguinho2App" 
+            emissive="0.0 0.0 0.0 1" 
+			color="1.0 1.0 1.0 1"
+            specular="0 0 0 0"
+            shininess="0" 
+             />
 
         <material id="woodApp" 
             color="0.8 0.8 0.8 1.0" 
@@ -198,8 +232,9 @@
 			specular="0 0 0 0" 
             shininess="10" 
             textureref="sofaTex" 
-            texlength_s="1" 
-            texlength_t="1" />
+            bumpref="sofaBumpTex" 
+            bumpscale="0.1"
+            />
         
         <material id="fireplaceApp" 
             color="0.8 0.8 0.8 1.0" 
@@ -254,10 +289,10 @@
                     color="1 0.2 0 1" 
                     intensity="3"
                     distance="30"
-                    decay="0.3"
+                    decay="0.2"
                     castshadow="true"
                     position="10 2 28" 
-                    shadowmapsize="4096"
+                    shadowmapsize="1028"
                 />
 
                 <spotlight id="light2" enabled="true" 
@@ -270,7 +305,7 @@
                     target="30 0 7.5"
                     penumbra="0.4"
                     angle="125.0" 
-                    shadowmapsize="4096"
+                    shadowmapsize="1028"
                 /> 
 
                 <spotlight id="light3" enabled="true" 
@@ -283,7 +318,7 @@
                     target="30 0 22.5"
                     penumbra="0.4"
                     angle="125.0" 
-                    shadowmapsize="4096"
+                    shadowmapsize="1028"
                 />  
 
             </children>
@@ -344,6 +379,7 @@
                 <noderef id="lrFloor"/>
                 <noderef id="xmasTree"/>
                 <noderef id="sofa"/>
+                <noderef id="santaHat"/>
                 <noderef id="fireplace"/>
             </children>
         </node>
@@ -448,6 +484,8 @@
                 <noderef id="hallDoor"/>
                 <noderef id="santaBag"/>
                 <noderef id="present2" />
+                <noderef id="poliguinho"/>
+                <noderef id="poliguinho2"/>
             </children>
         </node>
 
@@ -1388,6 +1426,37 @@
             </children> 
         </node>
 
+        <node id="santaHat">
+            <transforms>
+                <translate value3="14 2.51 15" />
+                <rotate value3="90 0 20" />
+            </transforms>
+            <materialref id="santaHatApp" />
+            <children>
+                <primitive>
+                    <triangle 
+                                    xyz1="1.2 2 0"
+                                    xyz2="2.2 0 0"
+                                    xyz3="0 0 0"
+                                     />
+                </primitive>
+                <noderef id="santaHatTip"/>
+            </children>
+        </node>
+
+        <node id="santaHatTip">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms>
+            <materialref id="plateApp" />
+            <children>
+                <primitive>
+                    <sphere radius="0.3" slices="32" stacks="32" />
+                </primitive>
+            </children>
+        </node>
+
+
         <node id="sofa">
             <transforms>
                 <translate value3="13 0 10" />
@@ -1765,5 +1834,31 @@
             </children>
         </node>
 
+        <node id="poliguinho">
+            <transforms>
+                <translate value3="10 13 -1"/>
+            </transforms>
+            <materialref id="poliguinhoApp" />
+            <children>
+                <primitive>
+                    <polygon radius="2" stacks="3" slices="5"
+                             color_c="1.0 0.6 0.6 1" color_p="1.0 0.1 0.1 1" /> 
+                </primitive>
+            </children>
+        </node>
+
+        <node id="poliguinho2">
+            <transforms>
+                <translate value3="15 0.001 7"/>
+                <rotate value3="-90 0 0"/>
+            </transforms>
+            <materialref id="poliguinho2App" />
+            <children>
+                <primitive>
+                    <polygon radius="3" stacks="30" slices="30"
+                             color_c="1.0 0.6 0.6 1" color_p="1.0 0.1 0.1 1" /> 
+                </primitive>
+            </children>
+        </node>
     </graph>
 </yaf> 
