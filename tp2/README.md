@@ -12,12 +12,12 @@
 
 ### Santa's Home
 
-This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest from his big and busy night. It includes a road, pine trees all around, as well as his sled.
+This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest from his big and busy night. It includes a road, pine trees all around, lamps, as well as his sled.
 
 - Scene
 
 <p align="center">
-  <img src='screenshot/freeCam.png' width=400px>
+  <img src='screenshots/freeCam.png' width=400px>
 </p>
 
 The house has 3 main divisions: 
@@ -28,13 +28,13 @@ The house has 3 main divisions:
 Living room seen from the sofa:
 
 <p align="center">
-  <img src='screenshot/sofaView.png' width=500px>
+  <img src='screenshots/sofaView.png' width=500px>
 </p>
 
 And as a surprise, Santa prefers beer to milk with cookies, that's why he built this kitchen counter with the beer taps:
 
 <p align="center">
-  <img src='screenshot/counterView.png' width=500px>
+  <img src='screenshots/counterView.png' width=500px>
 </p>
 
 ----

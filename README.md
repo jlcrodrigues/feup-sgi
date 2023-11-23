@@ -21,9 +21,11 @@ It includes the infamous couches and table, as well as some background table and
 </p>
 
 ### [TP2 - ...](tp2)
-- (items briefly describing main strong points)
-
-----
+This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest from his big and busy night. Apart from the house includes a road, pine trees all around, lamps, as well as his sled.
+<p align="center">
+  <img src='tp2/screenshots/freeCam.png' width=400px>
+  <img src='tp2/screenshots/sofaView.png' width=400px>
+</p>
 
 ### [TP3 - ...](tp3)
 - (items briefly describing main strong points)
