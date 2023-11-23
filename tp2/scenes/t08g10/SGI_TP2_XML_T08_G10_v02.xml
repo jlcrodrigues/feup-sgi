@@ -633,6 +633,20 @@
                     <box xyz1="0 0 0" xyz2="11 1 6" />
                 </primitive>
                 <noderef id="plate"/>
+                <noderef id="beerTap"/>
+            </children>
+        </node>
+
+        <node id="beerTap">
+            <transforms>
+				<translate value3="11 -6 8" />
+				<scale value3="10 10 10" />
+            </transforms> 
+
+            <children>
+                <primitive>
+                    <model3d filepath="scenes/t08g10/models/beer_tap.glb" />
+                </primitive>
             </children>
         </node>
 
@@ -967,7 +981,6 @@
             </transforms> 
             <children>             
                 <noderef id="tree" />
-                <noderef id="pineTree" />
                 <noderef id="starObj" />
                 <noderef id="balls" />
             </children> 
