@@ -17,7 +17,7 @@ This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest
 - Scene
 
 <p align="center">
-  <img src='screenshots/freeCam.png' width=400px>
+  <img src='screenshots/freeCam.png' width=700px>
 </p>
 
 The house has 3 main divisions: 
