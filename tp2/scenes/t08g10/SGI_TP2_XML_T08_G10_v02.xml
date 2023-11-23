@@ -295,7 +295,7 @@
 			
         <material id="lampTopApp" 
             color="0.5 0.5 0.2 1.0" 
-            emissive="0.2 0.2 0.05 0.4" 
+            emissive="0.5 0.5 0.05 0.4" 
 			specular="0 0 0 0" 
             shininess="20"
             textureref="lampTopTex" 
@@ -386,7 +386,7 @@
 
         <node id="sled">
             <transforms>
-				<translate value3="5 0 -25" />
+				<translate value3="10 0 -30" />
                 <rotate value3="0 170 0" />
 				<scale value3="0.2 0.2 0.2" />
             </transforms> 
@@ -1198,6 +1198,7 @@
             <transforms>
                 <translate value3="-40 0 -10" />
                 <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 10 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -1206,8 +1207,9 @@
 
         <node id="treePatch6">
             <transforms>
-                <translate value3="-45 0 -30" />
+                <translate value3="-45 0 -40" />
                 <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 -10 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -1215,6 +1217,17 @@
         </node>
 
         <node id="treePatch7">
+            <transforms>
+                <translate value3="-15 0 -45" />
+                <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 -70 0"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch8">
             <transforms>
                 <translate value3="78 0 -48" />
                 <scale value3="1.2 1.3 1.2"/>
@@ -1888,6 +1901,9 @@
                 <noderef id="roadLamp1" />
                 <noderef id="roadLamp2" />
                 <noderef id="roadLamp3" />
+                <noderef id="roadLamp4" />
+                <noderef id="roadLamp5" />
+                <noderef id="roadLamp6" />
             </children> 
         </node>
 
@@ -1918,29 +1934,109 @@
             </children> 
         </node>
 
+        <node id="roadLamp4">
+            <transforms>
+                <translate value3="25 0 -7" />
+            </transforms>
+            <children>             
+                <noderef id="roadLamp" />
+            </children> 
+        </node>
+
+        <node id="roadLamp5">
+            <transforms>
+                <translate value3="-5 0 -25" />
+            </transforms>
+            <children>             
+                <noderef id="roadLamp" />
+            </children> 
+        </node>
+
+        <node id="roadLamp6">
+            <transforms>
+                <translate value3="-35 0 -7" />
+            </transforms>
+            <children>             
+                <noderef id="roadLamp" />
+            </children> 
+        </node>
+
         <node id="road">
             <transforms>
                 <translate value3="40 0 -40"/>
             </transforms>
             <materialref id="roadApp" />
             <children>
-                <noderef id="roadPath" />
+                <noderef id="roadSeg1" />
+                <noderef id="roadSeg2" />
+                <noderef id="roadSeg3" />
+                <noderef id="roadSeg4" />
+                <noderef id="roadSeg5" />
+                <noderef id="roadSeg6" />
+                <noderef id="roadSquare" />
             </children>
         </node>
 
-        <node id="roadPath">
-            <transforms>
-            </transforms>
-            <children>
-                <noderef id="roadPathSeg1" />
-                <noderef id="roadPathSeg2" />
-                <noderef id="roadPathSeg3" />
-            </children>
-        </node>
-
-        <node id="roadPathSeg1">
+        <node id="roadSeg1">
             <transforms>
                 <translate value3="0 0 -20"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy1" />
+            </children>
+        </node>
+
+        <node id="roadSeg2">
+            <transforms>
+                <translate value3="0 0 10"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy2" />
+            </children>
+        </node>
+
+        <node id="roadSeg3">
+            <transforms>
+                <translate value3="-30 0 30"/>
+                <rotate value3="0 90 0"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy1" />
+            </children>
+        </node>
+
+        <node id="roadSeg4">
+            <transforms>
+                <translate value3="-60 0 30"/>
+                <rotate value3="0 90 0"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy2" />
+            </children>
+        </node>
+
+        <node id="roadSeg5">
+            <transforms>
+                <translate value3="-90 0 30"/>
+                <rotate value3="0 90 0"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy1" />
+            </children>
+        </node>
+
+        <node id="roadSeg6">
+            <transforms>
+                <translate value3="-120 0 30"/>
+                <rotate value3="0 90 0"/>
+            </transforms>
+            <children>
+                <noderef id="roadCurvy2" />
+            </children>
+        </node>
+
+        <node id="roadCurvy1">
+            <transforms>
             </transforms>
             <children>
                 <primitive>
@@ -1948,8 +2044,8 @@
                         <controlpoint xx="0" yy="0" zz="0" />
                         <controlpoint xx="15" yy="0" zz="0" />
 
-                        <controlpoint xx="8" yy="0" zz="10" />
-                        <controlpoint xx="23" yy="0" zz="10" />
+                        <controlpoint xx="5" yy="0" zz="10" />
+                        <controlpoint xx="20" yy="0" zz="10" />
 
                         <controlpoint xx="0" yy="0" zz="30" />
                         <controlpoint xx="15" yy="0" zz="30" />
@@ -1958,9 +2054,8 @@
             </children>
         </node>
 
-        <node id="roadPathSeg2">
+        <node id="roadCurvy2">
             <transforms>
-                <translate value3="0 0 10"/>
             </transforms>
             <children>
                 <primitive>
@@ -1978,7 +2073,7 @@
             </children>
         </node>
 
-        <node id="roadPathSeg3">
+        <node id="roadSquare">
             <transforms>
                 <translate value3="0 0 40"/>
                 <rotate value3="-90 0 -90" />
