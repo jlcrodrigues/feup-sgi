@@ -1,10 +1,11 @@
 # SGI 2023/2024
 
-## Group T0xG0y
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+## Group T08G10
+
+| Name                | Number    | E-Mail            |
+| ------------------- | --------- | ----------------- |
+| José Luís Rodrigues | 202008462 | up202008462@up.pt |
+| Martim Henriques    | 202004421 | up202004421@up.pt |
 
 ----
 
@@ -22,6 +23,7 @@ It includes the infamous couches and table, as well as some background table and
 
 ### [TP2 - ...](tp2)
 This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest from his big and busy night. Apart from the house includes a road, pine trees all around, lamps, as well as his sled.
+
 <p align="center">
   <img src='tp2/screenshots/freeCam.png' width=400px>
   <img src='tp2/screenshots/sofaView.png' width=400px>
