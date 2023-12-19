@@ -64,6 +64,8 @@ class App {
    * Uses the `scene` and `camera` from the current state.
    */
   render() {
+    this.state = this.state.step();
+
     // render the scene
     this.renderer.render(this.state.getScene(), this.state.getCamera());
 

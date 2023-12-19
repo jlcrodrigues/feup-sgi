@@ -1,6 +1,6 @@
 /**
  * Abstract State class. <br>
- * Each state must have a model, view and controller and implement step().
+ * Each state must have a controller and implement step().
  */
 class State {
   constructor() {
@@ -9,15 +9,12 @@ class State {
     }
   }
 
-  view = null;
-  camera = null;
-
   getScene() {
-    return this.view.scene;
+    return this.controller.view.scene;
   }
 
   getCamera() {
-    return this.view.camera;
+    return this.controller.view.camera;
   }
 }
 

@@ -6,9 +6,4 @@ class Model {
   }
 }
 
-/*
-AbstractController.prototype.render = function () {
-  throw new Error("step method must be implemented by subclasses");
-};
-
-*/
+export { Model };

@@ -1,11 +1,11 @@
+import { GameController } from "../controllers/GameController.js";
 import { State } from "./State.js";
-import { InitialController } from "../controllers/InitialController.js";
 
-class InitialState extends State {
+class GameState extends State {
   constructor() {
     super();
 
-    this.controller = new InitialController();
+    this.controller = new GameController();
   }
 
   step() {
@@ -17,4 +17,4 @@ class InitialState extends State {
   }
 }
 
-export { InitialState };
+export { GameState };
