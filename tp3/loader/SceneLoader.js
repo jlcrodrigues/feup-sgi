@@ -15,9 +15,9 @@ class SceneLoader {
     this.scene = scene;
   }
   
-  load() {
+  load(scene) {
     this.reader = new MyFileReader(App.getInstance(), this, this.onSceneLoaded);
-    this.reader.open("assets/scenes/t08g10/SGI_TP2_XML_T08_G10_v02.xml");
+    this.reader.open(`assets/scenes/${scene}/scene.xml`);
   }
 
   /**

@@ -14,8 +14,10 @@ class GameView extends View {
             1000
         );
         this.camera.position.z = 5;
+        this.camera.position.x = 70;
+        this.camera.position.y = 60;
 
-        new SceneLoader(this.scene).load();
+        new SceneLoader(this.scene).load('monza');
     }
 }
 

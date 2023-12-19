@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<yaf> 
+	
+    <globals background="0 0 0 1" ambient="0.8 0.8 0.8 1" /> 
+
+    <fog color="0.0 0.0 0.0 1" near="0.0" far="300.0" />
+
+    <cameras initial="Free Camera" > 
+        <perspective id="Free Camera" 
+            angle="60" 
+            near="0.1" 
+            far="1000" 
+            location="-30 60 20" 
+            target="20 0 20" /> 
+    </cameras> 
+
+    <skybox size="200 200 200" center="0 50 0" emissive="0.7 0.7 0.7 1" intensity="0.3" up="assets/scenes/monza/textures/sky.jpeg" down="assets/scenes/monza/textures/snow_floor.jpeg" left="assets/scenes/monza/textures/snow_landscape.jpeg" right="assets/scenes/monza/textures/snow_landscape.jpeg" front="assets/scenes/monza/textures/snow_landscape.jpeg" back="assets/scenes/monza/textures/snow_landscape.jpeg"/>
+
+    <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
+    <textures>        
+        <texture id="treeTex" filepath="assets/scenes/monza/textures/tree.jpeg" />
+        <texture id="woodTex" filepath="assets/scenes/monza/textures/wood.png" />
+        <texture id="blackWoodTex" filepath="assets/scenes/monza/textures/black_wood.jpeg" />
+        <texture id="roadTex" filepath="assets/scenes/monza/textures/road.jpg" />
+        <texture id="roadBumpTex" filepath="assets/scenes/monza/textures/roadBump.png" />
+    </textures> 
+
+    <materials> 
+        <material id="treeApp" 
+            emissive="0.0 0.0 0.0 1" 
+            color="0.8 0.8 0.8 1.0"  
+            specular="0 0 0 0" 
+            shininess="0" 
+            textureref="treeTex" 
+            texlength_s="1" 
+            texlength_t="1"
+            wireframe = "false" />
+
+        <material id="woodApp" 
+            color="0.8 0.8 0.8 1.0" 
+            emissive="0.0 0.0 0.0 0.0" 
+			specular="0 0 0 0" 
+            shininess="10" 
+            textureref="woodTex" 
+            texlength_s="1" 
+            texlength_t="1" />
+        
+        <material id="blackWoodApp" 
+            color="0.8 0.8 0.8 1.0" 
+            emissive="0.0 0.0 0.0 0.0" 
+			specular="0 0 0 0" 
+            shininess="10" 
+            textureref="blackWoodTex" 
+            texlength_s="1" 
+            texlength_t="1" />
+			
+        <material id="roadApp" 
+            color="0.5 0.5 0.5 1.0" 
+            emissive="0.0 0.0 0.0 1" 
+			specular="0 0 0 0" 
+            shininess="20"
+            textureref="roadTex" 
+            bumpref="roadBumpTex" 
+            texlength_s="4"
+            texlength_t="4"
+        />
+			
+        <material id="groundApp" 
+            color="0.2 0.7 0.2 1.0" 
+            emissive="0.0 0.0 0.0 1" 
+			specular="0 0 0 0" 
+            shininess="20"
+        />
+    </materials> 
+
+    <graph rootid="scene">
+        <node id="scene" castshadows="true" receiveshadows="true">
+            <children>
+                <noderef id="ground" />
+                <noderef id="outsideTrees" />
+
+            </children>
+        </node>
+
+        <node id="ground">
+            <transforms>
+                <translate value3="-100 0 100" />
+                <rotate value3="-90 0 0" />
+            </transforms> 
+            <materialref id="groundApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="200 200" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="outsideTrees">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="treePatch1" />
+                <noderef id="treePatch2" />
+                <noderef id="treePatch3" />
+                <noderef id="treePatch4" />
+                <noderef id="treePatch5" />
+                <noderef id="treePatch6" />
+                <noderef id="treePatch7" />
+            </children>
+        </node>
+
+        <node id="treePatch">
+			<transforms>
+            </transforms> 
+            <children>             
+                <noderef id="treePatchTree1" />
+                <noderef id="treePatchTree2" />
+                <noderef id="treePatchTree3" />
+            </children> 
+        </node>
+
+        <node id="treePatch1">
+            <transforms>
+                <translate value3="60 0 0" />
+                <scale value3="1.0 1.2 1.0"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch2">
+            <transforms>
+                <translate value3="55 0 30" />
+                <scale value3="1.2 1.4 1.2"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch3">
+            <transforms>
+                <translate value3="20 0 55" />
+                <scale value3="1.3 1.2 1.3"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch4">
+            <transforms>
+                <translate value3="50 0 50" />
+                <scale value3="1.2 1.3 1.2"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch5">
+            <transforms>
+                <translate value3="-40 0 -10" />
+                <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 10 0"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch6">
+            <transforms>
+                <translate value3="-45 0 -40" />
+                <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 -10 0"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch7">
+            <transforms>
+                <translate value3="-15 0 -45" />
+                <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 -70 0"/>
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch8">
+            <transforms>
+                <translate value3="78 0 -48" />
+                <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 -100 0" />
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatchTree1">
+            <transforms>
+                <translate value3="13 0 5" />
+                <scale value3="1.2 1.4 1.2"/>
+            </transforms> 
+            <children>
+                <lodref id="treeLod" />
+            </children>
+        </node>
+
+        <node id="treePatchTree2">
+            <transforms>
+                <translate value3="0 0 0" />
+                <scale value3="1.2 1.0 1.2"/>
+            </transforms> 
+            <children>
+                <lodref id="treeLod" />
+            </children>
+        </node>
+
+        <node id="treePatchTree3">
+            <transforms>
+                <translate value3="0 0 10" />
+                <scale value3="1.2 1.3 1.2"/>
+            </transforms> 
+            <children>
+                <lodref id="treeLod" />
+            </children>
+        </node>
+
+        <lod id="treeLod">
+            <noderef id="tree1" mindist= "50"/>
+            <noderef id="tree2" mindist="100"/>
+            <noderef id="tree3" mindist="150"/>
+        </lod>
+
+        <node id="tree1">
+			<transforms>
+            </transforms> 
+            <children>             
+				<noderef id="trunk" />
+				<noderef id="treeSeg1" />
+				<noderef id="treeSeg2" />
+				<noderef id="treeSeg3" />
+				<noderef id="treeSeg4" />
+				<noderef id="treeSeg5" />
+            </children> 
+        </node>
+
+        <node id="tree2">
+			<transforms>
+            </transforms> 
+            <children>             
+				<noderef id="trunk" />
+				<noderef id="treeSeg1" />
+				<noderef id="treeSeg2" />
+				<noderef id="treeSeg3" />
+            </children> 
+        </node>
+
+        <node id="tree3">
+            <children>             
+				<noderef id="trunk" />
+                <noderef id="tree3Special"/>
+            </children> 
+        </node>
+
+        <node id="tree3Special">
+			<transforms>
+				<translate value3="0 6 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="3" top="0" height="8" slices="10" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="trunk">
+			<transforms>
+				<translate value3="0 1.5 0" />
+			</transforms> 
+			<materialref id="woodApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="0.9" top="0.9" height="3" slices="32" stacks="32" />
+                </primitive>
+            </children> 
+        </node>
+
+        <node id="treeSeg1">
+			<transforms>
+				<translate value3="0 4 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="3" top="1.2" height="4" slices="10" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+		
+		<node id="treeSeg2">
+			<transforms>
+				<translate value3="0 6.4 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>
+                <primitive >
+                    <cylinder base="2.3" top="0.8" height="3" slices="7" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+		
+		<node id="treeSeg3">
+			<transforms>
+				<translate value3="0 9 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="1.5" top="0" height="3" slices="10" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+		
+		<node id="treeSeg4">
+			<transforms>
+				<translate value3="0 8 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="2.3" top="0" height="3" slices="6" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+		
+		<node id="treeSeg5">
+			<transforms>
+				<translate value3="0 9.8 0" />
+            </transforms> 
+			<materialref id="treeApp" />
+            <children>             
+                <primitive>
+                    <cylinder base="1.7" top="0" height="3" slices="6" stacks="64" />
+                </primitive>
+            </children> 
+        </node>
+    </graph>
+</yaf> 

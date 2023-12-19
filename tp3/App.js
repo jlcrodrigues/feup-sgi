@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { InitialState } from "./states/InitalState.js";
+import { GameState } from "./states/GameState.js";
 
 /**
  * The main App class. This is a singleton class.
@@ -27,7 +28,7 @@ class App {
    * Creates the renderer and the inital state.
    */
   start() {
-    this.state = new InitialState();
+    this.state = new GameState();
 
     // Create a renderer with Antialiasing
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
