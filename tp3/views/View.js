@@ -15,4 +15,8 @@ class View {
   camera = null;
 }
 
+View.prototype.step = function () {
+  throw new Error("View must implement step()");
+};
+
 export { View };

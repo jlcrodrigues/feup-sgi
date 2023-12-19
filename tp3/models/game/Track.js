@@ -13,6 +13,7 @@ class Track {
         this.name = data.name;
         this.path = data.path;
         this.width = data.width;
+        this.start = data.start;
     }
 }
 

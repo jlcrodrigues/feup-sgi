@@ -24,6 +24,10 @@ class InitialView extends View {
         const ambientLight = new THREE.AmbientLight(0x404040);
         this.scene.add(ambientLight);
     }
+
+    step() {
+        
+    }
 }
 
 export { InitialView };
