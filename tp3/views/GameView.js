@@ -1,3 +1,4 @@
+import { SceneLoader } from "../loader/SceneLoader.js";
 import { View } from "./View.js";
 import * as THREE from "three";
 
@@ -14,15 +15,7 @@ class GameView extends View {
         );
         this.camera.position.z = 5;
 
-        // add a simple cube
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-        const cube = new THREE.Mesh(geometry, material);
-        this.scene.add(cube);
-
-        // ambient light
-        const ambientLight = new THREE.AmbientLight(0x040404);
-        this.scene.add(ambientLight);
+        new SceneLoader(this.scene).load();
     }
 }
 

@@ -1,15 +1,14 @@
 import * as THREE from "three";
 
 class MyCamerasBuilder {
-  static build(app, data) {
+  static build(data) {
     let cameras = [];
     for (let key in data.cameras) {
       let cameraData = data.cameras[key];
       let camera = this.buildCamera(cameraData);
       cameras[key] = camera
     }
-    app.cameras = cameras
-    app.setActiveCamera(data.activeCameraId)
+    return cameras;
   }
 
   static buildCamera(cameraData) {

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { InitialState } from "./states/InitalState.js";
 
 /**
@@ -44,6 +45,15 @@ class App {
     // manage window resizes
     window.addEventListener("resize", this.onResize.bind(this), false);
 
+      // Orbit controls allow the camera to orbit around a target.
+      // TODO: remove global controls; add this to state
+      this.controls = new OrbitControls(
+        this.state.getCamera(),
+        this.renderer.domElement
+      );
+      this.controls.enableZoom = true;
+      this.controls.update();
+
     this.render();
   }
 
@@ -65,6 +75,8 @@ class App {
    */
   render() {
     this.state = this.state.step();
+    this.controls.object = this.state.getCamera();
+    this.controls.update();
 
     // render the scene
     this.renderer.render(this.state.getScene(), this.state.getCamera());
