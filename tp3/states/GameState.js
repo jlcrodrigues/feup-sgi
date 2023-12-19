@@ -5,7 +5,7 @@ class GameState extends State {
   constructor() {
     super();
 
-    this.controller = new GameController();
+    this.controller = new GameController({ track: "monza" });
   }
 
   step() {

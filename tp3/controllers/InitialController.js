@@ -8,7 +8,7 @@ class InitialController extends Controller {
         super();
 
         this.model = new InitialModel();
-        this.view = new InitialView();
+        this.view = new InitialView(this.model);
     }
 
     step() {

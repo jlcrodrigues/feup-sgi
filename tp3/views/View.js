@@ -3,21 +3,16 @@
  * Each view belongs to a state and must define `scene` and `camera`.
  */
 class View {
-  constructor() {
+  constructor(model) {
     if (this.constructor === View) {
       throw new Error("Cannot instantiate View directly");
     }
+
+    this.model = model;
   }
 
   scene = null;
   camera = null;
 }
-
-/*
-AbstractController.prototype.render = function () {
-  throw new Error("step method must be implemented by subclasses");
-};
-
-*/
 
 export { View };

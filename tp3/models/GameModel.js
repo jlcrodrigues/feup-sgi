@@ -1,9 +1,11 @@
 import { Model } from "./Model.js";
+import { Track } from "./game/Track.js";
 
 class GameModel extends Model {
-  constructor() {
+  constructor(settings) {
     super();
-    this.counter = 0;
+
+    this.track = new Track(settings.track ?? "monza");
   }
 }
 

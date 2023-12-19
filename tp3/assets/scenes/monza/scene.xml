@@ -14,7 +14,7 @@
             target="20 0 20" /> 
     </cameras> 
 
-    <skybox size="200 200 200" center="0 50 0" emissive="0.7 0.7 0.7 1" intensity="0.3" up="assets/scenes/monza/textures/sky.jpeg" down="assets/scenes/monza/textures/snow_floor.jpeg" left="assets/scenes/monza/textures/snow_landscape.jpeg" right="assets/scenes/monza/textures/snow_landscape.jpeg" front="assets/scenes/monza/textures/snow_landscape.jpeg" back="assets/scenes/monza/textures/snow_landscape.jpeg"/>
+    <skybox size="300 300 300" center="0 50 0" emissive="0.7 0.7 0.7 1" intensity="5" up="assets/scenes/monza/textures/sky.jpeg" down="assets/scenes/monza/textures/snow_floor.jpeg" left="assets/scenes/monza/textures/snow_landscape.jpeg" right="assets/scenes/monza/textures/snow_landscape.jpeg" front="assets/scenes/monza/textures/snow_landscape.jpeg" back="assets/scenes/monza/textures/snow_landscape.jpeg"/>
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
     <textures>        

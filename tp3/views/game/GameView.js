@@ -1,10 +1,11 @@
-import { SceneLoader } from "../loader/SceneLoader.js";
-import { View } from "./View.js";
+import { SceneLoader } from "../../loader/SceneLoader.js";
+import { View } from "../View.js";
 import * as THREE from "three";
+import { TrackBuilder } from "./TrackBuilder.js";
 
 class GameView extends View {
-    constructor() {
-        super();
+    constructor(model) {
+        super(model);
     
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
@@ -18,7 +19,9 @@ class GameView extends View {
         this.camera.position.y = 60;
 
         new SceneLoader(this.scene).load('monza');
+        this.scene.add(new TrackBuilder().build(model.track));
     }
+
 }
 
 export { GameView };
