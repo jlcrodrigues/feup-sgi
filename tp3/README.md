@@ -1,20 +1,43 @@
-# SGI 2023/2024 - TP3
+# SGI 2023/2024 - TP2
 
-## Group: T0xG0y
+## Group: T08G10
 
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| José Luís Rodrigues | 202008462 | up202008462@up.pt |
+| Martim Henriques    | 202004421  | up202004421@up.pt  |
 
 ----
 ## Project information
 
-- (items describing main strong points)
+### Santa's Home
+
+This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest from his big and busy night. It includes a road, pine trees all around, lamps, as well as his sled.
+
 - Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
+
+<p align="center">
+  <img src='screenshots/freeCam.png' width=700px>
+</p>
+
+The house has 3 main divisions: 
+  - hall (presents, Santa's bag and 2 polygons);
+  - living room (sofa, rug, christmas tree, TV, Santa's picture and a fireplace);
+  - kitchen (table, plate, cookies, counter and 2 beer taps);
+
+Living room seen from the sofa:
+
+<p align="center">
+  <img src='screenshots/sofaView.png' width=500px>
+</p>
+
+And as a surprise, Santa prefers beer to milk with cookies, that's why he built this kitchen counter with the beer taps:
+
+<p align="center">
+  <img src='screenshots/counterView.png' width=500px>
+</p>
+
 ----
 ## Issues/Problems
 
-- (items describing unimplemented features, bugs, problems, etc.)
+- some lights escape between the objects
