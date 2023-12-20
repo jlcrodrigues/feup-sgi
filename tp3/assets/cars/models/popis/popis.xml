@@ -17,26 +17,26 @@
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
     <textures>        
+        <texture id="sofaTex" filepath="assets/cars/models/popis/textures/sofa.png" />
+        <texture id="sofaBumpTex" filepath="assets/cars/models/popis/textures/sofa_bump.png" />
     </textures> 
 
     <materials> 
         <material id="sofaApp" 
-            color="0.9 0.8 0.8 1.0" 
+            color="0.8 0.8 0.8 1.0" 
             emissive="0.0 0.0 0.0 0.0" 
 			specular="0 0 0 0" 
             shininess="10" 
+            textureref="sofaTex" 
+            bumpref="sofaBumpTex" 
+            bumpscale="0.1"
             />
     </materials> 
 
     <graph rootid="model">
         <node id="model" castshadows="true" receiveshadows="true">
-            <children>
-                <noderef id="sofa" />
-            </children>
-        </node>
-
-        <node id="sofa">
             <transforms>
+                <translate value3="-2.25 0 -5"/>
             </transforms>
             <materialref id="sofaApp" />
             <children>

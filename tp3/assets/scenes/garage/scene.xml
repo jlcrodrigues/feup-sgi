@@ -49,13 +49,13 @@
 
         <node id="ground">
             <transforms>
-                <translate value3="0 0 0" />
+                <translate value3="-100 0 100" />
                 <rotate value3="-90 0 0" />
             </transforms> 
             <materialref id="groundApp" />
             <children>
                 <primitive>
-                    <rectangle xy1="0 0" xy2="100 100" />
+                    <rectangle xy1="0 0" xy2="200 200" />
                 </primitive>
             </children>
         </node>

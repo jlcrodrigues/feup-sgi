@@ -19,10 +19,10 @@ class GameView extends View {
     this.camera.position.z = -20;
     this.camera.position.y = 20;
 
-    new SceneLoader(this.scene).load("monza");
+    new SceneLoader(this.scene).load("assets/scenes/monza/scene.xml");
     this.scene.add(new TrackBuilder().build(model.track));
 
-    this.car = this.loadCar();
+    this.car = this.model.car.model
     this.scene.add(this.car);
   }
 
@@ -39,39 +39,6 @@ class GameView extends View {
 
     this.camera.position.lerp(targetPosition, dampingFactor);
     this.camera.lookAt(this.car.position);
-  }
-
-  loadCar() {
-    // TODO: load cars
-    const car = new THREE.Group();
-    const bodyGeometry = new THREE.BoxGeometry(4, 2, 2);
-    const bodyMaterial = new THREE.MeshLambertMaterial({ color: 0xff0000 });
-    const bodyMesh = new THREE.Mesh(bodyGeometry, bodyMaterial);
-    car.add(bodyMesh);
-    const wheelGeometry = new THREE.BoxGeometry(1, 1, 1);
-    const wheelMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 });
-    const wheelFLMesh = new THREE.Mesh(wheelGeometry, wheelMaterial);
-    wheelFLMesh.position.set(-1.5, -0.5, 1);
-    car.add(wheelFLMesh);
-    const wheelFRMesh = new THREE.Mesh(wheelGeometry, wheelMaterial);
-    wheelFRMesh.position.set(-1.5, -0.5, -1);
-    car.add(wheelFRMesh);
-    const wheelBLMesh = new THREE.Mesh(wheelGeometry, wheelMaterial);
-    wheelBLMesh.position.set(1.5, -0.5, 1);
-    car.add(wheelBLMesh);
-    const wheelBRMesh = new THREE.Mesh(wheelGeometry, wheelMaterial);
-    wheelBRMesh.position.set(1.5, -0.5, -1);
-    car.add(wheelBRMesh);
-
-    // something in the front
-    const frontGeometry = new THREE.BoxGeometry(1, 1, 1);
-    const frontMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 });
-    const frontMesh = new THREE.Mesh(frontGeometry, frontMaterial);
-    frontMesh.position.set(-2, 0.5, 0);
-    car.add(frontMesh);
-
-    car.translateY(1);
-    return car;
   }
 }
 
