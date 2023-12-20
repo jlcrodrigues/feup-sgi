@@ -16,10 +16,11 @@ const movements = {
 class GameModel extends Model {
   constructor(settings) {
     super();
+    this.settings = settings;
 
     this.track = new Track(settings.track ?? "monza");
 
-    this.car = new Car();
+    this.car = settings.car;
     this.car.position = this.track.start;
   }
 

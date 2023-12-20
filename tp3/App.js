@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { InitialState } from "./states/InitalState.js";
 import { GameState } from "./states/GameState.js";
+import { GarageState } from "./states/GarageState.js";
 
 const controlsActive = false;
 
