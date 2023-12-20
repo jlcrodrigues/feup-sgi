@@ -33,9 +33,9 @@ class GameView extends View {
     this.car.rotation.y = -this.model.car.rotation;
 
     const targetPosition = this.car.position.clone();
-    targetPosition.y += 20;
-    targetPosition.x -= 30 * Math.cos(-this.car.rotation.y);
-    targetPosition.z -= 30 * Math.sin(-this.car.rotation.y);
+    targetPosition.y += 10;
+    targetPosition.x -= 20 * Math.cos(-this.car.rotation.y);
+    targetPosition.z -= 20 * Math.sin(-this.car.rotation.y);
 
     this.camera.position.lerp(targetPosition, dampingFactor);
     this.camera.lookAt(this.car.position);

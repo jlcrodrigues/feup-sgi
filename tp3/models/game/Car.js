@@ -1,10 +1,10 @@
-const defaultMaxSpeed = 0.7;
-const accelerationDelta = 0.01;
+const defaultMaxSpeed = 1.4;
+const accelerationDelta = 0.001;
 const maxAcceleration = 0.02;
 const dragFactor = 0.99;
-const reverseFactor = 0.5;
+const reverseFactor = 0.3;
 
-const defaultAngularSpeed = 0.05;
+const defaultAngularSpeed = 0.02;
 
 /**
  * Defines a car and handles movement. <br>
@@ -54,7 +54,7 @@ class Car {
       }
     } else if (this.moving.down) {
       if (this.speed > 0) {
-        this.acceleration = -maxAcceleration;
+        this.acceleration = -maxAcceleration * reverseFactor;
       } else {
         if (
           this.acceleration > -(maxAcceleration * reverseFactor)
