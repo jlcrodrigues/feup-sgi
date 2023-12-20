@@ -15,9 +15,9 @@ class InitialView extends View {
         this.camera.position.z = 5;
 
         // Create a menu panel
-        const panelGeometry = new THREE.BoxGeometry(4, 2, 0.1);
-        const panelMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
-        this.panel = new THREE.Mesh(panelGeometry, panelMaterial);
+        const menuPanelGeometry = new THREE.BoxGeometry(4, 2, 0.1);
+        const menuPanelMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
+        const menuPanel = new THREE.Mesh(menuPanelGeometry, menuPanelMaterial);
 
         // Create a Play button
         const playButtonGeometry = new THREE.BoxGeometry(1.2, 0.7, 0.1);
@@ -31,21 +31,22 @@ class InitialView extends View {
         const playButtonMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, map: playButtonTexture });
         const playButton = new THREE.Mesh(playButtonGeometry, playButtonMaterial);
         playButton.position.set(-1, 0, 0.05);
-        this.panel.add(playButton);
+        menuPanel.add(playButton);
 
         // Create an Exit button
         const exitButtonGeometry = new THREE.BoxGeometry(1.2, 0.7, 0.1);
         const exitButtonMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
         const exitButton = new THREE.Mesh(exitButtonGeometry, exitButtonMaterial);
         exitButton.position.set(1, 0, 0.05);
-        this.panel.add(exitButton);
+        menuPanel.add(exitButton);
 
+        // Create selection border
         const borderGeometry = new THREE.BoxGeometry(1.25, 0.75, 0.1);
         const borderMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         this.border = new THREE.Mesh(borderGeometry, borderMaterial);  
-        this.panel.add(this.border);
+        menuPanel.add(this.border);
 
-        this.scene.add(this.panel);
+        this.scene.add(menuPanel);
 
         // ambient light
         const ambientLight = new THREE.AmbientLight(0xeeeeee);
@@ -53,19 +54,9 @@ class InitialView extends View {
     }
 
     step() {
+        //update border position
+        this.border.position.set(this.model.menu.selected,0,0);
 
-        switch (this.model.action['left']){
-            case true: {
-                this.border.position.set(-1, 0, 0.01);
-                break
-            }
-            case false: {
-                this.border.position.set(1, 0, 0.01);
-                break
-            }
-        }
-        this.panel.add(this.border);
-        this.scene.add(this.panel);
     }
 }
 

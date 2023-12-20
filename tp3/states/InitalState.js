@@ -7,13 +7,12 @@ class InitialState extends State {
     super();
 
     this.controller = new InitialController();
-    console.log(this.controller)
   }
 
   step() {
     const state = this.controller.step();
-    if (state == 'game' ) {
-      return new GameState();
+    if (state instanceof GameState ) {
+      return state;
     }
     return this;
   }

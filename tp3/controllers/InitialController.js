@@ -10,25 +10,18 @@ class InitialController extends Controller {
         this.model = new InitialModel();
         this.view = new InitialView(this.model);
         
-        const movements = {
-            "ArrowLeft": "left",
-            "ArrowRight": "right",
-            "ArrowUp": "left",
-            "ArrowDown": "right",
-            "Enter": "enter"
-        }
-
         document.addEventListener("keydown", (event) => {
-            this.model.updateMenuPanel(movements[event.code], true);
+            this.model.processInput(event.code);
         });
       
     }
 
     
     step() {
+        // this.model.step();
         this.view.step();
-        if (this.model.state == 'game')
-            return "game";
+        if (this.model.state == 'play')
+            return new GameState();
         return null;
     }
 }

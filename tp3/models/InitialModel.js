@@ -1,33 +1,29 @@
 import { Model } from "./Model.js";
+import { MainMenu } from "./menu/MainMenu.js";
+
+const keyInputs = {
+  ArrowLeft: "left",
+  ArrowRight: "right",
+  ArrowUp: "left",
+  ArrowDown: "right",
+  Enter: "enter"
+}
 
 class InitialModel extends Model {
   constructor() {
     super();
 
-    this.action ={
-      left: true,
-      right: false,
-    }
+    this.menu = new MainMenu();
+
   }
 
-  updateMenuPanel(key, value){
-    switch (key){
-      case 'left': 
-        this.action[key] = value;
-        this.action['right'] = false;
-        break
-      case 'right':
-        this.action[key] = value;
-        this.action['left'] = false;
-        break
-      case 'enter':
-        if(this.action['left']){
-          this.state = 'game'
-        }
-        break
+  step(){}
+
+  processInput(key){
+    const input = keyInputs[key];
+    if (input){
+      this.state = this.menu.processInput(input)
     }
-    console.log(this.action);
-      
   }
 }
 
