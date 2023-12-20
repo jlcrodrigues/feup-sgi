@@ -26,8 +26,10 @@ class GameView extends View {
     }
 
     step() {
-        this.car.position.x = this.model.carPosition.x;
-        this.car.position.z = this.model.carPosition.z;
+        this.car.position.x = this.model.car.position.x;
+        this.car.position.z = this.model.car.position.z;
+
+        this.car.rotation.y = -this.model.car.rotation;
     }
 
     loadCar() {
@@ -51,6 +53,14 @@ class GameView extends View {
         const wheelBRMesh = new THREE.Mesh(wheelGeometry, wheelMaterial);
         wheelBRMesh.position.set(1.5, -0.5, -1);
         car.add(wheelBRMesh);
+
+        // something in the front
+        const frontGeometry = new THREE.BoxGeometry(1, 1, 1);
+        const frontMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 });
+        const frontMesh = new THREE.Mesh(frontGeometry, frontMaterial);
+        frontMesh.position.set(-2, 0.5, 0);
+        car.add(frontMesh);
+        
         car.translateY(1);
         return car;
     }
