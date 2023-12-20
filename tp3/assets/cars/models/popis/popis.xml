@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<yaf> 
+	
+    <globals background="0 0 0 1" ambient="0.8 0.8 0.8 1" /> 
+
+    <skybox size="0 0 0" center="0 50 0" emissive="0.7 0.7 0.7 1" intensity="5" up="assets/scenes/monza/textures/sky.jpeg" down="assets/scenes/monza/textures/snow_floor.jpeg" left="assets/scenes/monza/textures/snow_landscape.jpeg" right="assets/scenes/monza/textures/snow_landscape.jpeg" front="assets/scenes/monza/textures/snow_landscape.jpeg" back="assets/scenes/monza/textures/snow_landscape.jpeg"/>
+    <fog color="0.5 0.5 0.5 1" near="0.0" far="300.0" />
+
+    <cameras initial="Free Camera" > 
+        <perspective id="Free Camera" 
+            angle="60" 
+            near="0.1" 
+            far="1000" 
+            location="-30 60 20" 
+            target="20 0 20" /> 
+    </cameras> 
+
+    <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
+    <textures>        
+    </textures> 
+
+    <materials> 
+        <material id="sofaApp" 
+            color="0.9 0.8 0.8 1.0" 
+            emissive="0.0 0.0 0.0 0.0" 
+			specular="0 0 0 0" 
+            shininess="10" 
+            />
+    </materials> 
+
+    <graph rootid="model">
+        <node id="model" castshadows="true" receiveshadows="true">
+            <children>
+                <noderef id="sofa" />
+            </children>
+        </node>
+
+        <node id="sofa">
+            <transforms>
+            </transforms>
+            <materialref id="sofaApp" />
+            <children>
+                <noderef id="seat" />
+                <noderef id="backrest" />
+                <noderef id="armrest1" />
+                <noderef id="armrest2" />
+            </children>
+        </node>
+
+        <node id="seat">
+            <materialref id="sofaApp" />
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="4.5 2.5 10" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="backrest">
+            <transforms>
+                <translate value3="3 2 0" />
+                <rotate value3="0 0 -10"/>
+            </transforms>
+            <materialref id="sofaApp" />
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="1.5 4 10" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="armrest1">
+            <transforms>
+                <translate value3="1.5 2.8 0.3" />
+                <rotate value3="0 0 90"/>
+            </transforms>
+            <materialref id="sofaApp" />
+            <children>
+                <primitive>
+                    <cylinder base="0.8" top="0.8" height="3.5" slices="32" stacks="32" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="armrest2">
+            <transforms>
+                <translate value3="1.5 2.8 9.8" />
+                <rotate value3="0 0 90"/>
+            </transforms>
+            <materialref id="sofaApp" />
+            <children>
+                <primitive>
+                    <cylinder base="0.8" top="0.8" height="3.5" slices="32" stacks="32" />
+                </primitive>
+            </children>
+        </node>
+    </graph>
+</yaf> 

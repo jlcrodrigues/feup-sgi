@@ -1,10 +1,6 @@
-const defaultMaxSpeed = 1.4;
 const accelerationDelta = 0.001;
-const maxAcceleration = 0.02;
 const dragFactor = 0.99;
 const reverseFactor = 0.3;
-
-const defaultAngularSpeed = 0.02;
 
 /**
  * Defines a car and handles movement. <br>
@@ -15,8 +11,12 @@ const defaultAngularSpeed = 0.02;
  *  - 
  */
 class Car {
-  constructor() {
-    this.maxSpeed = defaultMaxSpeed;
+  constructor(defaultMaxSpeed = 1.4, defaultAngularSpeed = 0.02, maxAcceleration = 0.02) {
+    this.defaultMaxSpeed = defaultMaxSpeed;
+    this.defaultAngularSpeed = defaultAngularSpeed;
+    this.maxAcceleration = maxAcceleration;
+
+    this.maxSpeed = this.defaultMaxSpeed;
 
     // Modular Velocity
     this.speed = 0;
@@ -49,15 +49,15 @@ class Car {
   updateAcceleration() {
     // Modular Velocity
     if (this.moving.up) {
-      if (this.acceleration < maxAcceleration) {
+      if (this.acceleration < this.maxAcceleration) {
         this.acceleration += accelerationDelta;
       }
     } else if (this.moving.down) {
       if (this.speed > 0) {
-        this.acceleration = -maxAcceleration * reverseFactor;
+        this.acceleration = -this.maxAcceleration * reverseFactor;
       } else {
         if (
-          this.acceleration > -(maxAcceleration * reverseFactor)
+          this.acceleration > -(this.maxAcceleration * reverseFactor)
         ) {
           this.acceleration -= accelerationDelta;
         }
@@ -71,10 +71,10 @@ class Car {
         this.angularSpeed = 0;
     }
     else if (this.moving.left && !this.moving.right) {
-        this.angularSpeed = -defaultAngularSpeed;
+        this.angularSpeed = -this.defaultAngularSpeed;
     }
     else if (this.moving.right && !this.moving.left) {
-        this.angularSpeed = defaultAngularSpeed;
+        this.angularSpeed = this.defaultAngularSpeed;
     }
   }
 

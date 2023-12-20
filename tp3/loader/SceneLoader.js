@@ -15,9 +15,9 @@ class SceneLoader {
     this.scene = scene;
   }
   
-  load(scene) {
+  load(scenePath) {
     this.reader = new MyFileReader(App.getInstance(), this, this.onSceneLoaded);
-    this.reader.open(`assets/scenes/${scene}/scene.xml`);
+    this.reader.open(scenePath);
   }
 
   /**

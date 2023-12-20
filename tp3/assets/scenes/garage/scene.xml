@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<yaf> 
+	
+    <globals background="0 0 0 1" ambient="0.8 0.8 0.8 1" /> 
+
+    <cameras initial="Free Camera" > 
+        <perspective id="Free Camera" 
+            angle="60" 
+            near="0.1" 
+            far="1000" 
+            location="-30 60 20" 
+            target="20 0 20" /> 
+    </cameras> 
+
+    <skybox size="0 0 0" center="0 50 0" emissive="0.7 0.7 0.7 1" intensity="5" up="assets/scenes/monza/textures/sky.jpeg" down="assets/scenes/monza/textures/snow_floor.jpeg" left="assets/scenes/monza/textures/snow_landscape.jpeg" right="assets/scenes/monza/textures/snow_landscape.jpeg" front="assets/scenes/monza/textures/snow_landscape.jpeg" back="assets/scenes/monza/textures/snow_landscape.jpeg"/>
+    <fog color="0.5 0.5 0.5 1" near="0.0" far="300.0" />
+
+    <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
+    <textures>        
+    </textures> 
+
+    <materials> 
+        <material id="roadApp" 
+            color="0.5 0.5 0.5 1.0" 
+            emissive="0.0 0.0 0.0 1" 
+			specular="0 0 0 0" 
+            shininess="20"
+            textureref="roadTex" 
+            bumpref="roadBumpTex" 
+            texlength_s="4"
+            texlength_t="4"
+        />
+			
+        <material id="groundApp" 
+            color="0.2 0.7 0.2 1.0" 
+            emissive="0.0 0.0 0.0 1" 
+			specular="0 0 0 0" 
+            shininess="20"
+        />
+    </materials> 
+
+    <graph rootid="scene">
+        <node id="scene" castshadows="true" receiveshadows="true">
+            <children>
+                <noderef id="ground" />
+
+            </children>
+        </node>
+
+        <node id="ground">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="-90 0 0" />
+            </transforms> 
+            <materialref id="groundApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="100 100" />
+                </primitive>
+            </children>
+        </node>
+
+    </graph>
+</yaf> 

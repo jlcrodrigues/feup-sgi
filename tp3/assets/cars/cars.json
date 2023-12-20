@@ -1,0 +1,11 @@
+{
+    "cars": [
+        {
+            "name": "Popis",
+            "path": "models/popis/popis.xml",
+            "maxSpeed": 1.4,
+            "defaultAngularSpeed": 0.02,
+            "maxAcceleration": 0.02
+        }
+    ]
+}

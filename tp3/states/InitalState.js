@@ -7,7 +7,6 @@ class InitialState extends State {
     super();
 
     this.controller = new InitialController();
-    console.log(this.controller)
   }
 
   step() {
