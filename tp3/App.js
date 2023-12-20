@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { InitialState } from "./states/InitalState.js";
 import { GameState } from "./states/GameState.js";
+import { GarageState } from "./states/GarageState.js";
 
 const controlsActive = false;
 
@@ -30,7 +31,7 @@ class App {
    * Creates the renderer and the inital state.
    */
   start() {
-    this.state = new GameState();
+    this.state = new GarageState({});
 
     // Create a renderer with Antialiasing
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
