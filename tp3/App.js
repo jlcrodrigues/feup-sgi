@@ -3,6 +3,8 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { InitialState } from "./states/InitalState.js";
 import { GameState } from "./states/GameState.js";
 
+const controlsActive = false;
+
 /**
  * The main App class. This is a singleton class.
  */
@@ -46,14 +48,16 @@ class App {
     // manage window resizes
     window.addEventListener("resize", this.onResize.bind(this), false);
 
-      // Orbit controls allow the camera to orbit around a target.
-      // TODO: remove global controls; add this to state
+    // Orbit controls allow the camera to orbit around a target.
+    // TODO: remove global controls; add this to state
+    if (controlsActive) {
       this.controls = new OrbitControls(
         this.state.getCamera(),
         this.renderer.domElement
       );
       this.controls.enableZoom = true;
       this.controls.update();
+    }
 
     this.render();
   }
@@ -62,7 +66,10 @@ class App {
    * Window resize handler.
    */
   onResize() {
-    if (this.state.getCamera() !== undefined && this.state.getCamera() !== null) {
+    if (
+      this.state.getCamera() !== undefined &&
+      this.state.getCamera() !== null
+    ) {
       this.state.getCamera().aspect = window.innerWidth / window.innerHeight;
       this.state.getCamera().updateProjectionMatrix();
       this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -76,8 +83,10 @@ class App {
    */
   render() {
     this.state = this.state.step();
-    this.controls.object = this.state.getCamera();
-    this.controls.update();
+    if (controlsActive) {
+      this.controls.object = this.state.getCamera();
+      this.controls.update();
+    }
 
     // render the scene
     this.renderer.render(this.state.getScene(), this.state.getCamera());
