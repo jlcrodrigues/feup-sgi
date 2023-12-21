@@ -32,14 +32,14 @@ class InitialView extends View {
         // playButtonTexture.offset.set( 0.2, 0.2 );        
         const playButtonMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, map: playButtonTexture });
         const playButton = new THREE.Mesh(playButtonGeometry, playButtonMaterial);
-        playButton.position.set(-1, 0, 0.05);
+        playButton.position.set(...this.model.playButtonPosition);
         menuPanel.add(playButton);
 
         // Create an Exit button
         const exitButtonGeometry = new THREE.BoxGeometry(1.2, 0.7, 0.1);
         const exitButtonMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
         const exitButton = new THREE.Mesh(exitButtonGeometry, exitButtonMaterial);
-        exitButton.position.set(1, 0, 0.05);
+        exitButton.position.set(...this.model.exitButtonPosition);
         menuPanel.add(exitButton);
 
         // Create selection border
@@ -57,10 +57,10 @@ class InitialView extends View {
 
     step() {
         //update border position
-        this.border.position.set(this.model.selected,0,0.01);
+        this.border.position.set(this.model.selected[0],this.model.selected[1],0.01);
 
         const targetPosition = this.camera.position.clone();
-        targetPosition.x = this.model.selected/2;
+        targetPosition.x = this.model.selected[0]/2;
 
         this.camera.position.lerp(targetPosition, dampingFactor);
 

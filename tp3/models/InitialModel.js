@@ -12,10 +12,10 @@ class InitialModel extends Model {
   constructor() {
     super();
 
-    this.playPosition = -1
-    this.exitPosition = 1
+    this.playButtonPosition = [-1,0,0.05]
+    this.exitButtonPosition = [1,0,0.05]
 
-    this.selected = this.playPosition
+    this.selected = this.playButtonPosition
 
   }
 
@@ -24,9 +24,9 @@ class InitialModel extends Model {
   processInput(key){
     const input = keyInputs[key];
     switch (input){
-      case 'left': this.selected = this.playPosition; break;
-      case 'right': this.selected = this.exitPosition; break;
-      case 'enter': if (this.selected == -1){ this.state = 'play';}
+      case 'left': this.selected = this.playButtonPosition; break;
+      case 'right': this.selected = this.exitButtonPosition; break;
+      case 'enter': if (this.selected == this.playButtonPosition){ this.state = 'play';}
     }
   }
 }
