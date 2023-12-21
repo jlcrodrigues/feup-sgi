@@ -22,6 +22,9 @@ class GameModel extends Model {
 
     this.car = settings.car;
     this.car.position = this.track.start;
+
+    this.opponent = settings.opponent;
+    this.opponent.position = this.track.start;
   }
 
   step() {

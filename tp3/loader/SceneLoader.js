@@ -34,11 +34,13 @@ class SceneLoader {
     this.cameras = MyCamerasBuilder.build(data);
 
     // Set global settings: fov, ambient & background
-    this.scene.fog = new THREE.Fog(
-      data.fog.color,
-      data.fog.near,
-      data.fog.far
-    );
+    if (data.fog) {
+      this.scene.fog = new THREE.Fog(
+        data.fog.color,
+        data.fog.near,
+        data.fog.far
+      );
+    }
     const ambientLight = new THREE.AmbientLight(data.options.ambient);
     this.scene.add(ambientLight);
     this.scene.background = data.options.background;

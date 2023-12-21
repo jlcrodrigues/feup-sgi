@@ -4,7 +4,7 @@ import { InitialState } from "./states/InitalState.js";
 import { GameState } from "./states/GameState.js";
 import { GarageState } from "./states/GarageState.js";
 
-const controlsActive = false;
+const controlsActive = true;
 
 /**
  * The main App class. This is a singleton class.
@@ -31,7 +31,7 @@ class App {
    * Creates the renderer and the inital state.
    */
   start() {
-    this.state = new InitialState();
+    this.state = new GarageState();
 
     // Create a renderer with Antialiasing
     this.renderer = new THREE.WebGLRenderer({ antialias: true });

@@ -6,6 +6,10 @@ class GameState extends State {
     super();
     this.settings = settings ?? {};
     if (!this.settings.track) this.settings.track = "monza";
+    if (!this.settings.opponent) {
+      this.settings.opponent = JSON.parse(JSON.stringify(this.settings.car));
+      this.settings.opponent.model = this.settings.car.model.clone()
+    }
 
     this.controller = new GameController(this.settings);
   }
