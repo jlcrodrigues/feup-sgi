@@ -39,8 +39,8 @@ class GameView extends View {
     targetPosition.x -= 20 * Math.cos(-this.car.rotation.y);
     targetPosition.z -= 20 * Math.sin(-this.car.rotation.y);
 
-    //this.camera.position.lerp(targetPosition, dampingFactor);
-    //this.camera.lookAt(this.car.position);
+    this.camera.position.lerp(targetPosition, dampingFactor);
+    this.camera.lookAt(this.car.position);
 
 
     const currentPosition = this.opponent.position.clone();
