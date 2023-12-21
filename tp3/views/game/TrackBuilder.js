@@ -4,7 +4,7 @@ import * as THREE from "three";
 class TrackBuilder {
   build(track) {
     //Curve related attributes
-    this.segments = 100;
+    this.segments = 1000;
     this.width = track.width;
     this.textureRepeat = 1;
     this.showLine = true;

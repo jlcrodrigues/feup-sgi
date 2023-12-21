@@ -4,10 +4,10 @@ import { State } from "./State.js";
 class GameState extends State {
   constructor(settings) {
     super();
-    this.settings = settings;
-    if (!settings.track) settings.track = "monza";
+    this.settings = settings ?? {};
+    if (!this.settings.track) this.settings.track = "monza";
 
-    this.controller = new GameController(settings);
+    this.controller = new GameController(this.settings);
   }
 
   step() {

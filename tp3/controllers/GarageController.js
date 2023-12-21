@@ -6,9 +6,9 @@ import { Controller } from "./Controller.js";
 class GarageController extends Controller {
   constructor(settings) {
     super();
-    this.settings = settings
+    this.settings = settings ?? {}
 
-    this.model = new GarageModel(settings);
+    this.model = new GarageModel(this.settings);
     this.view = new GarageView(this.model);
 
     document.addEventListener("keydown", (event) => {
