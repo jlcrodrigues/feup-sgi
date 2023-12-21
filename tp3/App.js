@@ -4,7 +4,7 @@ import { InitialState } from "./states/InitalState.js";
 import { GameState } from "./states/GameState.js";
 import { GarageState } from "./states/GarageState.js";
 
-const controlsActive = true;
+const controlsActive = false;
 
 /**
  * The main App class. This is a singleton class.
