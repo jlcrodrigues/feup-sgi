@@ -1,5 +1,4 @@
 import { Model } from "./Model.js";
-import { MainMenu } from "./menu/MainMenu.js";
 
 const keyInputs = {
   ArrowLeft: "left",
@@ -13,7 +12,10 @@ class InitialModel extends Model {
   constructor() {
     super();
 
-    this.menu = new MainMenu();
+    this.playPosition = -1
+    this.exitPosition = 1
+
+    this.selected = this.playPosition
 
   }
 
@@ -21,8 +23,10 @@ class InitialModel extends Model {
 
   processInput(key){
     const input = keyInputs[key];
-    if (input){
-      this.state = this.menu.processInput(input)
+    switch (input){
+      case 'left': this.selected = this.playPosition; break;
+      case 'right': this.selected = this.exitPosition; break;
+      case 'enter': if (this.selected == -1){ this.state = 'play';}
     }
   }
 }

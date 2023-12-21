@@ -1,6 +1,8 @@
 import { View } from "./View.js";
 import * as THREE from "three";
 
+const dampingFactor = 0.1
+
 class InitialView extends View {
     constructor(model) {
         super(model);
@@ -55,8 +57,15 @@ class InitialView extends View {
 
     step() {
         //update border position
-        this.border.position.set(this.model.menu.selected,0,0);
+        this.border.position.set(this.model.selected,0,0.01);
 
+        const targetPosition = this.camera.position.clone();
+        targetPosition.x = this.model.selected/2;
+
+        this.camera.position.lerp(targetPosition, dampingFactor);
+
+        const lookAt = this.camera.position.clone();
+        this.camera.lookAt(lookAt.x*1.5, 0, 0); 
     }
 }
 

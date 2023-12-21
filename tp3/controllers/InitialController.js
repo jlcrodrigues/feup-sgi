@@ -1,5 +1,5 @@
 import { InitialModel } from "../models/InitialModel.js";
-import { GameState } from "../states/GameState.js";
+import { RaceMenuState } from "../states/RaceMenuState.js";
 import { InitialView } from "../views/InitialView.js";
 import { Controller } from "./Controller.js";
 
@@ -21,7 +21,7 @@ class InitialController extends Controller {
         // this.model.step();
         this.view.step();
         if (this.model.state == 'play')
-            return new GameState();
+            return new RaceMenuState();
         return null;
     }
 }
