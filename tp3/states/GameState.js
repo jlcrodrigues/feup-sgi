@@ -10,6 +10,7 @@ class GameState extends State {
       this.settings.opponent = JSON.parse(JSON.stringify(this.settings.car));
       this.settings.opponent.model = this.settings.car.model.clone()
     }
+    this.settings.laps = this.settings.laps ?? 3;
 
     this.controller = new GameController(this.settings);
   }

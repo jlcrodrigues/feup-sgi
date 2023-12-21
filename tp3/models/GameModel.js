@@ -1,6 +1,7 @@
 import { Model } from "./Model.js";
 import { Car } from "./game/Car.js";
 import { Track } from "./game/Track.js";
+import * as THREE from "three";
 
 const movements = {
   ArrowLeft: "left",
@@ -25,10 +26,31 @@ class GameModel extends Model {
 
     this.opponent = settings.opponent;
     this.opponent.position = this.track.start;
+
+    this.laps = 0;
+    this.checkpoint = new THREE.Vector3(...this.track.path[this.track.path.length / 2])
+    this.checkpoint.x = - this.checkpoint.x;
+    this.start = new THREE.Vector3(this.track.start.x, this.track.start.y, this.track.start.z)
+    this.start.x = - this.start.x;
+    this.lapStart = new Date();
+    this.lastLap = null
   }
 
   step() {
     this.car.move();
+
+    if (this.car.model.position.distanceTo(this.start) <= this.track.width && (this.laps - Math.floor(this.laps) != 0)) {
+      this.lastLap = ((new Date()) - this.lapStart) / 1000
+      this.lapStart = new Date()
+      this.laps += 0.5;
+    }
+    if (this.car.model.position.distanceTo(this.checkpoint) <= this.track.width * 2 && (this.laps - Math.floor(this.laps) == 0)) {
+      this.laps += 0.5;
+    }
+
+    if (this.laps >= this.settings.laps) {
+      return true;
+    }
   }
 
   processInput(code, down) {

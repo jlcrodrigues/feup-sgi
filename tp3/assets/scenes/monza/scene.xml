@@ -78,6 +78,26 @@
                 <noderef id="ground" />
                 <noderef id="outsideTrees" />
 
+                <noderef id="line1" />
+                <noderef id="line2" />
+            </children>
+        </node>
+
+        <node id="line1">
+            <transforms>
+                <translate value3="0 0 -10" />
+            </transforms> 
+            <children>
+                <noderef id="tree1" />
+            </children>
+        </node>
+
+        <node id="line2">
+            <transforms>
+                <translate value3="0 0 10" />
+            </transforms> 
+            <children>
+                <noderef id="tree1" />
             </children>
         </node>
 

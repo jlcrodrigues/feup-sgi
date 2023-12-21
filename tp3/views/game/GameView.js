@@ -26,9 +26,26 @@ class GameView extends View {
     this.scene.add(this.car);
 
     this.loadOpponent();
+
+    document.querySelector("#top-left").innerHTML = '<p id="laps"></p>';
+    document.querySelector("#top-left").innerHTML +=
+      '<p id="elapsed-time"></p>';
+    document.querySelector("#top-left").innerHTML += '<p id="last-lap"></p>';
   }
 
   step() {
+    document.querySelector("#laps").innerHTML = `${Math.floor(
+      this.model.laps
+    )} / ${this.model.settings.laps}`;
+    document.querySelector("#elapsed-time").innerHTML = `${Math.floor(
+      (new Date() - this.model.lapStart) / 1000
+    )} s`;
+    if (this.model.lastLap) {
+      document.querySelector(
+        "#last-lap"
+      ).innerHTML = `Last lap: ${this.model.lastLap.toFixed(3)} s`;
+    }
+
     this.car.position.x = this.model.car.position.x;
     this.car.position.z = this.model.car.position.z;
 
@@ -42,13 +59,13 @@ class GameView extends View {
     this.camera.position.lerp(targetPosition, dampingFactor);
     this.camera.lookAt(this.car.position);
 
-
     const currentPosition = this.opponent.position.clone();
     if (this.mixer) this.mixer.update(0.01);
     const nextPosition = this.opponent.position.clone();
 
     const direction = new THREE.Vector3().subVectors(
-      nextPosition, currentPosition
+      nextPosition,
+      currentPosition
     );
 
     direction.normalize();
@@ -66,7 +83,8 @@ class GameView extends View {
       this.model.track.route.values
     );
 
-    const limit = this.model.track.route.times[this.model.track.route.times.length - 1]
+    const limit =
+      this.model.track.route.times[this.model.track.route.times.length - 1];
     const clip = new THREE.AnimationClip("positionClip", limit, [positionKF]);
 
     this.mixer = new THREE.AnimationMixer(this.opponent);
