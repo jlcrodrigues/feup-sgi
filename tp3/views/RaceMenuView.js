@@ -22,24 +22,27 @@ class RaceMenuView extends View {
         const menuPanel = new THREE.Mesh(menuPanelGeometry, menuPanelMaterial);
 
         // Create a Play button
-        const garageButtonGeometry = new THREE.BoxGeometry(1.5, 0.7, 0.1);
+        const garageButtonGeometry = new THREE.BoxGeometry(...this.model.buttonSize);
         const garageButtonMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
         const garageButton = new THREE.Mesh(garageButtonGeometry, garageButtonMaterial);
-        garageButton.position.set(this.model.garageButtonPosition, 0.75, 0.05);
+        garageButton.position.set(...this.model.garageButtonPosition);
         menuPanel.add(garageButton);
 
         // Create an Exit button
-        const trackButtonGeometry = new THREE.BoxGeometry(1.5, 0.7, 0.1);
+        const trackButtonGeometry = new THREE.BoxGeometry(...this.model.buttonSize);
         const trackButtonMaterial = new THREE.MeshBasicMaterial({ color: 0x0fa0f0 });
         const trackButton = new THREE.Mesh(trackButtonGeometry, trackButtonMaterial);
-        trackButton.position.set(this.model.trackButtonPosition, 0.75, 0.05);
+        trackButton.position.set(...this.model.trackButtonPosition);
         menuPanel.add(trackButton);
 
-        // Create selection border
-        const borderGeometry = new THREE.BoxGeometry(1.55, 0.75, 0.1);
-        const borderMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-        this.border = new THREE.Mesh(borderGeometry, borderMaterial);  
-        menuPanel.add(this.border);
+        // Create Laps Button Selector
+        const lapsButtonGeometry = new THREE.BoxGeometry(...this.model.lapsButtonSize);
+        const lapsButtonMaterial = new THREE.MeshBasicMaterial({ color: 0x666666 });
+        this.lapsButton = new THREE.Mesh(lapsButtonGeometry,lapsButtonMaterial);
+        menuPanel.add(this.lapsButton);
+
+        // Create selection border 
+        menuPanel.add(this.model.border);
 
         this.scene.add(menuPanel);
 
@@ -50,10 +53,11 @@ class RaceMenuView extends View {
 
     step() {
         //update border position
-        this.border.position.set(this.model.selected,0.75,0.01);
+        this.model.border.position.set(this.model.selectedPosition[0],this.model.selectedPosition[1],0.01);
+        this.lapsButton.position.set(this.model.lapsButtonPosition[0],this.model.lapsButtonPosition[1],0.01);
 
         const targetPosition = this.camera.position.clone();
-        targetPosition.x = this.model.selected/2;
+        targetPosition.x = this.model.selectedPosition[0]/2;
 
         this.camera.position.lerp(targetPosition, dampingFactor);
 
