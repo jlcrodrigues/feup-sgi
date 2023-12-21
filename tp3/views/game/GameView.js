@@ -2,6 +2,8 @@ import { SceneLoader } from "../../loader/SceneLoader.js";
 import { View } from "../View.js";
 import * as THREE from "three";
 import { TrackBuilder } from "./TrackBuilder.js";
+import { ObstacleBuilder } from "./ObstacleBuilder.js";
+import { PowerUpBuilder } from "./PowerUpBuilder.js";
 
 const dampingFactor = 0.1;
 
@@ -19,13 +21,27 @@ class GameView extends View {
     this.camera.position.z = -20;
     this.camera.position.y = 20;
 
+    // Load the track scene
     new SceneLoader(this.scene).load("assets/scenes/monza/scene.xml");
+    // Load the track
     this.scene.add(new TrackBuilder().build(model.track));
 
+    // Load player's car
     this.car = this.model.car.model;
     this.scene.add(this.car);
 
+    // Load opponent's car
     this.loadOpponent();
+
+    // Load obstacles
+    this.model.track.obstacles.forEach((obstacle) => {
+      this.scene.add(ObstacleBuilder.build(obstacle));
+    });
+
+    // Load power-ups
+    this.model.track.powerUps.forEach((powerUp) => {
+      this.scene.add(PowerUpBuilder.build(powerUp));
+    });
 
     document.querySelector("#top-left").innerHTML = '<p id="laps"></p>';
     document.querySelector("#top-left").innerHTML +=
