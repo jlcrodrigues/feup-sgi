@@ -25,7 +25,7 @@ class RaceMenuModel extends Model {
     this.border = new THREE.Mesh(borderGeometry, borderMaterial);
 
     this.garageButtonPosition = [-1.5,0.75,0.05]
-    this.trackButtonPosition = [1.5,0.75,0.05]
+    this.tracksButtonPosition = [1.5,0.75,0.05]
     this.lapsButtonPosition = [0,-0.75,0.1]
 
     this.laps = defaultLaps
@@ -54,15 +54,24 @@ class RaceMenuModel extends Model {
           this.selectedPosition[0] = this.laps - defaultLaps
         }
         else{
-          this.selectedPosition = this.trackButtonPosition;
+          this.selectedPosition = this.tracksButtonPosition;
         }
         break;
       case 'down': 
         this.selectedPosition = this.lapsButtonPosition; 
         this.border.scale.set(this.lapsButtonSize[0]/this.buttonSize[0],this.lapsButtonSize[1]/this.buttonSize[1],this.lapsButtonSize[2]/this.buttonSize[2]);  
         break;
-      case 'up': this.selectedPosition = this.garageButtonPosition; break;
-      case 'enter': if (this.selectedPosition == this.garageButtonPosition){ this.state = 'garage'; break;}
+      case 'up': 
+        this.selectedPosition = this.garageButtonPosition; 
+        this.border.scale.set(1,1,1);  
+        break;
+      case 'enter': 
+        if (this.selectedPosition == this.garageButtonPosition){ 
+          this.state = 'garage'; 
+          break;
+        } else if (this.selectedPosition == this.tracksButtonPosition){
+          this.state = 'tracks';
+        }
     }
   }
 }

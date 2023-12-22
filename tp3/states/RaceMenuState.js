@@ -1,6 +1,7 @@
 import { State } from "./State.js";
 import { RaceMenuController } from "../controllers/RaceMenuController.js";
 import { GarageState } from "./GarageState.js";
+import { TracksState } from "./TracksState.js";
 
 class RaceMenuState extends State {
   constructor() {
@@ -11,7 +12,7 @@ class RaceMenuState extends State {
 
   step() {
     const state = this.controller.step();
-    if (state instanceof GarageState ) {
+    if (state != null) {
       return state;
     }
     return this;
