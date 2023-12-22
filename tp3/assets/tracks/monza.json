@@ -55,9 +55,6 @@
         ]
     },
     "modifiers": [
-        { "type": "type1", "position": { "x": -7, "y": 2, "z": 0 }},
-        { "type": "type2", "position": { "x": -8, "y": 2, "z": 5 }},
-        { "type": "speedUp", "position": { "x": 70, "y": 2, "z": 0 }},
-        { "type": "type2", "position": { "x": 8, "y": 2, "z": -5 }}
+        { "type": "speedUp", "position": { "x": 70, "y": 2, "z": 0 }}
     ]
 }

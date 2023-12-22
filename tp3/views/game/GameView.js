@@ -5,6 +5,7 @@ import { TrackBuilder } from "./TrackBuilder.js";
 import { ModifierView } from "./ModifierView.js";
 
 const dampingFactor = 0.1;
+const modifierAnimationDuration = 2;
 
 class GameView extends View {
   constructor(model) {
@@ -19,6 +20,7 @@ class GameView extends View {
     );
     this.camera.position.z = -20;
     this.camera.position.y = 20;
+    this.mixers = [];
 
     // Load the track scene
     new SceneLoader(this.scene).load("assets/scenes/monza/scene.xml");
@@ -32,41 +34,14 @@ class GameView extends View {
     // Load opponent's car
     this.loadOpponent();
 
-    // Load obstacles
-    this.model.track.modifiers.forEach((obstacle) => {
-      this.scene.add(ModifierView.build(obstacle));
-    });
+    // Load modifiers
+    this.loadModifiers();
 
-    document.querySelector("#top-left").innerHTML = '<p id="laps"></p>';
-    document.querySelector("#top-left").innerHTML +=
-      '<p id="elapsed-time"></p>';
-    document.querySelector("#top-left").innerHTML += '<p id="last-lap"></p>';
-
-    document.querySelector("#bottom-left").innerHTML += '<p id="modifier"></p>';
-    document.querySelector("#bottom-left").innerHTML += '<p id="modifierTime"></p>';
+    this.loadHud();
   }
 
   step() {
-    document.querySelector("#laps").innerHTML = `${Math.floor(
-      this.model.laps
-    )} / ${this.model.settings.laps}`;
-    document.querySelector("#elapsed-time").innerHTML = `${Math.floor(
-      (new Date() - this.model.lapStart) / 1000
-    )} s`;
-    if (this.model.lastLap) {
-      document.querySelector(
-        "#last-lap"
-      ).innerHTML = `Last lap: ${this.model.lastLap.toFixed(3)} s`;
-    }
-
-    if (this.model.modifier) {
-      document.querySelector("#modifier").innerHTML = `${this.model.modifier}`;
-      document.querySelector("#modifierTime").innerHTML = `${this.model.modifierDuration - Math.floor((new Date() - this.model.modifierStart) / 1000)} s`;
-    }
-    else {
-      document.querySelector("#modifier").innerHTML = "";
-      document.querySelector("#modifierTime").innerHTML = "";
-    }
+    this.stepHud();
 
     this.car.position.x = this.model.car.position.x;
     this.car.position.z = this.model.car.position.z;
@@ -82,7 +57,9 @@ class GameView extends View {
     this.camera.lookAt(this.car.position);
 
     const currentPosition = this.opponent.position.clone();
-    if (this.mixer) this.mixer.update(0.01);
+    this.mixers.forEach((mixer) => {
+      mixer.update(0.01);
+    });
     const nextPosition = this.opponent.position.clone();
 
     const direction = new THREE.Vector3().subVectors(
@@ -109,9 +86,70 @@ class GameView extends View {
       this.model.track.route.times[this.model.track.route.times.length - 1];
     const clip = new THREE.AnimationClip("positionClip", limit, [positionKF]);
 
-    this.mixer = new THREE.AnimationMixer(this.opponent);
-    const action = this.mixer.clipAction(clip);
+    const mixer = new THREE.AnimationMixer(this.opponent);
+    const action = mixer.clipAction(clip);
+    this.mixers.push(mixer);
     action.play();
+  }
+
+  loadHud() {
+    document.querySelector("#top-left").innerHTML = '<p id="laps"></p>';
+    document.querySelector("#top-left").innerHTML +=
+      '<p id="elapsed-time"></p>';
+    document.querySelector("#top-left").innerHTML += '<p id="last-lap"></p>';
+
+    document.querySelector("#bottom-left").innerHTML += '<p id="modifier"></p>';
+    document.querySelector("#bottom-left").innerHTML +=
+      '<p id="modifierTime"></p>';
+  }
+
+  stepHud() {
+    document.querySelector("#laps").innerHTML = `${Math.floor(
+      this.model.laps
+    )} / ${this.model.settings.laps}`;
+    document.querySelector("#elapsed-time").innerHTML = `${Math.floor(
+      (new Date() - this.model.lapStart) / 1000
+    )} s`;
+    if (this.model.lastLap) {
+      document.querySelector(
+        "#last-lap"
+      ).innerHTML = `Last lap: ${this.model.lastLap.toFixed(3)} s`;
+    }
+
+    if (this.model.modifier) {
+      document.querySelector("#modifier").innerHTML = `${this.model.modifier}`;
+      document.querySelector("#modifierTime").innerHTML = `${
+        this.model.modifierDuration -
+        Math.floor((new Date() - this.model.modifierStart) / 1000)
+      } s`;
+    } else {
+      document.querySelector("#modifier").innerHTML = "";
+      document.querySelector("#modifierTime").innerHTML = "";
+    }
+  }
+
+  loadModifiers() {
+    this.model.track.modifiers.forEach((modifier) => {
+      const mesh = ModifierView.build(modifier);
+      this.scene.add(mesh);
+
+    const rotationKF = new THREE.NumberKeyframeTrack(
+      ".rotation[y]",
+      [0, 3], [0, Math.PI * 2]
+    );
+
+    const positionKF = new THREE.NumberKeyframeTrack(
+      ".position[y]",
+      [0, 1.5, 3], [3, 4, 3]
+    );
+
+    const clip = new THREE.AnimationClip("positionClip", 3, [rotationKF, positionKF]);
+
+      const mixer = new THREE.AnimationMixer(mesh);
+      const action = mixer.clipAction(clip);
+      this.mixers.push(mixer);
+      action.play();
+    });
   }
 }
 

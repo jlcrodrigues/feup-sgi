@@ -1,23 +1,20 @@
 import * as THREE from "three";
+import { SceneLoader } from "../../loader/SceneLoader.js";
+
+const modifiersPath = "./assets/modifiers";
 
 class ModifierView {
-    static build(powerUp) {
-        const geometry = new THREE.BoxGeometry(2, 3, 2);
-        let material;
-        if (powerUp.type == "speedUp") {
-            material = new THREE.MeshStandardMaterial({ color: 0xffff00 });
-        }
-        else {
-            material = new THREE.MeshStandardMaterial({ color: 0xff0f00 });
-        }
-        const mesh = new THREE.Mesh(geometry, material);
+  static build(modifier) {
+    const scene = new THREE.Scene();
+    new SceneLoader(scene).load(`${modifiersPath}/${modifier.type}/${modifier.type}.xml`);
+    const mesh = scene.children[0];
 
-        mesh.position.x = powerUp.position.x;
-        mesh.position.y = powerUp.position.y;
-        mesh.position.z = powerUp.position.z;
+    mesh.position.x = modifier.position.x;
+    mesh.position.y = modifier.position.y;
+    mesh.position.z = modifier.position.z;
 
-        return mesh;
-    }
+    return mesh;
+  }
 }
 
 export { ModifierView };
