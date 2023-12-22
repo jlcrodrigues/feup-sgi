@@ -7,7 +7,7 @@ class TrackBuilder {
     this.segments = 1000;
     this.width = track.width;
     this.textureRepeat = 1;
-    this.showLine = true;
+    this.showLine = false;
     this.closedCurve = false;
 
     const points = [];
@@ -49,7 +49,7 @@ class TrackBuilder {
       this.path,
       this.segments,
       this.width,
-      3,
+      8,
       this.closedCurve
     );
     this.mesh = new THREE.Mesh(geometry, this.material);
@@ -58,8 +58,9 @@ class TrackBuilder {
 
     this.curve.add(this.mesh);
 
-    this.curve.rotateZ(Math.PI);
-    this.curve.scale.set(1, 0.2, 1);
+    //this.curve.rotateZ(Math.PI);
+    this.curve.scale.set(1, 0.001, 1);
+    this.curve.translateY(0.01)
   }
 }
 

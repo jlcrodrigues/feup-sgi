@@ -29,9 +29,9 @@ class GameModel extends Model {
 
     this.laps = 0;
     this.checkpoint = new THREE.Vector3(...this.track.path[this.track.path.length / 2])
-    this.checkpoint.x = - this.checkpoint.x;
+    this.checkpoint.x = this.checkpoint.x;
     this.start = new THREE.Vector3(this.track.start.x, this.track.start.y, this.track.start.z)
-    this.start.x = - this.start.x;
+    this.start.x = this.start.x;
     this.lapStart = new Date();
     this.lastLap = null
   }

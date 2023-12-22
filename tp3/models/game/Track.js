@@ -26,7 +26,7 @@ class Track {
 
         this.route.values = []
         for (let i = 0; i < this.route.points.length; i++) {
-            this.route.points[i][0] *= (-1) * data.scale ?? 1;
+            this.route.points[i][0] *= data.scale ?? 1;
             this.route.points[i][1] *= data.scale ?? 1;
             this.route.points[i][2] *= data.scale ?? 1;
             this.route.values.push(...this.route.points[i]);
