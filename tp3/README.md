@@ -10,34 +10,11 @@
 ----
 ## Project information
 
-### Santa's Home
+## models
 
-This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest from his big and busy night. It includes a road, pine trees all around, lamps, as well as his sled.
+Toyota AE86 by IvOfficial [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/ZEFWmOPSgh)
+Pickup Thunder by Quaternius (https://poly.pizza/m/fUfTnyvYdl)
 
-- Scene
-
-<p align="center">
-  <img src='screenshots/freeCam.png' width=700px>
-</p>
-
-The house has 3 main divisions: 
-  - hall (presents, Santa's bag and 2 polygons);
-  - living room (sofa, rug, christmas tree, TV, Santa's picture and a fireplace);
-  - kitchen (table, plate, cookies, counter and 2 beer taps);
-
-Living room seen from the sofa:
-
-<p align="center">
-  <img src='screenshots/sofaView.png' width=500px>
-</p>
-
-And as a surprise, Santa prefers beer to milk with cookies, that's why he built this kitchen counter with the beer taps:
-
-<p align="center">
-  <img src='screenshots/counterView.png' width=500px>
-</p>
-
-----
-## Issues/Problems
-
-- some lights escape between the objects
+Boots by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/7HbqG8RwRcA)
+Anchor by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/1hF4bXyyW5U)
+Green Arrow Icon by Thomas Balouet [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/7eaXP_9tC-e)

@@ -15,8 +15,7 @@ class Track {
         this.width = data.width;
         this.start = data.start;
         this.route = data.route;
-        this.obstacles = data.obstacles;
-        this.powerUps = data.powerUps;
+        this.modifiers = data.modifiers;
 
         for (let i = 0; i < this.path.length; i++) {
             this.path[i][0] *= data.scale ?? 1;
