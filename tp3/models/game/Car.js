@@ -1,6 +1,7 @@
 const accelerationDelta = 0.001;
 const dragFactor = 0.99;
 const reverseFactor = 0.3;
+const gravity = -0.04
 
 /**
  * Defines a car and handles movement. <br>
@@ -26,6 +27,8 @@ class Car {
     this.rotation = 0;
     this.angularSpeed = 0;
 
+    this.jumpSpeed = 0;
+
     this.position = { x: 0, y: 0, z: 0 };
 
     this.moving = {
@@ -40,6 +43,11 @@ class Car {
     this.position.x += this.speed * Math.cos(this.rotation);
     this.position.z += this.speed * Math.sin(this.rotation);
 
+    if (this.position.y > 0 || this.jumpSpeed > 0) {
+      this.position.y += this.jumpSpeed;
+      this.jumpSpeed += gravity;
+    }
+
     this.speed *= dragFactor;
 
     this.updateAcceleration();
@@ -52,6 +60,10 @@ class Car {
 
   resetMaxSpeed() {
     this.maxSpeed = this.defaultMaxSpeed;
+  }
+
+  jump() {
+    this.jumpSpeed = 1;
   }
 
   updateAcceleration() {

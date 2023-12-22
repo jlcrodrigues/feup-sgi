@@ -45,6 +45,7 @@ class GameView extends View {
 
     this.car.position.x = this.model.car.position.x;
     this.car.position.z = this.model.car.position.z;
+    this.car.position.y = this.model.car.position.y;
 
     this.car.rotation.y = -this.model.car.rotation;
 

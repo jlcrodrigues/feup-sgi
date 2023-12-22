@@ -85,6 +85,13 @@ class GameModel extends Model {
           this.modifierStart = new Date();
           this.car.setMaxSpeed(this.car.maxSpeed * 2);
         }
+        else if (this.modifiers[i].type == "jump") {
+          if (this.modifier != "jump" || (new Date() - this.modifierStart < this.modifierDuration * 1000)) {
+          this.modifier = "jump"
+          this.modifierStart = new Date();
+          this.car.jump();
+          }
+        }
       }
     }
   }

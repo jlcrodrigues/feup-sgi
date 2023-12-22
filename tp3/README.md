@@ -14,3 +14,5 @@
 
 Toyota AE86 by IvOfficial [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/ZEFWmOPSgh)
 Pickup Thunder by Quaternius (https://poly.pizza/m/fUfTnyvYdl)
+
+Boots by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/7HbqG8RwRcA)
