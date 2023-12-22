@@ -28,12 +28,18 @@ class GameModel extends Model {
     this.opponent.position = this.track.start;
 
     this.laps = 0;
-    this.checkpoint = new THREE.Vector3(...this.track.path[this.track.path.length / 2])
+    this.checkpoint = new THREE.Vector3(
+      ...this.track.path[this.track.path.length / 2]
+    );
     this.checkpoint.x = this.checkpoint.x;
-    this.start = new THREE.Vector3(this.track.start.x, this.track.start.y, this.track.start.z)
+    this.start = new THREE.Vector3(
+      this.track.start.x,
+      this.track.start.y,
+      this.track.start.z
+    );
     this.start.x = this.start.x;
     this.lapStart = new Date();
-    this.lastLap = null
+    this.lastLap = null;
 
     this.modifiers = this.track.modifiers;
     this.modifier = null;
@@ -44,12 +50,19 @@ class GameModel extends Model {
   step() {
     this.car.move();
 
-    if (this.car.model.position.distanceTo(this.start) <= this.track.width && (this.laps - Math.floor(this.laps) != 0)) {
-      this.lastLap = ((new Date()) - this.lapStart) / 1000
-      this.lapStart = new Date()
+    if (
+      this.car.model.position.distanceTo(this.start) <= this.track.width &&
+      this.laps - Math.floor(this.laps) != 0
+    ) {
+      this.lastLap = (new Date() - this.lapStart) / 1000;
+      this.lapStart = new Date();
       this.laps += 0.5;
     }
-    if (this.car.model.position.distanceTo(this.checkpoint) <= this.track.width * 2 && (this.laps - Math.floor(this.laps) == 0)) {
+    if (
+      this.car.model.position.distanceTo(this.checkpoint) <=
+        this.track.width * 2 &&
+      this.laps - Math.floor(this.laps) == 0
+    ) {
       this.laps += 0.5;
     }
 
@@ -72,6 +85,11 @@ class GameModel extends Model {
       if (new Date() - this.modifierStart > this.modifierDuration * 1000) {
         if (this.modifier == "speedUp") {
           this.car.resetMaxSpeed();
+        } else if (this.modifier == "slowDown") {
+          this.car.resetMaxSpeed();
+        }
+        else if (this.modifier == "switcheroo") {
+          this.car.switched = false;
         }
         this.modifier = null;
       }
@@ -81,19 +99,26 @@ class GameModel extends Model {
     for (let i = 0; i < this.modifiers.length; i++) {
       if (this.car.model.position.distanceTo(this.modifiers[i].position) <= 4) {
         if (this.modifiers[i].type == "speedUp") {
-          this.modifier = "speedUp"
-          this.modifierStart = new Date();
+          this.setModifier("speedUp");
           this.car.setMaxSpeed(this.car.maxSpeed * 2);
+        } else if (this.modifiers[i].type == "slowDown") {
+          this.setModifier("slowDown");
+          this.car.setMaxSpeed(this.car.maxSpeed * 0.7);
+        } else if (this.modifiers[i].type == "jump") {
+            this.setModifier("jump");
+            this.car.jump();
+        }       
+        else if (this.modifiers[i].type == "switcheroo") {
+          this.setModifier("switcheroo");
+          this.car.switched = true;
         }
-        else if (this.modifiers[i].type == "jump") {
-          if (this.modifier != "jump" || (new Date() - this.modifierStart < this.modifierDuration * 1000)) {
-          this.modifier = "jump"
-          this.modifierStart = new Date();
-          this.car.jump();
-          }
-        }
-      }
+       }
     }
+  }
+
+  setModifier(name) {
+    this.modifier = name;
+    this.modifierStart = new Date();
   }
 }
 

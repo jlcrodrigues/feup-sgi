@@ -27,7 +27,9 @@ class Car {
     this.rotation = 0;
     this.angularSpeed = 0;
 
+    // Modifiers
     this.jumpSpeed = 0;
+    this.switched = false;
 
     this.position = { x: 0, y: 0, z: 0 };
 
@@ -91,10 +93,10 @@ class Car {
         this.angularSpeed = 0;
     }
     else if (this.moving.left && !this.moving.right) {
-        this.angularSpeed = -this.defaultAngularSpeed;
+        this.angularSpeed = -this.defaultAngularSpeed * (this.switched ? -1 : 1);
     }
     else if (this.moving.right && !this.moving.left) {
-        this.angularSpeed = this.defaultAngularSpeed;
+        this.angularSpeed = this.defaultAngularSpeed * (this.switched ? -1 : 1);
     }
   }
 
