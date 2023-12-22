@@ -9,7 +9,7 @@ const gravity = -0.04
  * A car moves in two dimensions:
  *  - Modular speed. This is the speed of the car in the direction of the car.
  * User input changes the acceleration, which in turn changes the speed over time.
- *  - 
+ *  - Angular speed to turn the wheels
  */
 class Car {
   constructor(defaultMaxSpeed = 1.4, defaultAngularSpeed = 0.02, maxAcceleration = 0.02) {

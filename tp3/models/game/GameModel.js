@@ -50,6 +50,17 @@ class GameModel extends Model {
   step() {
     this.car.move();
 
+    if (this.modifier != "slowDown") {
+      // Opponent collision
+      if (
+        this.car.model.position.distanceTo(this.opponent.model.position) < 3
+      ) {
+        this.car.setMaxSpeed(this.car.maxSpeed * 0.7);
+        this.setModifier("slowDown", 3);
+      }
+    }
+
+    // Laps
     if (
       this.car.model.position.distanceTo(this.start) <= this.track.width &&
       this.laps - Math.floor(this.laps) != 0
@@ -73,6 +84,13 @@ class GameModel extends Model {
     this.stepModifiers();
   }
 
+  setOutsideTrack() {
+    if (this.modifier == null && this.modifier != "slowDown") {
+      this.car.setMaxSpeed(this.car.maxSpeed * 0.7);
+      this.setModifier("slowDown", 3);
+    }
+  }
+
   processInput(code, down) {
     const direction = movements[code];
     if (direction) {
@@ -87,8 +105,7 @@ class GameModel extends Model {
           this.car.resetMaxSpeed();
         } else if (this.modifier == "slowDown") {
           this.car.resetMaxSpeed();
-        }
-        else if (this.modifier == "switcheroo") {
+        } else if (this.modifier == "switcheroo") {
           this.car.switched = false;
         }
         this.modifier = null;
@@ -105,20 +122,20 @@ class GameModel extends Model {
           this.setModifier("slowDown");
           this.car.setMaxSpeed(this.car.maxSpeed * 0.7);
         } else if (this.modifiers[i].type == "jump") {
-            this.setModifier("jump");
-            this.car.jump();
-        }       
-        else if (this.modifiers[i].type == "switcheroo") {
+          this.setModifier("jump");
+          this.car.jump();
+        } else if (this.modifiers[i].type == "switcheroo") {
           this.setModifier("switcheroo");
           this.car.switched = true;
         }
-       }
+      }
     }
   }
 
-  setModifier(name) {
+  setModifier(name, duration = 5) {
     this.modifier = name;
     this.modifierStart = new Date();
+    this.modifierDuration = duration;
   }
 }
 

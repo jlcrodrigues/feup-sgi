@@ -25,7 +25,8 @@ class GameView extends View {
     // Load the track scene
     new SceneLoader(this.scene).load("assets/scenes/monza/scene.xml");
     // Load the track
-    this.scene.add(new TrackBuilder().build(model.track));
+    this.track = new TrackBuilder().build(model.track);
+    this.scene.add(this.track);
 
     // Load player's car
     this.car = this.model.car.model;
@@ -48,6 +49,8 @@ class GameView extends View {
     this.car.position.y = this.model.car.position.y;
 
     this.car.rotation.y = -this.model.car.rotation;
+
+    this.checkCarPosition();
 
     const targetPosition = this.car.position.clone();
     targetPosition.y += 10;
@@ -75,6 +78,7 @@ class GameView extends View {
 
   loadOpponent() {
     this.opponent = this.model.opponent.model;
+    this.opponent.position.x = this.model.opponent.position.x - 100;
     this.scene.add(this.opponent);
 
     const positionKF = new THREE.VectorKeyframeTrack(
@@ -134,23 +138,45 @@ class GameView extends View {
       const mesh = ModifierView.build(modifier);
       this.scene.add(mesh);
 
-    const rotationKF = new THREE.NumberKeyframeTrack(
-      ".rotation[y]",
-      [0, 3], [0, Math.PI * 2]
-    );
+      const rotationKF = new THREE.NumberKeyframeTrack(
+        ".rotation[y]",
+        [0, 3],
+        [0, Math.PI * 2]
+      );
 
-    const positionKF = new THREE.NumberKeyframeTrack(
-      ".position[y]",
-      [0, 1.5, 3], [3, 4, 3]
-    );
+      const positionKF = new THREE.NumberKeyframeTrack(
+        ".position[y]",
+        [0, 1.5, 3],
+        [3, 4, 3]
+      );
 
-    const clip = new THREE.AnimationClip("positionClip", 3, [rotationKF, positionKF]);
+      const clip = new THREE.AnimationClip("positionClip", 3, [
+        rotationKF,
+        positionKF,
+      ]);
 
       const mixer = new THREE.AnimationMixer(mesh);
       const action = mixer.clipAction(clip);
       this.mixers.push(mixer);
       action.play();
     });
+  }
+
+  /** Checks if the car is outside the track. */
+  checkCarPosition() {
+    const raycaster = new THREE.Raycaster();
+
+    const direction = new THREE.Vector3(0, -1, 0);
+    const carPos = new THREE.Vector3(this.model.car.position.x, 10, this.model.car.position.z);
+
+    raycaster.set(carPos, direction);
+
+    const intersects = raycaster.intersectObject(this.track);
+    if (intersects.length == 0) {
+      this.model.setOutsideTrack();
+    }
+
+
   }
 }
 
