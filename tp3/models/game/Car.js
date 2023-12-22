@@ -46,6 +46,14 @@ class Car {
     this.updateSpeed();
   }
 
+  setMaxSpeed(maxSpeed) {
+    this.maxSpeed = maxSpeed;
+  }
+
+  resetMaxSpeed() {
+    this.maxSpeed = this.defaultMaxSpeed;
+  }
+
   updateAcceleration() {
     // Modular Velocity
     if (this.moving.up) {

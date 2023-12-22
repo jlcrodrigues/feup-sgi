@@ -1,6 +1,6 @@
-import { Model } from "./Model.js";
-import { Car } from "./game/Car.js";
-import { Track } from "./game/Track.js";
+import { Model } from "../Model.js";
+import { Car } from "./Car.js";
+import { Track } from "./Track.js";
 import * as THREE from "three";
 
 const movements = {
@@ -34,6 +34,11 @@ class GameModel extends Model {
     this.start.x = this.start.x;
     this.lapStart = new Date();
     this.lastLap = null
+
+    this.modifiers = this.track.modifiers;
+    this.modifier = null;
+    this.modifierStart = null;
+    this.modifierDuration = 5;
   }
 
   step() {
@@ -51,12 +56,36 @@ class GameModel extends Model {
     if (this.laps >= this.settings.laps) {
       return true;
     }
+
+    this.stepModifiers();
   }
 
   processInput(code, down) {
     const direction = movements[code];
     if (direction) {
       this.car.processInput(direction, down);
+    }
+  }
+
+  stepModifiers() {
+    if (this.modifier != null) {
+      if (new Date() - this.modifierStart > this.modifierDuration * 1000) {
+        if (this.modifier == "speedUp") {
+          this.car.resetMaxSpeed();
+        }
+        this.modifier = null;
+      }
+      return;
+    }
+
+    for (let i = 0; i < this.modifiers.length; i++) {
+      if (this.car.model.position.distanceTo(this.modifiers[i].position) <= 4) {
+        if (this.modifiers[i].type == "speedUp") {
+          this.modifier = "speedUp"
+          this.modifierStart = new Date();
+          this.car.setMaxSpeed(this.car.maxSpeed * 2);
+        }
+      }
     }
   }
 }

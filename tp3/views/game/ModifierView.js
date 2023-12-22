@@ -1,10 +1,10 @@
 import * as THREE from "three";
 
-class PowerUpBuilder {
+class ModifierView {
     static build(powerUp) {
         const geometry = new THREE.BoxGeometry(2, 3, 2);
         let material;
-        if (powerUp.type == "type1") {
+        if (powerUp.type == "speedUp") {
             material = new THREE.MeshStandardMaterial({ color: 0xffff00 });
         }
         else {
@@ -20,4 +20,4 @@ class PowerUpBuilder {
     }
 }
 
-export { PowerUpBuilder };
+export { ModifierView };

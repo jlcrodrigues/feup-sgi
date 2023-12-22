@@ -10,9 +10,9 @@
         {
             "name": "Toyota AE86",
             "path": "models/ae86/ae86.xml",
-            "maxSpeed": 2.0,
+            "maxSpeed": 1.4,
             "defaultAngularSpeed": 0.05,
-            "maxAcceleration": 0.05
+            "maxAcceleration": 0.03
         }
     ]
 }

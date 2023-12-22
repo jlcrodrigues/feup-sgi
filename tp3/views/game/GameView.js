@@ -2,8 +2,7 @@ import { SceneLoader } from "../../loader/SceneLoader.js";
 import { View } from "../View.js";
 import * as THREE from "three";
 import { TrackBuilder } from "./TrackBuilder.js";
-import { ObstacleBuilder } from "./ObstacleBuilder.js";
-import { PowerUpBuilder } from "./PowerUpBuilder.js";
+import { ModifierView } from "./ModifierView.js";
 
 const dampingFactor = 0.1;
 
@@ -34,19 +33,17 @@ class GameView extends View {
     this.loadOpponent();
 
     // Load obstacles
-    this.model.track.obstacles.forEach((obstacle) => {
-      this.scene.add(ObstacleBuilder.build(obstacle));
-    });
-
-    // Load power-ups
-    this.model.track.powerUps.forEach((powerUp) => {
-      this.scene.add(PowerUpBuilder.build(powerUp));
+    this.model.track.modifiers.forEach((obstacle) => {
+      this.scene.add(ModifierView.build(obstacle));
     });
 
     document.querySelector("#top-left").innerHTML = '<p id="laps"></p>';
     document.querySelector("#top-left").innerHTML +=
       '<p id="elapsed-time"></p>';
     document.querySelector("#top-left").innerHTML += '<p id="last-lap"></p>';
+
+    document.querySelector("#bottom-left").innerHTML += '<p id="modifier"></p>';
+    document.querySelector("#bottom-left").innerHTML += '<p id="modifierTime"></p>';
   }
 
   step() {
@@ -60,6 +57,15 @@ class GameView extends View {
       document.querySelector(
         "#last-lap"
       ).innerHTML = `Last lap: ${this.model.lastLap.toFixed(3)} s`;
+    }
+
+    if (this.model.modifier) {
+      document.querySelector("#modifier").innerHTML = `${this.model.modifier}`;
+      document.querySelector("#modifierTime").innerHTML = `${this.model.modifierDuration - Math.floor((new Date() - this.model.modifierStart) / 1000)} s`;
+    }
+    else {
+      document.querySelector("#modifier").innerHTML = "";
+      document.querySelector("#modifierTime").innerHTML = "";
     }
 
     this.car.position.x = this.model.car.position.x;

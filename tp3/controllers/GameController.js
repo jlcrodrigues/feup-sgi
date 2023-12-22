@@ -1,4 +1,4 @@
-import { GameModel } from "../models/GameModel.js";
+import { GameModel } from "../models/game/GameModel.js";
 import { GarageState } from "../states/GarageState.js";
 import { GameView } from "../views/game/GameView.js";
 import { Controller } from "./Controller.js";
