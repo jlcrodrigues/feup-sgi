@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 
 class FontLoader{
-    constructor(){
-        this.fontTexture = new THREE.TextureLoader().load("assets/fonts/very_nice_font.png");
+    constructor(onLoad){
+        this.fontTexture = new THREE.TextureLoader().load("assets/fonts/very_nice_font.png",onLoad);
 
         const parser = new DOMParser();
 
@@ -28,17 +28,38 @@ class FontLoader{
         const height = parseInt(charData.getAttribute('height'));
         const xadvance = parseInt(charData.getAttribute('xadvance'));
 
-        const offset = new THREE.Vector2(x / this.scaleW, 1 - (y + height) / this.scaleH);
-        const repeat = new THREE.Vector2(width / this.scaleW, height / this.scaleH);
+        // const offset = new THREE.Vector2(x / this.scaleW, 1 - (y + height) / this.scaleH);
+        // const repeat = new THREE.Vector2(width / this.scaleW, height / this.scaleH);
 
         // Create geometry and material for each character
         const geometry = new THREE.PlaneGeometry(width/this.scaleW, height/this.scaleH);
-        const material = new THREE.MeshBasicMaterial({
-            map: this.fontTexture,
-            transparent: true
+
+        // Create a custom shader material
+        const material = new THREE.ShaderMaterial({
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform sampler2D map;
+                uniform vec2 repeat;
+                uniform vec2 offset;
+                varying vec2 vUv;
+                void main() {
+                    vec2 uv = vec2(vUv.x * repeat.x + offset.x, vUv.y * repeat.y + offset.y);
+                    gl_FragColor = texture2D(map, uv);
+                }
+            `,
+            uniforms: {
+                map: { value: this.fontTexture },
+                repeat: { value: new THREE.Vector2(width / this.scaleW, height / this.scaleH) },
+                offset: { value: new THREE.Vector2(x / this.scaleW, 1 - (y + height) / this.scaleH) },
+            },
+            transparent: true,
         });
-        material.map.offset.copy(offset);
-        material.map.repeat.copy(repeat);
 
         // Update the offset for the character
         const charOffset = xadvance * index / this.scaleW;
@@ -47,6 +68,7 @@ class FontLoader{
         const charMesh = new THREE.Mesh(geometry, material);
         charMesh.position.set(charOffset,0,0.5);
 
+        console.log(charMesh.geometry.attributes.uv.array);
         return charMesh
     }
 

@@ -23,21 +23,27 @@ class InitialView extends View {
         const menuPanel = new THREE.Mesh(menuPanelGeometry, menuPanelMaterial);
 
         // Create a Play button
-        const playButton = new THREE.Group()
-        const playButtonArray = new FontLoader().getMeshArray("PLAY");
-        playButton.add(...playButtonArray)
-        playButton.scale.set(1.5,1.5,1.5);
-        playButton.position.set(...this.model.playButtonPosition);
-        menuPanel.add(playButton);
+        // const playButton = new THREE.Group()
+        // const playButtonArray = new FontLoader().getMeshArray("FISH");
+        // playButton.add(...playButtonArray)
+        // playButton.scale.set(1.5,1.5,1.5);
+        // playButton.position.set(...this.model.playButtonPosition);
+        // menuPanel.add(playButton);
+
+        const fontLoader = new FontLoader(() => {
+            const playButton = new THREE.Group();
+            const playButtonArray = fontLoader.getMeshArray("PLAY");
+            playButton.add(...playButtonArray);
+            playButton.scale.set(2, 2, 2);
+            playButton.position.set(...this.model.playButtonPosition);
+            menuPanel.add(playButton);
+        });
 
         // Create an Exit button
-        const exitButtonGeometry = new THREE.BoxGeometry(1.2, 0.7, 0.1);
-        const exitButtonMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-        const exitButton = new THREE.Mesh(exitButtonGeometry, exitButtonMaterial);
-        // const exitButton = new THREE.Group()
-        // const exitButtonArray = new FontLoader().getMeshArray("EXIT");
-        // exitButton.add(...exitButtonArray)
-        // exitButton.scale.set(1.5,1.5,1.5);
+        const exitButton = new THREE.Group()
+        const exitButtonArray = new FontLoader().getMeshArray("EXIT");
+        exitButton.add(...exitButtonArray)
+        exitButton.scale.set(2,2,2);
         exitButton.position.set(...this.model.exitButtonPosition);        
         menuPanel.add(exitButton);
 
