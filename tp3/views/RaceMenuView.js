@@ -81,6 +81,7 @@ class RaceMenuView extends View {
 
         const targetPosition = this.camera.position.clone();
         targetPosition.x = this.model.selectedPosition[0]/2;
+        targetPosition.y = this.model.selectedPosition[1]/4;
 
         this.camera.position.lerp(targetPosition, dampingFactor);
 

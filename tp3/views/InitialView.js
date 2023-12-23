@@ -1,4 +1,5 @@
 import { View } from "./View.js";
+import {FontLoader} from "../loader/FontLoader.js"
 import * as THREE from "three";
 
 const dampingFactor = 0.1
@@ -22,16 +23,10 @@ class InitialView extends View {
         const menuPanel = new THREE.Mesh(menuPanelGeometry, menuPanelMaterial);
 
         // Create a Play button
-        const playButtonGeometry = new THREE.BoxGeometry(1.2, 0.7, 0.1);
-        const playButtonTexture = new THREE.TextureLoader().load("assets/fonts/menu_font.png");
-        // TODO: map coords u and v to obtain the word Play and Exit, (eventualmente manipulando o valor de offset)
-        // Ponto 4.4 do enunciado
-        // playButtonTexture.wrapS = THREE.RepeatWrapping;
-        // playButtonTexture.wrapT = THREE.RepeatWrapping;
-        // playButtonTexture.repeat.set( 0.15, 0.15 )
-        // playButtonTexture.offset.set( 0.2, 0.2 );        
-        const playButtonMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, map: playButtonTexture });
-        const playButton = new THREE.Mesh(playButtonGeometry, playButtonMaterial);
+        const playButton = new THREE.Group()
+        const playButtonArray = new FontLoader().getMeshArray("PLAY");
+        playButton.add(...playButtonArray)
+        playButton.scale.set(1.5,1.5,1.5);
         playButton.position.set(...this.model.playButtonPosition);
         menuPanel.add(playButton);
 
@@ -39,12 +34,16 @@ class InitialView extends View {
         const exitButtonGeometry = new THREE.BoxGeometry(1.2, 0.7, 0.1);
         const exitButtonMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
         const exitButton = new THREE.Mesh(exitButtonGeometry, exitButtonMaterial);
-        exitButton.position.set(...this.model.exitButtonPosition);
+        // const exitButton = new THREE.Group()
+        // const exitButtonArray = new FontLoader().getMeshArray("EXIT");
+        // exitButton.add(...exitButtonArray)
+        // exitButton.scale.set(1.5,1.5,1.5);
+        exitButton.position.set(...this.model.exitButtonPosition);        
         menuPanel.add(exitButton);
 
         // Create selection border
         const borderGeometry = new THREE.BoxGeometry(1.25, 0.75, 0.1);
-        const borderMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const borderMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
         this.border = new THREE.Mesh(borderGeometry, borderMaterial);  
         menuPanel.add(this.border);
 
