@@ -22,14 +22,20 @@ class GameModel extends Model {
     this.track = new Track(settings.track ?? "monza");
 
     this.car = settings.car;
+    if (this.car == null) {
+      this.car = new Car();
+    }
     this.car.position = this.track.start;
 
     this.opponent = settings.opponent;
+    if (this.opponent == null) {
+      this.opponent = new Car();
+    }
     this.opponent.position = this.track.start;
 
     this.laps = 0;
     this.checkpoint = new THREE.Vector3(
-      ...this.track.path[this.track.path.length / 2]
+      ...this.track.path[Math.floor(this.track.path.length / 2)]
     );
     this.checkpoint.x = this.checkpoint.x;
     this.start = new THREE.Vector3(

@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 const accelerationDelta = 0.001;
 const dragFactor = 0.99;
 const reverseFactor = 0.3;
@@ -12,7 +14,7 @@ const gravity = -0.04
  *  - Angular speed to turn the wheels
  */
 class Car {
-  constructor(defaultMaxSpeed = 1.4, defaultAngularSpeed = 0.02, maxAcceleration = 0.02) {
+  constructor(defaultMaxSpeed = 2.4, defaultAngularSpeed = 0.02, maxAcceleration = 0.02) {
     this.defaultMaxSpeed = defaultMaxSpeed;
     this.defaultAngularSpeed = defaultAngularSpeed;
     this.maxAcceleration = maxAcceleration;
@@ -39,6 +41,8 @@ class Car {
       left: false,
       right: false,
     };
+
+    this.model = new THREE.Object3D();
   }
 
   move() {

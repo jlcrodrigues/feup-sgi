@@ -3,6 +3,7 @@ import { View } from "../View.js";
 import * as THREE from "three";
 import { TrackBuilder } from "./TrackBuilder.js";
 import { ModifierView } from "./ModifierView.js";
+import { App } from "../../App.js";
 
 const dampingFactor = 0.1;
 const modifierAnimationDuration = 2;
@@ -19,7 +20,7 @@ class GameView extends View {
       1000
     );
     this.camera.position.z = -20;
-    this.camera.position.y = 20;
+    this.camera.position.y = 400;
     this.mixers = [];
 
     // Load the track scene
@@ -57,8 +58,10 @@ class GameView extends View {
     targetPosition.x -= 20 * Math.cos(-this.car.rotation.y);
     targetPosition.z -= 20 * Math.sin(-this.car.rotation.y);
 
-    this.camera.position.lerp(targetPosition, dampingFactor);
-    this.camera.lookAt(this.car.position);
+    if (!App.controlsActive) {
+      this.camera.position.lerp(targetPosition, dampingFactor);
+      this.camera.lookAt(this.car.position);
+    }
 
     const currentPosition = this.opponent.position.clone();
     this.mixers.forEach((mixer) => {
