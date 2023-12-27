@@ -14,7 +14,7 @@ const gravity = -0.04
  *  - Angular speed to turn the wheels
  */
 class Car {
-  constructor(defaultMaxSpeed = 1.4, defaultAngularSpeed = 0.02, maxAcceleration = 0.02) {
+  constructor(defaultMaxSpeed = 2.4, defaultAngularSpeed = 0.02, maxAcceleration = 0.02) {
     this.defaultMaxSpeed = defaultMaxSpeed;
     this.defaultAngularSpeed = defaultAngularSpeed;
     this.maxAcceleration = maxAcceleration;
