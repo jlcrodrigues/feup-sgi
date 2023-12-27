@@ -9,7 +9,7 @@ class TrackBuilder {
     this.textureRepeat = 1;
     this.showLine = false;
     this.closedCurve = false;
-    this.debug = true;
+    this.debug = false;
 
     this.points = [];
     for (let i = 0; i < track.path.length; i++) {

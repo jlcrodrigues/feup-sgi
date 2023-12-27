@@ -302,6 +302,278 @@
             </transforms> 
             <children>
                 <noderef id="pitBuildingStructure" />
+                <noderef id="pitBuildingInside" />
+            </children>
+        </node>
+
+        <node id="pitBuildingInside">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="jumperCables" />
+                <noderef id="tireRack" />
+                <noderef id="handToolbox" />
+                <noderef id="tirePile" />
+                <noderef id="computer" />
+                <noderef id="toolbox" />
+                <noderef id="table" />
+            </children>
+        </node>
+
+        <node id="modelSample">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/SAMPLE.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="jumperCables">
+            <transforms>
+                <translate value3="8 0 -2" />
+                <rotate value3="0 0 0" />
+                <scale value3="2.0 2.0 2.0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/jumperCables.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tireRack">
+            <transforms>
+                <translate value3="-6 0 7" />
+            </transforms> 
+            <children>
+                <noderef id="rack" />
+                <noderef id="tireRackTire1" />
+                <noderef id="tireRackTire2" />
+                <noderef id="tireRackTire3" />
+            </children>
+        </node>
+
+        <node id="tireRackTire1">
+            <transforms>
+                <translate value3="2.8 2.9 0" />
+                <rotate value3="0 0 90" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms> 
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tireRackTire2">
+            <transforms>
+                <translate value3="1.3 2.9 0" />
+                <rotate value3="0 0 90" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms> 
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tireRackTire3">
+            <transforms>
+                <translate value3="-0.3 2.9 0" />
+                <rotate value3="0 0 90" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms> 
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="rack">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 -90 0" />
+                <scale value3="0.030 0.023 0.020" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/rack.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="handToolbox">
+            <transforms>
+                <translate value3="-6 0 0" />
+                <rotate value3="0 10 0" />
+                <scale value3="0.22 0.22 0.22" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/handToolbox.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tirePile">
+            <transforms>
+                <translate value3="-6.5 0 -6.0" />
+            </transforms> 
+            <children>
+                <noderef id="tire1" />
+                <noderef id="tire2" />
+                <noderef id="tire3" />
+                <noderef id="tire4" />
+            </children>
+        </node>
+
+        <node id="tire1">
+            <transforms>
+                <translate value3="0 0.0 0" />
+            </transforms>
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tire2">
+            <transforms>
+                <translate value3="0.1 1.32 0.05" />
+            </transforms>
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tire3">
+            <transforms>
+                <translate value3="-0.05 2.64 0.1" />
+            </transforms>
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tire4">
+            <transforms>
+                <rotate value3="-80 0 0" />
+                <translate value3="0 1.45 -1.7" />
+            </transforms>
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tire">
+            <transforms>
+                <translate value3="0 0.7 0" />
+                <rotate value3="00 0 90" />
+                <scale value3="0.18 0.16 0.18" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/tire.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="computer">
+            <transforms>
+                <translate value3="8 2.72 5" />
+                <rotate value3="0 -90 0" />
+                <scale value3="0.005 0.005 0.005" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/computer.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="table">
+            <transforms>
+                <translate value3="6 0 9"/>
+                <rotate value3="0 90 0"/>
+                <scale value3="0.6 0.6 0.6"/>
+            </transforms>            
+            <children>
+                <noderef id="tableTop"/>
+                <noderef id="tableLeg1"/>
+                <noderef id="tableLeg2"/>
+                <noderef id="tableLeg3"/>
+                <noderef id="tableLeg4"/>
+            </children>
+        </node>
+
+        <node id="tableTop">
+            <transforms>
+                <translate value3="0 4 0"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="11 0.5 6" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tableLeg1">
+            <transforms>
+                <translate value3="1.5 0 1"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0.7 4 0.7" />
+                </primitive>
+            </children>
+        </node>
+        <node id="tableLeg2">
+            <transforms>
+                <translate value3="1.5 0 5"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0.7 4 0.7" />
+                </primitive>
+            </children>
+        </node>
+        <node id="tableLeg3">
+            <transforms>
+                <translate value3="9.5 0 5"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0.7 4 0.7" />
+                </primitive>
+            </children>
+        </node>
+        <node id="tableLeg4">
+            <transforms>
+                <translate value3="9.5 0 1"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0.7 4 0.7" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="toolbox">
+            <transforms>
+                <translate value3="-1 0 -15" />
+                <rotate value3="0 -80 0" />
+                <scale value3="4.0 4.0 4.0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/toolbox.glb" />
+                </primitive>
             </children>
         </node>
 

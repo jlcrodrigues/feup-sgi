@@ -12,9 +12,14 @@
 
 ## models
 
-Toyota AE86 by IvOfficial [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/ZEFWmOPSgh)
-Pickup Thunder by Quaternius (https://poly.pizza/m/fUfTnyvYdl)
-
-Boots by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/7HbqG8RwRcA)
-Anchor by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/1hF4bXyyW5U)
-Green Arrow Icon by Thomas Balouet [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/7eaXP_9tC-e)
+ - Toyota AE86 by IvOfficial [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/ZEFWmOPSgh)
+ - Pickup Thunder by Quaternius (https://poly.pizza/m/fUfTnyvYdl)
+ - Boots by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/7HbqG8RwRcA)
+ - Anchor by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/1hF4bXyyW5U)
+ - Green Arrow Icon by Thomas Balouet [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/7eaXP_9tC-e)
+ - Toolbox by Jesus Navas Aller [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/bNqhcgTSc_E)
+ - Computer by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/2EHvZLax4Y3)
+ - Tire by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/cV6yx0v8Bfy)
+ - Toolbox by jeremy [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/20JcnkCnbAc)
+ - Gondola by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/eKu0cp5cOn8)
+ - Jumper Cables by J-Toastie [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/Qt4PcL7wjJ)
