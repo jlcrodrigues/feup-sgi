@@ -33,18 +33,18 @@ class InitialView extends View {
         const fontLoader = new FontLoader(() => {
             const playButton = new THREE.Group();
             const playButtonArray = fontLoader.getMeshArray("PLAY");
-            playButton.add(...playButtonArray);
+            playButton.add(...playButtonArray[0]);
             playButton.scale.set(2, 2, 2);
-            playButton.position.set(...this.model.playButtonPosition);
+            playButton.position.set(this.model.playButtonPosition[0]-playButtonArray[1],this.model.playButtonPosition[1],this.model.playButtonPosition[2]);
             menuPanel.add(playButton);
         });
 
         // Create an Exit button
         const exitButton = new THREE.Group()
         const exitButtonArray = new FontLoader().getMeshArray("EXIT");
-        exitButton.add(...exitButtonArray)
+        exitButton.add(...exitButtonArray[0])
         exitButton.scale.set(2,2,2);
-        exitButton.position.set(...this.model.exitButtonPosition);        
+        exitButton.position.set(this.model.exitButtonPosition[0]-exitButtonArray[1]*1.5,this.model.exitButtonPosition[1],this.model.exitButtonPosition[2]);
         menuPanel.add(exitButton);
 
         // Create selection border
