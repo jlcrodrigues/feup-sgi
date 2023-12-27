@@ -23,3 +23,4 @@
  - Toolbox by jeremy [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/20JcnkCnbAc)
  - Gondola by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/eKu0cp5cOn8)
  - Jumper Cables by J-Toastie [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/Qt4PcL7wjJ)
+ - Houses by Quaternius (https://poly.pizza/m/vCoDG5hFyI)

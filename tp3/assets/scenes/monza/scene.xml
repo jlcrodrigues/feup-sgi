@@ -120,7 +120,8 @@
                 <noderef id="ground" />
                 <noderef id="pit" />
                 <noderef id="grandstands" />
-                <noderef id="outsideTrees" />
+                <noderef id="forest" />
+                <noderef id="houses" />
 
                 <noderef id="line1" />
                 <noderef id="line2" />
@@ -1246,10 +1247,302 @@
             </children>
         </node>
 
-        <node id="outsideTrees">
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~ HOUSES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+        <node id="houses">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="house1" />
+                <noderef id="house2" />
+                <noderef id="house3" />
+                <noderef id="house4" />
+            </children>
+        </node>
+
+        <node id="house1">
+            <transforms>
+                <translate value3="550 0 100" />
+                <rotate value3="0 0 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="houseBasis" />
+            </children>
+        </node>
+
+        <node id="house2">
+            <transforms>
+                <translate value3="540 0 60" />
+                <rotate value3="0 90 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="houseBasis" />
+            </children>
+        </node>
+
+        <node id="house3">
+            <transforms>
+                <translate value3="580 0 150" />
+                <rotate value3="0 10 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="houseBasis" />
+            </children>
+        </node>
+
+        <node id="house4">
+            <transforms>
+                <translate value3="590 0 180" />
+                <rotate value3="0 100 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="houseBasis" />
+            </children>
+        </node>
+
+        <node id="houseBasis">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+                <scale value3="20.0 20.0 20.0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/houses.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~ FOREST ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+        <node id="forest">
             <transforms>
             </transforms> 
             <children>
+                <noderef id="forest1" />
+                <noderef id="forest2" />
+                <noderef id="forest3" />
+                <noderef id="forest4" />
+                <noderef id="forest5" />
+                <noderef id="forest6" />
+                <noderef id="forest7" />
+                <noderef id="forest8" />
+                <noderef id="forest9" />
+                <noderef id="forest10" />
+                <noderef id="forest11" />
+                <noderef id="forest12" />
+                <noderef id="forest13" />
+                <noderef id="forest14" />
+                <noderef id="forest15" />
+                <noderef id="forest16" />
+                <noderef id="forest17" />
+                <noderef id="forest18" />
+            </children>
+        </node>
+
+        <node id="forest1">
+            <transforms>
+                <translate value3="70 0 30" />
+            </transforms> 
+            <children>
+                <noderef id="forestM" />
+            </children>
+        </node>
+
+        <node id="forest2">
+            <transforms>
+                <translate value3="153 0 33" />
+                <rotate value3="0 -40 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest3">
+            <transforms>
+                <translate value3="230 0 60" />
+                <rotate value3="0 15 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest4">
+            <transforms>
+                <translate value3="360 0 30" />
+                <rotate value3="0 -30 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestS" />
+            </children>
+        </node>
+
+        <node id="forest5">
+            <transforms>
+                <translate value3="420 0 70" />
+                <rotate value3="0 -70 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest6">
+            <transforms>
+                <translate value3="450 0 220" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestS" />
+            </children>
+        </node>
+
+        <node id="forest7">
+            <transforms>
+                <translate value3="400 0 320" />
+                <rotate value3="0 80 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest8">
+            <transforms>
+                <translate value3="450 0 500" />
+                <rotate value3="0 110 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest9">
+            <transforms>
+                <translate value3="390 0 370" />
+                <rotate value3="0 40 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestM" />
+            </children>
+        </node>
+
+        <node id="forest10">
+            <transforms>
+                <translate value3="380 0 340" />
+                <rotate value3="0 120 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest11">
+            <transforms>
+                <translate value3="290 0 220" />
+                <rotate value3="0 80 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest12">
+            <transforms>
+                <translate value3="-300 0 90" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest13">
+            <transforms>
+                <translate value3="-530 0 60" />
+                <rotate value3="0 -70 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest14">
+            <transforms>
+                <translate value3="-490 0 -20" />
+                <rotate value3="0 -120 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest15">
+            <transforms>
+                <translate value3="-500 0 -100" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest16">
+            <transforms>
+                <translate value3="500 0 80" />
+                <rotate value3="0 90 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestS" />
+            </children>
+        </node>
+
+        <node id="forest17">
+            <transforms>
+                <translate value3="520 0 230" />
+                <rotate value3="0 90 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestM" />
+            </children>
+        </node>
+
+        <node id="forestS">
+			<transforms>
+            </transforms> 
+            <children>             
+                <noderef id="treePatch1" />
+                <noderef id="treePatch2" />
+                <noderef id="treePatch3" />
+            </children> 
+        </node>
+
+        <node id="forestM">
+			<transforms>
+            </transforms> 
+            <children>             
+                <noderef id="treePatch1" />
+                <noderef id="treePatch2" />
+                <noderef id="treePatch3" />
+                <noderef id="treePatch4" />
+                <noderef id="treePatch5" />
+                <noderef id="treePatch6" />
+            </children> 
+        </node>
+
+        <node id="forestL">
+			<transforms>
+            </transforms> 
+            <children>             
                 <noderef id="treePatch1" />
                 <noderef id="treePatch2" />
                 <noderef id="treePatch3" />
@@ -1257,7 +1550,10 @@
                 <noderef id="treePatch5" />
                 <noderef id="treePatch6" />
                 <noderef id="treePatch7" />
-            </children>
+                <noderef id="treePatch8" />
+                <noderef id="treePatch9" />
+                <noderef id="treePatch10" />
+            </children> 
         </node>
 
         <node id="treePatch">
@@ -1272,7 +1568,7 @@
 
         <node id="treePatch1">
             <transforms>
-                <translate value3="150 0 0" />
+                <translate value3="0 0 0" />
                 <scale value3="1.0 1.2 1.0"/>
             </transforms> 
             <children>
@@ -1282,8 +1578,9 @@
 
         <node id="treePatch2">
             <transforms>
-                <translate value3="155 0 30" />
+                <translate value3="25 0 0" />
                 <scale value3="1.2 1.4 1.2"/>
+                <rotate value3="0 -20 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -1292,8 +1589,9 @@
 
         <node id="treePatch3">
             <transforms>
-                <translate value3="20 0 55" />
+                <translate value3="-8 0 25" />
                 <scale value3="1.3 1.2 1.3"/>
+                <rotate value3="0 60 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -1302,7 +1600,7 @@
 
         <node id="treePatch4">
             <transforms>
-                <translate value3="150 0 50" />
+                <translate value3="50 0 0" />
                 <scale value3="1.2 1.3 1.2"/>
             </transforms> 
             <children>
@@ -1312,7 +1610,7 @@
 
         <node id="treePatch5">
             <transforms>
-                <translate value3="-40 0 50" />
+                <translate value3="20 0 25" />
                 <scale value3="1.2 1.3 1.2"/>
                 <rotate value3="0 10 0"/>
             </transforms> 
@@ -1323,9 +1621,9 @@
 
         <node id="treePatch6">
             <transforms>
-                <translate value3="-45 0 -40" />
+                <translate value3="60 0 30" />
                 <scale value3="1.2 1.3 1.2"/>
-                <rotate value3="0 -10 0"/>
+                <rotate value3="0 70 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -1334,7 +1632,7 @@
 
         <node id="treePatch7">
             <transforms>
-                <translate value3="-15 0 -45" />
+                <translate value3="40 0 50" />
                 <scale value3="1.2 1.3 1.2"/>
                 <rotate value3="0 -70 0"/>
             </transforms> 
@@ -1345,9 +1643,31 @@
 
         <node id="treePatch8">
             <transforms>
-                <translate value3="78 0 -48" />
+                <translate value3="95 0 0" />
                 <scale value3="1.2 1.3 1.2"/>
                 <rotate value3="0 -100 0" />
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch9">
+            <transforms>
+                <translate value3="95 0 50" />
+                <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 100 0" />
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch10">
+            <transforms>
+                <translate value3="55 0 55" />
+                <scale value3="1.1 1.2 1.2"/>
+                <rotate value3="0 130 0" />
             </transforms> 
             <children>
                 <noderef id="treePatch" />
