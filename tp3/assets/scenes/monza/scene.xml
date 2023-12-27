@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-16" standalone="yes"?>
 <yaf> 
 	
-    <globals background="0 0 0 1" ambient="0.8 0.8 0.8 1" /> 
+    <globals background="0 0 0 1" ambient="0.2 0.2 0.2 1" /> 
 
 
     <cameras initial="Free Camera" > 
@@ -22,6 +22,9 @@
         <texture id="blackWoodTex" filepath="assets/scenes/monza/textures/black_wood.jpeg" />
         <texture id="roadTex" filepath="assets/scenes/monza/textures/road.jpg" />
         <texture id="roadBumpTex" filepath="assets/scenes/monza/textures/roadBump.png" />
+        <texture id="wallTex" filepath="assets/scenes/monza/textures/wall.avif" />
+        <texture id="wallBumpTex" filepath="assets/scenes/monza/textures/wallBump.png" />
+        <texture id="windowTex" filepath="assets/scenes/monza/textures/window.jpg" />
     </textures> 
 
     <materials> 
@@ -77,6 +80,30 @@
 			specular="0 0 0 0" 
             shininess="20"
         />
+			
+        <material id="wallApp" 
+            color="0.75 0.75 0.75 1.0" 
+            emissive="0.0 0.0 0.0 1" 
+			specular="0 0 0 0" 
+            shininess="20"
+            twosided="true"
+            textureref="wallTex" 
+            bumpref="wallBumpTex" 
+            bumpscale="0.01"
+            texlength_s="60"
+            texlength_t="100"
+        />
+			
+        <material id="windowApp" 
+            color="0.75 0.75 0.85 1.0" 
+            emissive="0.00 0.00 0.00 1" 
+			specular="0.5 0.5 0.5 1" 
+            shininess="50"
+            twosided="true"
+            textureref="windowTex" 
+            texlength_s="12"
+            texlength_t="12"
+        />
     </materials> 
 
     <graph rootid="scene">
@@ -88,6 +115,14 @@
 
                 <noderef id="line1" />
                 <noderef id="line2" />
+
+                <directionallight id="sun"
+                    enabled="true"
+                    color="1 1 1 1"    
+                    intensity="2"
+                    position="300 500 -200"
+                    castshadow="true"
+                />  
             </children>
         </node>
 
@@ -131,6 +166,7 @@
                 <noderef id="pitGround" />
                 <noderef id="pitEntry" />
                 <noderef id="pitExit" />
+                <noderef id="pitBuildingGroup" />
             </children>
         </node>
 
@@ -169,6 +205,307 @@
             <children>
                 <primitive>
                     <rectangle xy1="0 0" xy2="90 20" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingGroup">
+            <transforms>
+                <translate value3="-220 0 60" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding1" />
+                <noderef id="pitBuilding2" />
+                <noderef id="pitBuilding3" />
+                <noderef id="pitBuilding4" />
+                <noderef id="pitBuilding5" />
+                <noderef id="pitBuilding6" />
+                <noderef id="pitBuilding7" />
+                <noderef id="pitBuilding8" />
+            </children>
+        </node>
+
+        <node id="pitBuilding1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding2">
+            <transforms>
+                <translate value3="20 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding3">
+            <transforms>
+                <translate value3="40 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding4">
+            <transforms>
+                <translate value3="60 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding5">
+            <transforms>
+                <translate value3="80 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding6">
+            <transforms>
+                <translate value3="100 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding7">
+            <transforms>
+                <translate value3="120 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding8">
+            <transforms>
+                <translate value3="140 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="pitBuildingStructure" />
+            </children>
+        </node>
+
+        <node id="pitBuildingStructure">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="pitBuildingWallLeft" />
+                <noderef id="pitBuildingWallRight" />
+                <noderef id="pitBuildingWallBack" />
+                <noderef id="pitBuildingFrontFrame" />
+                <noderef id="pitBuildingRoof" />
+                <noderef id="pitBuildingTriangleLeft" />
+                <noderef id="pitBuildingTriangleRight" />
+                <noderef id="pitBuildingFacade" />
+            </children>
+        </node>
+
+        <node id="pitBuildingRoof">
+            <transforms>
+                <rotate value3="-90 0 0" />
+                <translate value3="-10 25 10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 25" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFacade">
+            <transforms>
+                <rotate value3="-18.43 0 0" />
+                <translate value3="-10 10 -10" />
+            </transforms> 
+            <materialref id="windowApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 15.81" />
+                </primitive>
+                <noderef id="pitBuildingFacadeFrame" />
+            </children>
+        </node>
+
+        <node id="pitBuildingFacadeFrame">
+            <transforms>
+                <translate value3="0.00 0.00 -0.01" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <noderef id="pitBuildingFacadeFrameLeft" />
+                <noderef id="pitBuildingFacadeFrameRight" />
+                <noderef id="pitBuildingFacadeFrameTop" />
+            </children>
+        </node>
+
+        <node id="pitBuildingFacadeFrameTop">
+            <transforms>
+                <translate value3="0.00 15.00 0.00" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 1" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFacadeFrameLeft">
+            <transforms>
+                <translate value3="19.00 0.00 0.00" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="1 15.81" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFacadeFrameRight">
+            <transforms>
+                <translate value3="0.00 0.00 0.00" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="1 15.81" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingTriangleLeft">
+            <transforms>
+                <translate value3="10 10 -10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <triangle xyz1="0 0 0" xyz2="0 15 0" xyz3="0 15 -5" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingTriangleRight">
+            <transforms>
+                <translate value3="-10 10 -10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <triangle xyz1="0 0 0" xyz2="0 15 0" xyz3="0 15 -5" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingWallLeft">
+            <transforms>
+                <rotate value3="0 90 0" />
+                <translate value3="10 0 10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 25" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingWallRight">
+            <transforms>
+                <rotate value3="0 90 0" />
+                <translate value3="-10 0 10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 25" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingWallBack">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="-10 0 10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 25" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFrontFrame">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="0 0 -10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <noderef id="pitBuildingFrontFrameLeft" />
+                <noderef id="pitBuildingFrontFrameRight" />
+                <noderef id="pitBuildingFrontFrameTop" />
+            </children>
+        </node>
+
+        <node id="pitBuildingFrontFrameLeft">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="7 0 0" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="3 10" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFrontFrameRight">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="-10 0 0" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="3 10" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFrontFrameTop">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="-7 7 0" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="16 3" />
                 </primitive>
             </children>
         </node>

@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 const accelerationDelta = 0.001;
 const dragFactor = 0.99;
 const reverseFactor = 0.3;
@@ -39,6 +41,8 @@ class Car {
       left: false,
       right: false,
     };
+
+    this.model = new THREE.Object3D();
   }
 
   move() {
