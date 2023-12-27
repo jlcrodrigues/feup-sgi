@@ -29,7 +29,7 @@ class GameModel extends Model {
 
     this.laps = 0;
     this.checkpoint = new THREE.Vector3(
-      ...this.track.path[this.track.path.length / 2]
+      ...this.track.path[Math.floor(this.track.path.length / 2)]
     );
     this.checkpoint.x = this.checkpoint.x;
     this.start = new THREE.Vector3(

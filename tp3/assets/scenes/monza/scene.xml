@@ -70,12 +70,20 @@
 			specular="0 0 0 0" 
             shininess="20"
         />
+			
+        <material id="pitGroundApp" 
+            color="0.25 0.25 0.25 1.0" 
+            emissive="0.0 0.0 0.0 1" 
+			specular="0 0 0 0" 
+            shininess="20"
+        />
     </materials> 
 
     <graph rootid="scene">
         <node id="scene" castshadows="true" receiveshadows="true">
             <children>
                 <noderef id="ground" />
+                <noderef id="pit" />
                 <noderef id="outsideTrees" />
 
                 <noderef id="line1" />
@@ -85,7 +93,7 @@
 
         <node id="line1">
             <transforms>
-                <translate value3="0 0 -10" />
+                <translate value3="-230 0 -10" />
             </transforms> 
             <children>
                 <noderef id="tree1" />
@@ -94,7 +102,7 @@
 
         <node id="line2">
             <transforms>
-                <translate value3="0 0 10" />
+                <translate value3="-230 0 10" />
             </transforms> 
             <children>
                 <noderef id="tree1" />
@@ -109,7 +117,58 @@
             <materialref id="groundApp" />
             <children>
                 <primitive>
-                    <rectangle xy1="0 0" xy2="1500 800" />
+                    <rectangle xy1="0 0" xy2="1500 1000" />
+                </primitive>
+            </children>
+        </node>
+
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~ PIT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+        <node id="pit">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="pitGround" />
+                <noderef id="pitEntry" />
+                <noderef id="pitExit" />
+            </children>
+        </node>
+
+        <node id="pitGround">
+            <transforms>
+                <translate value3="-290 0.02 70" />
+                <rotate value3="-90 0 0" />
+            </transforms> 
+            <materialref id="pitGroundApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="250 50" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitEntry">
+            <transforms>
+                <translate value3="-320 0.01 10" />
+                <rotate value3="-90 0 -20" />
+            </transforms> 
+            <materialref id="pitGroundApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="90 20" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitExit">
+            <transforms>
+                <translate value3="-50 0.01 40" />
+                <rotate value3="-90 0 20" />
+            </transforms> 
+            <materialref id="pitGroundApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="90 20" />
                 </primitive>
             </children>
         </node>
