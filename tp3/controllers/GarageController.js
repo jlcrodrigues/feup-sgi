@@ -1,5 +1,6 @@
 import { GarageModel } from "../models/GarageModel.js";
 import { GameState } from "../states/GameState.js";
+import { RaceMenuState } from "../states/RaceMenuState.js";
 import { GarageView } from "../views/garage/GarageView.js";
 import { Controller } from "./Controller.js";
 
@@ -20,9 +21,11 @@ class GarageController extends Controller {
     this.model.step()
     this.view.step();
 
-    if (this.model.over) {
+    if (this.settings.race && this.model.state === "race"){
       this.settings.car = this.model.cars[this.model.selected];
       return new GameState(this.settings);
+    }else if (this.model.state === "menu"){
+        return new RaceMenuState();
     }
     return null;
   }

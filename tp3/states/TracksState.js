@@ -2,10 +2,10 @@ import { TracksController } from "../controllers/TracksController.js";
 import { State } from "./State.js";
 
 class TracksState extends State {
-    constructor() {
+    constructor(settings) {
         super();
-
-        this.controller = new TracksController();
+        
+        this.controller = new TracksController(settings);
     }
 
     step(){

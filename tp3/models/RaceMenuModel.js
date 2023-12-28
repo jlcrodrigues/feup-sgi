@@ -88,7 +88,7 @@ class RaceMenuModel extends Model {
         } else if (this.selectedPosition == this.tracksButtonPosition){
           this.state = 'tracks';
         } else if (this.selectedPosition == this.raceButtonPosition){
-          this.state = 'game'
+          this.state = 'race'
         }
         break;
       case "esc":

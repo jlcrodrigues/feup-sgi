@@ -7,6 +7,7 @@ const movements = {
   ArrowLeft: "left",
   ArrowRight: "right",
   Enter: "enter",
+  Escape: "esc"
 };
 
 class GarageModel extends Model {
@@ -14,7 +15,6 @@ class GarageModel extends Model {
     super();
 
     this.selected = 0;
-    this.over = false;
 
     const carData = this.loadCarData();
     this.cars = carData.map((car) => CarLoader.load(car));
@@ -30,9 +30,11 @@ class GarageModel extends Model {
       else if (movements[code] === "right") {
         this.selected = Math.min(this.cars.length - 1, this.selected + 1);
       }
-
-      if (movements[code] === "enter") {
-        this.over = true;
+      else if (movements[code] === "esc") {
+        this.state = "menu";
+      }
+      else if (movements[code] === "enter"){
+        this.state = "race";
       }
     }
   }

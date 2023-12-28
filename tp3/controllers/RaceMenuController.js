@@ -11,6 +11,7 @@ class RaceMenuController extends Controller {
         super();
 
         this.settings = settings ?? {}
+        this.settings.race = false;
 
         this.model = new RaceMenuModel();
         this.view = new RaceMenuView(this.model);
@@ -25,14 +26,18 @@ class RaceMenuController extends Controller {
     step() {
         // this.model.step();
         this.view.step();
-        if (this.model.state == 'garage')
-            return new GarageState();
-        else if (this.model.state == 'tracks')
-            return new TracksState();
+        if (this.model.state == 'garage'){
+            return new GarageState(this.settings);
+        }
+        else if (this.model.state == 'tracks'){
+            return new TracksState(this.settings);
+        }
         else if (this.model.state == 'initial')
             return new InitialState();
-        else if (this.model.state == 'game'){
-            return new GameState();
+        else if (this.model.state == 'race'){
+            this.settings.laps = this.model.laps 
+            this.settings.race = true;
+            return new TracksState(this.settings);
         }
         return null;
     }

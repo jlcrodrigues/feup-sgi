@@ -1,7 +1,8 @@
 import { Model } from "./Model.js";
 
 const keyInputs = {
-    Enter: "enter"
+    Enter: "enter",
+    Escape: "esc"
   }
 
 class TracksModel extends Model{
@@ -12,8 +13,10 @@ class TracksModel extends Model{
 
     processInput(key){
         const input = keyInputs[key];
-        if (input == 'enter')
-            this.state = 'menu'
+        if (input === "esc")
+            this.state = "menu"
+        else if (input === "enter")
+            this.state = "garage"
     }
 }
 
