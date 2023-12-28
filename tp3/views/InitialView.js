@@ -22,14 +22,6 @@ class InitialView extends View {
         const menuPanelMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
         const menuPanel = new THREE.Mesh(menuPanelGeometry, menuPanelMaterial);
 
-        // Create a Play button
-        // const playButton = new THREE.Group()
-        // const playButtonArray = new FontLoader().getMeshArray("FISH");
-        // playButton.add(...playButtonArray)
-        // playButton.scale.set(1.5,1.5,1.5);
-        // playButton.position.set(...this.model.playButtonPosition);
-        // menuPanel.add(playButton);
-
         const fontLoader = new FontLoader(() => {
             const playButton = new THREE.Group();
             const playButtonArray = fontLoader.getMeshArray("PLAY");
@@ -41,14 +33,14 @@ class InitialView extends View {
 
         // Create an Exit button
         const exitButton = new THREE.Group()
-        const exitButtonArray = new FontLoader().getMeshArray("EXIT");
+        const exitButtonArray = new FontLoader().getMeshArray("RULES");
         exitButton.add(...exitButtonArray[0])
         exitButton.scale.set(2,2,2);
-        exitButton.position.set(this.model.exitButtonPosition[0]-exitButtonArray[1]*1.5,this.model.exitButtonPosition[1],this.model.exitButtonPosition[2]);
+        exitButton.position.set(this.model.exitButtonPosition[0]-exitButtonArray[1]*1.7,this.model.exitButtonPosition[1],this.model.exitButtonPosition[2]);
         menuPanel.add(exitButton);
 
         // Create selection border
-        const borderGeometry = new THREE.BoxGeometry(1.25, 0.75, 0.1);
+        const borderGeometry = new THREE.BoxGeometry(1.25, 0.03, 0.1);
         const borderMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
         this.border = new THREE.Mesh(borderGeometry, borderMaterial);  
         menuPanel.add(this.border);
@@ -62,10 +54,10 @@ class InitialView extends View {
 
     step() {
         //update border position
-        this.border.position.set(this.model.selected[0],this.model.selected[1],0.01);
+        this.border.position.set(this.model.selectedPosition[0],this.model.selectedPosition[1]-0.15,0.01);
 
         const targetPosition = this.camera.position.clone();
-        targetPosition.x = this.model.selected[0]/2;
+        targetPosition.x = this.model.selectedPosition[0]/2;
 
         this.camera.position.lerp(targetPosition, dampingFactor);
 
