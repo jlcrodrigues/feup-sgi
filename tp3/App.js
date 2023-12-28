@@ -30,7 +30,7 @@ class App {
    * Creates the renderer and the inital state.
    */
   start() {
-    this.state = new GameState();
+    this.state = new GarageState();
 
     // Create a renderer with Antialiasing
     this.renderer = new THREE.WebGLRenderer({ antialias: true });

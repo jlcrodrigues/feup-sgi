@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { TrackBuilder } from "./TrackBuilder.js";
 import { ModifierView } from "./ModifierView.js";
 import { App } from "../../App.js";
+import { Car } from "../../models/game/Car.js";
 
 const dampingFactor = 0.1;
 const modifierAnimationDuration = 2;
@@ -55,8 +56,8 @@ class GameView extends View {
 
     const targetPosition = this.car.position.clone();
     targetPosition.y += 10;
-    targetPosition.x -= 20 * Math.cos(-this.car.rotation.y);
-    targetPosition.z -= 20 * Math.sin(-this.car.rotation.y);
+    targetPosition.x -= 10 * Math.cos(-this.car.rotation.y);
+    targetPosition.z -= 10 * Math.sin(-this.car.rotation.y);
 
     if (!App.controlsActive) {
       this.camera.position.lerp(targetPosition, dampingFactor);
@@ -138,9 +139,9 @@ class GameView extends View {
       document.querySelector("#modifierTime").innerHTML = "";
     }
 
-    document.querySelector("#speed").innerHTML = `<div>Speed</div><div>${(
-      this.model.car.speed * 144
-    ).toFixed(0)} km/h</div>`;
+    document.querySelector("#speed").innerHTML = `<div>Speed</div><div>${Math.floor(
+      this.model.car.speed * Car.speedConverter
+    )} km/h</div>`;
   }
 
   loadModifiers() {
@@ -189,6 +190,14 @@ class GameView extends View {
     if (intersects.length == 0) {
       this.model.setOutsideTrack();
     }
+  }
+
+  cleanup() {
+    document.querySelector("#top-left").innerHTML = "";
+    document.querySelector("#top-center").innerHTML = "";
+    document.querySelector("#top-left").innerHTML = "";
+    document.querySelector("#bottom-left").innerHTML = "";
+    document.querySelector("#bottom-right").innerHTML = "";
   }
 }
 

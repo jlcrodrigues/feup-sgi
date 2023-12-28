@@ -3,6 +3,11 @@
   src: url("./assets/fonts/TechnoRace-Italic.otf");
 }
 
+@font-face {
+  font-family: "Designer";
+  src: url("./assets/fonts/Designer.otf");
+}
+
 body {
   margin: 0;
 }
@@ -26,9 +31,16 @@ body {
 }
 
 #top-right {
-    position: absolute;
-    top: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#center-bottom {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #bottom-left {
@@ -50,7 +62,7 @@ body {
 }
 
 #last-lap {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .hud {
@@ -61,6 +73,69 @@ body {
   font-size: 2.5rem;
 }
 
+.hud-menu {
+  padding: 1em;
+  font-family: "TechnoRace", sans-serif;
+  color: #fff;
+  font-size: 2.8rem;
+}
+
+#garage-hud {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2em;
+  width: 1000px;
+}
+
+#garage-hud * {
+  margin: 0;
+}
+
+#car-name,
+#specs > p {
+  text-shadow: #f38c06 2px 2px 0px;
+}
+
+#specs > p {
+  font-size: 1.7rem;
+}
+
+#car-description {
+  font-family: "Designer";
+  font-weight: 100;
+  font-size: 1.3rem;
+}
+
+#specs > p {
+  font-family: "TechnoRace";
+  font-size: 1.9rem;
+}
+
+#specs-in {
+  font-family: "Designer";
+  font-size: 1.2rem;
+}
+
 .hud * {
   margin: 0;
+}
+
+.range-out {
+  background-color: #f38c06;
+  transform: skewX(-40deg);
+}
+
+.range-in {
+  position: relative;
+  bottom: 5px;
+  left: 2px;
+  background-color: #fff;
+  transform: skewX(-10deg);
+}
+
+.range {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3em;
 }
