@@ -22,6 +22,7 @@ class GarageController extends Controller {
 
     if (this.model.over) {
       this.settings.car = this.model.cars[this.model.selected];
+      this.view.cleanup();
       return new GameState(this.settings);
     }
     return null;

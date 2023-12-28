@@ -18,6 +18,9 @@ class GarageModel extends Model {
 
     const carData = this.loadCarData();
     this.cars = carData.map((car) => CarLoader.load(car));
+    this.maxMaxSpeed = Math.max(...this.cars.map((car) => car.maxSpeed));
+    this.maxAngularSpeed = Math.max(...this.cars.map((car) => car.defaultAngularSpeed));
+    this.maxAcceleration = Math.max(...this.cars.map((car) => car.maxAcceleration));
   }
 
   step() {}

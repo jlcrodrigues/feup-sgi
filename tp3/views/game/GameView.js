@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { TrackBuilder } from "./TrackBuilder.js";
 import { ModifierView } from "./ModifierView.js";
 import { App } from "../../App.js";
+import { Car } from "../../models/game/Car.js";
 
 const dampingFactor = 0.1;
 const modifierAnimationDuration = 2;
@@ -139,7 +140,7 @@ class GameView extends View {
     }
 
     document.querySelector("#speed").innerHTML = `<div>Speed</div><div>${(
-      this.model.car.speed * 144
+      this.model.car.speed * Car.speedConverter
     ).toFixed(0)} km/h</div>`;
   }
 
@@ -189,6 +190,14 @@ class GameView extends View {
     if (intersects.length == 0) {
       this.model.setOutsideTrack();
     }
+  }
+
+  cleanup() {
+    document.querySelector("#top-left").innerHTML = "";
+    document.querySelector("#top-center").innerHTML = "";
+    document.querySelector("#top-left").innerHTML = "";
+    document.querySelector("#bottom-left").innerHTML = "";
+    document.querySelector("#bottom-right").innerHTML = "";
   }
 }
 

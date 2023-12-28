@@ -6,7 +6,9 @@ const carsPath = './assets/cars';
 
 class CarLoader {
     static load(carData) {
-        const car = new Car(carData.maxSpeed, carData.angularSpeed, carData.maxAcceleration);
+        const car = new Car(carData.maxSpeed, carData.defaultAngularSpeed, carData.maxAcceleration);
+        car.name = carData.name;
+        car.description = carData.description;
 
         if (carData.path.endsWith('.xml')) {
             const scene = new THREE.Scene();

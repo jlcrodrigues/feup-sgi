@@ -21,6 +21,7 @@ class GameController extends Controller {
 
   step() {
     if (this.model.step()) {
+      this.view.cleanup();
       return new GarageState();
     }
     this.view.step();

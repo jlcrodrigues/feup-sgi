@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-16" standalone="yes"?>
 <yaf> 
 	
-    <globals background="0 0 0 1" ambient="0.8 0.8 0.8 1" /> 
+    <globals background="0 0 0 1" ambient="0.1 0.1 0.1 1" /> 
 
     <cameras initial="Free Camera" > 
         <perspective id="Free Camera" 
@@ -89,6 +89,14 @@
                 <noderef id="ground" />
                 <noderef id="pit" />
 
+
+                <directionallight id="sun"
+                    enabled="true"
+                    color="1 1 1 1"    
+                    intensity="1.8"
+                    position="-50 50 50"
+                    castshadow="true"
+                />  
             </children>
         </node>
 
