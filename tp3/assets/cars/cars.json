@@ -12,9 +12,25 @@
             "name": "Toyota AE86",
             "description": "A legendary drift machine with razor-sharp handling and relentless speed.",
             "path": "models/ae86/ae86.xml",
-            "maxSpeed": 2.8,
-            "defaultAngularSpeed": 0.06,
+            "maxSpeed": 2.3,
+            "defaultAngularSpeed": 0.03,
             "maxAcceleration": 0.03
+        },
+        {
+            "name": "Delorean DMC-12 1981",
+            "description": "Step into the future with the DeLorean DMC-12. It's not just a car; it's a portal to unparalleled excitement.",
+            "path": "models/delorean/delorean.xml",
+            "maxSpeed": 1.0894,
+            "defaultAngularSpeed": 0.02,
+            "maxAcceleration": 0.03
+        },
+        {
+            "name": "Formula 1 RB19",
+            "description": "Dive into the heart of speed with this Formula One marvel - the epitome of cutting-edge racing technology in the palm of your virtual hands.",
+            "path": "models/f1/f1.xml",
+            "maxSpeed": 3.054,
+            "defaultAngularSpeed": 0.04,
+            "maxAcceleration": 0.05
         }
     ]
 }

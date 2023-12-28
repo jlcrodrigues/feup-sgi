@@ -24,3 +24,4 @@
  - Gondola by Poly by Google [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/eKu0cp5cOn8)
  - Jumper Cables by J-Toastie [CC-BY] (https://creativecommons.org/licenses/by/3.0/) via Poly Pizza (https://poly.pizza/m/Qt4PcL7wjJ)
  - Houses by Quaternius (https://poly.pizza/m/vCoDG5hFyI)
+ - "Low Poly-F1" (https://skfb.ly/oLEwV) by salasilma13 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).

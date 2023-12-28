@@ -3,11 +3,11 @@ import * as THREE from "three";
 const accelerationDelta = 0.001;
 const dragFactor = 0.99;
 const reverseFactor = 0.3;
-const gravity = -0.04
+const gravity = -0.04;
 
 /**
  * Defines a car and handles movement. <br>
- * 
+ *
  * A car moves in two dimensions:
  *  - Modular speed. This is the speed of the car in the direction of the car.
  * User input changes the acceleration, which in turn changes the speed over time.
@@ -16,7 +16,11 @@ const gravity = -0.04
 class Car {
   static speedConverter = 130;
 
-  constructor(defaultMaxSpeed = 2.4, defaultAngularSpeed = 0.02, maxAcceleration = 0.02) {
+  constructor(
+    defaultMaxSpeed = 2.4,
+    defaultAngularSpeed = 0.02,
+    maxAcceleration = 0.02
+  ) {
     this.defaultMaxSpeed = defaultMaxSpeed;
     this.defaultAngularSpeed = defaultAngularSpeed;
     this.maxAcceleration = maxAcceleration;
@@ -56,7 +60,7 @@ class Car {
       this.jumpSpeed += gravity;
     }
 
-    this.speed *= dragFactor;
+    if (this.acceleration == 0) this.speed *= dragFactor;
 
     this.updateAcceleration();
     this.updateSpeed();
@@ -84,9 +88,7 @@ class Car {
       if (this.speed > 0) {
         this.acceleration = -this.maxAcceleration * reverseFactor;
       } else {
-        if (
-          this.acceleration > -(this.maxAcceleration * reverseFactor)
-        ) {
+        if (this.acceleration > -(this.maxAcceleration * reverseFactor)) {
           this.acceleration -= accelerationDelta;
         }
       }
@@ -96,13 +98,11 @@ class Car {
 
     // Angular Velocity
     if (!this.moving.left && !this.moving.right) {
-        this.angularSpeed = 0;
-    }
-    else if (this.moving.left && !this.moving.right) {
-        this.angularSpeed = -this.defaultAngularSpeed * (this.switched ? -1 : 1);
-    }
-    else if (this.moving.right && !this.moving.left) {
-        this.angularSpeed = this.defaultAngularSpeed * (this.switched ? -1 : 1);
+      this.angularSpeed = 0;
+    } else if (this.moving.left && !this.moving.right) {
+      this.angularSpeed = -this.defaultAngularSpeed * (this.switched ? -1 : 1);
+    } else if (this.moving.right && !this.moving.left) {
+      this.angularSpeed = this.defaultAngularSpeed * (this.switched ? -1 : 1);
     }
   }
 
@@ -115,6 +115,11 @@ class Car {
     } else {
       if (this.speed < this.maxSpeed) {
         this.speed += this.acceleration;
+        this.speed = Math.min(this.speed, this.maxSpeed);
+      }
+      else if (this.speed > this.maxSpeed) {
+        this.speed -= this.acceleration;
+        this.speed = Math.max(this.speed, this.maxSpeed);
       }
     }
 

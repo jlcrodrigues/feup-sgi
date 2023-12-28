@@ -33,8 +33,6 @@ class GarageView extends View {
       i++;
     }
 
-    console.log(this.model.cars);
-
     this.loadHud();
   }
 

@@ -56,8 +56,8 @@ class GameView extends View {
 
     const targetPosition = this.car.position.clone();
     targetPosition.y += 10;
-    targetPosition.x -= 20 * Math.cos(-this.car.rotation.y);
-    targetPosition.z -= 20 * Math.sin(-this.car.rotation.y);
+    targetPosition.x -= 10 * Math.cos(-this.car.rotation.y);
+    targetPosition.z -= 10 * Math.sin(-this.car.rotation.y);
 
     if (!App.controlsActive) {
       this.camera.position.lerp(targetPosition, dampingFactor);
@@ -139,9 +139,9 @@ class GameView extends View {
       document.querySelector("#modifierTime").innerHTML = "";
     }
 
-    document.querySelector("#speed").innerHTML = `<div>Speed</div><div>${(
+    document.querySelector("#speed").innerHTML = `<div>Speed</div><div>${Math.floor(
       this.model.car.speed * Car.speedConverter
-    ).toFixed(0)} km/h</div>`;
+    )} km/h</div>`;
   }
 
   loadModifiers() {
