@@ -12,8 +12,8 @@ class InitialModel extends Model {
   constructor() {
     super();
 
-    this.playButtonPosition = [-1,0,0.05]
-    this.exitButtonPosition = [1,0,0.05]
+    this.playButtonPosition = [-0.9,0,0.05]
+    this.exitButtonPosition = [0.8,0,0.05]
 
     this.selectedPosition = this.playButtonPosition
 

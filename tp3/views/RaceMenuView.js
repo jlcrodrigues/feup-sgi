@@ -17,32 +17,44 @@ class RaceMenuView extends View {
         );
         this.camera.position.z = 5;
 
+        const menuPanelGroup = new THREE.Group();
+        const contentsGroup = new THREE.Group();
+
         // Create a menu panel
-        const menuPanelGeometry = new THREE.BoxGeometry(6, 4, 0.1);
+        const menuPanelGeometry = new THREE.BoxGeometry(6, 5, 0.1);
         const menuPanelMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
         const menuPanel = new THREE.Mesh(menuPanelGeometry, menuPanelMaterial);
+        menuPanel.position.set(0,-1,0);
+        menuPanelGroup.add(menuPanel)
 
         // Create a Play button
         const garageButton = new THREE.Group()
         const garageButtonArray = new FontLoader().getMeshArray("GARAGE");
         garageButton.add(...garageButtonArray[0])
-        garageButton.scale.set(2,2,2);
+        garageButton.scale.set(2,2,1.5);
         garageButton.position.set(this.model.garageButtonPosition[0]-garageButtonArray[1]*1.1,this.model.garageButtonPosition[1],this.model.garageButtonPosition[2]);
-        menuPanel.add(garageButton);
+        contentsGroup.add(garageButton);
 
         // Create an Exit button
         const tracksButton = new THREE.Group()
         const tracksButtonArray = new FontLoader().getMeshArray("TRACKS");
         tracksButton.add(...tracksButtonArray[0])
-        tracksButton.scale.set(2,2,2);
+        tracksButton.scale.set(2,2,1.5);
         tracksButton.position.set(this.model.tracksButtonPosition[0]-tracksButtonArray[1]*2,this.model.tracksButtonPosition[1],this.model.tracksButtonPosition[2]);
-        menuPanel.add(tracksButton);
+        contentsGroup.add(tracksButton);
+
+        const raceButton = new THREE.Group()
+        const raceButtonArray = new FontLoader().getMeshArray("RACE");
+        raceButton.add(...raceButtonArray[0])
+        raceButton.scale.set(2,2,1.5);
+        raceButton.position.set(this.model.raceButtonPosition[0]-raceButtonArray[1]*1.4,this.model.raceButtonPosition[1]+0.35,this.model.raceButtonPosition[2]);
+        contentsGroup.add(raceButton);
 
         // Create Laps Button Selector and Selection Frame
         const lapsSelectorGeometry = new THREE.BoxGeometry(...this.model.lapsSelectorSize);
         const lapsSelectorMaterial = new THREE.MeshBasicMaterial({ color: 0x666666 });
         this.lapsSelector = new THREE.Mesh(lapsSelectorGeometry,lapsSelectorMaterial);
-        menuPanel.add(this.lapsSelector);
+        contentsGroup.add(this.lapsSelector);
 
         const lapsFrameGeometry = new THREE.BoxGeometry(0.05,0.4,0.1);
         const lapsFrameMaterial = new THREE.MeshBasicMaterial({ color: 0x444444 });
@@ -71,27 +83,30 @@ class RaceMenuView extends View {
         const lapsNumber3 = new FontLoader().getMeshArray("3")[0][0];
         const lapsNumber4 = new FontLoader().getMeshArray("4")[0][0];
         const lapsNumber5 = new FontLoader().getMeshArray("5")[0][0];
-        lapsNumber1.position.set(-2,this.model.lapsSelectorPosition[1],0.1)
-        lapsNumber2.position.set(-1,this.model.lapsSelectorPosition[1],0.1)
-        lapsNumber3.position.set(0,this.model.lapsSelectorPosition[1],0.1)
-        lapsNumber4.position.set(1,this.model.lapsSelectorPosition[1],0.1)
-        lapsNumber5.position.set(2,this.model.lapsSelectorPosition[1],0.1)
         lapsNumbers.add(lapsNumber1,lapsNumber2,lapsNumber3,lapsNumber4,lapsNumber5)
-        lapsNumbers.scale.set(1,2,1);
-        menuPanel.add(lapsNumbers);
+        lapsNumbers.scale.set(2,2,1);
+        lapsNumber1.position.set(-1,this.model.lapsSelectorPosition[1]/2-0.25,0.1)
+        lapsNumber2.position.set(-0.5,this.model.lapsSelectorPosition[1]/2-0.25,0.1)
+        lapsNumber3.position.set(0,this.model.lapsSelectorPosition[1]/2-0.25,0.1)
+        lapsNumber4.position.set(0.5,this.model.lapsSelectorPosition[1]/2-0.25,0.1)
+        lapsNumber5.position.set(1,this.model.lapsSelectorPosition[1]/2-0.25,0.1)
+        contentsGroup.add(lapsNumbers);
 
         const lapsLabel = new THREE.Group()
         const lapsLabelArray = new FontLoader().getMeshArray("LAPS");
         lapsLabel.add(...lapsLabelArray[0])
-        lapsLabel.scale.set(2,2,2);
-        lapsLabel.position.set(this.model.lapsLabelPosition[0]-lapsLabelArray[1]*1.5,this.model.lapsLabelPosition[1],this.model.lapsLabelPosition[2]);
-        menuPanel.add(lapsLabel);
-        menuPanel.add(lapsFrame)
+        lapsLabel.scale.set(2,2,1.5);
+        lapsLabel.position.set(this.model.lapsLabelPosition[0]-lapsLabelArray[1]*1.4,this.model.lapsLabelPosition[1],this.model.lapsLabelPosition[2]);
+        contentsGroup.add(lapsLabel);
+        contentsGroup.add(lapsFrame);
 
         // Create selection border 
-        menuPanel.add(this.model.border);
+        contentsGroup.add(this.model.border);
 
-        this.scene.add(menuPanel);
+        menuPanelGroup.add(contentsGroup);
+        menuPanelGroup.position.set(0,1,0);
+
+        this.scene.add(menuPanelGroup);
 
         // ambient light
         const ambientLight = new THREE.AmbientLight(0xeeeeee);

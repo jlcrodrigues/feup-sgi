@@ -120,7 +120,7 @@
                 <noderef id="ground" />
                 <noderef id="pit" />
                 <noderef id="grandstands" />
-                <noderef id="forest" />
+                <!-- <noderef id="forest" /> -->
                 <noderef id="houses" />
 
                 <noderef id="line1" />
