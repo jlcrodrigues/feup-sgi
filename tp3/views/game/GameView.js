@@ -34,6 +34,13 @@ class GameView extends View {
     this.car = this.model.car.model;
     this.scene.add(this.car);
 
+    if (this.model.car.name === "Toyota AE86") {
+      this.car.wheel1 = this.car.getObjectByName("Wheel1");
+      this.car.wheel2 = this.car.getObjectByName("Wheel3");
+      this.car.wheel1.originalRotationX = this.car.wheel1.rotation.x;
+      this.car.wheel2.originalRotationX = this.car.wheel2.rotation.x;
+    }
+
     // Load opponent's car
     this.loadOpponent();
 
@@ -45,14 +52,7 @@ class GameView extends View {
 
   step() {
     this.stepHud();
-
-    this.car.position.x = this.model.car.position.x;
-    this.car.position.z = this.model.car.position.z;
-    this.car.position.y = this.model.car.position.y;
-
-    this.car.rotation.y = -this.model.car.rotation;
-
-    this.checkCarPosition();
+    this.stepCar();
 
     const targetPosition = this.car.position.clone();
     targetPosition.y += 10;
@@ -171,6 +171,27 @@ class GameView extends View {
       this.mixers.push(mixer);
       action.play();
     });
+  }
+
+  stepCar() {
+    this.car.position.x = this.model.car.position.x;
+    this.car.position.z = this.model.car.position.z;
+    this.car.position.y = this.model.car.position.y;
+
+    this.car.rotation.y = -this.model.car.rotation;
+
+    this.checkCarPosition();
+
+    // Rotate wheels
+    if (this.model.car.name === "Toyota AE86") {
+      const dist = this.model.car.speed;
+      let car = this.car.getObjectByName("Car");
+      for (let i = 0; i < car.children.length; i++) {
+        car.children[i].rotateZ(dist);
+      }
+      this.car.wheel1.rotation.x = this.car.wheel1.originalRotationX + this.model.car.angularSpeed * 10;
+      this.car.wheel2.rotation.x = this.car.wheel2.originalRotationX + this.model.car.angularSpeed *  10;
+    }
   }
 
   /** Checks if the car is outside the track. */
