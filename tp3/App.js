@@ -9,7 +9,7 @@ import { GarageState } from "./states/GarageState.js";
  */
 class App {
   static instance = null;
-  static controlsActive = true;
+  static controlsActive = false;
 
   constructor() {
     this.renderer = null;
