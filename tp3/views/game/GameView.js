@@ -102,26 +102,29 @@ class GameView extends View {
 
   loadHud() {
     document.querySelector("#top-left").innerHTML = '<p id="laps"></p>';
-    document.querySelector("#top-left").innerHTML +=
+    document.querySelector("#top-center").innerHTML +=
       '<p id="elapsed-time"></p>';
     document.querySelector("#top-left").innerHTML += '<p id="last-lap"></p>';
 
     document.querySelector("#bottom-left").innerHTML += '<p id="modifier"></p>';
     document.querySelector("#bottom-left").innerHTML +=
       '<p id="modifierTime"></p>';
+
+    document.querySelector("#bottom-right").innerHTML += '<p id="speed"></p>';
   }
 
   stepHud() {
-    document.querySelector("#laps").innerHTML = `${Math.floor(
+    document.querySelector("#laps").innerHTML = `Lap ${Math.floor(
       this.model.laps
     )} / ${this.model.settings.laps}`;
-    document.querySelector("#elapsed-time").innerHTML = `${Math.floor(
-      (new Date() - this.model.lapStart) / 1000
-    )} s`;
+    document.querySelector("#elapsed-time").innerHTML = `${(
+      (new Date() - this.model.lapStart) /
+      1000
+    ).toFixed(3)} s`;
     if (this.model.lastLap) {
       document.querySelector(
         "#last-lap"
-      ).innerHTML = `Last lap: ${this.model.lastLap.toFixed(3)} s`;
+      ).innerHTML = `Last: ${this.model.lastLap.toFixed(3)} s`;
     }
 
     if (this.model.modifier) {
@@ -134,6 +137,10 @@ class GameView extends View {
       document.querySelector("#modifier").innerHTML = "";
       document.querySelector("#modifierTime").innerHTML = "";
     }
+
+    document.querySelector("#speed").innerHTML = `<div>Speed</div><div>${(
+      this.model.car.speed * 144
+    ).toFixed(0)} km/h</div>`;
   }
 
   loadModifiers() {
@@ -170,7 +177,11 @@ class GameView extends View {
     const raycaster = new THREE.Raycaster();
 
     const direction = new THREE.Vector3(0, -1, 0);
-    const carPos = new THREE.Vector3(this.model.car.position.x, 10, this.model.car.position.z);
+    const carPos = new THREE.Vector3(
+      this.model.car.position.x,
+      10,
+      this.model.car.position.z
+    );
 
     raycaster.set(carPos, direction);
 
@@ -178,8 +189,6 @@ class GameView extends View {
     if (intersects.length == 0) {
       this.model.setOutsideTrack();
     }
-
-
   }
 }
 
