@@ -4,13 +4,12 @@ import { InitialState } from "./states/InitalState.js";
 import { GameState } from "./states/GameState.js";
 import { GarageState } from "./states/GarageState.js";
 
-const controlsActive = false;
-
 /**
  * The main App class. This is a singleton class.
  */
 class App {
   static instance = null;
+  static controlsActive = false;
 
   constructor() {
     this.renderer = null;
@@ -51,7 +50,7 @@ class App {
 
     // Orbit controls allow the camera to orbit around a target.
     // TODO: remove global controls; add this to state
-    if (controlsActive) {
+    if (App.controlsActive) {
       this.controls = new OrbitControls(
         this.state.getCamera(),
         this.renderer.domElement
@@ -84,7 +83,7 @@ class App {
    */
   render() {
     this.state = this.state.step();
-    if (controlsActive) {
+    if (App.controlsActive) {
       this.controls.object = this.state.getCamera();
       this.controls.update();
     }

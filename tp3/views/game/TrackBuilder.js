@@ -9,12 +9,13 @@ class TrackBuilder {
     this.textureRepeat = 1;
     this.showLine = false;
     this.closedCurve = false;
+    this.debug = false;
 
-    const points = [];
+    this.points = [];
     for (let i = 0; i < track.path.length; i++) {
-      points.push(new THREE.Vector3(...track.path[i]));
+      this.points.push(new THREE.Vector3(...track.path[i]));
     }
-    this.path = new THREE.CatmullRomCurve3(points);
+    this.path = new THREE.CatmullRomCurve3(this.points);
 
     this.buildCurve();
 
@@ -39,6 +40,8 @@ class TrackBuilder {
     this.material.map.wrapS = THREE.RepeatWrapping;
     this.material.map.wrapT = THREE.RepeatWrapping;
     */
+
+    this.lineMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
   }
 
   /**
@@ -53,14 +56,30 @@ class TrackBuilder {
       this.closedCurve
     );
     this.mesh = new THREE.Mesh(geometry, this.material);
+    //this.curve.rotateZ(Math.PI);
+    this.mesh.scale.set(1, 0.001, 1);
+    this.mesh.translateY(0.01)
 
     this.curve = new THREE.Group();
-
     this.curve.add(this.mesh);
 
-    //this.curve.rotateZ(Math.PI);
-    this.curve.scale.set(1, 0.001, 1);
-    this.curve.translateY(0.01)
+
+    if (this.debug) {
+      let points = this.path.getPoints(this.segments);
+      let bGeometry = new THREE.BufferGeometry().setFromPoints(points);
+
+      this.line = new THREE.Line(bGeometry, this.lineMaterial);
+      this.curve.add(this.line);
+
+      // add a sphere to each point
+      let sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
+      let sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+      this.points.forEach((point) => {
+        let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere.position.set(point.x, 2, point.z);
+        this.curve.add(sphere);
+      });
+    }
   }
 }
 

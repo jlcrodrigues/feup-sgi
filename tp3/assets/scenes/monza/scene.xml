@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-16" standalone="yes"?>
 <yaf> 
 	
-    <globals background="0 0 0 1" ambient="0.8 0.8 0.8 1" /> 
+    <globals background="0 0 0 1" ambient="0.2 0.2 0.2 1" /> 
 
 
     <cameras initial="Free Camera" > 
@@ -22,6 +22,9 @@
         <texture id="blackWoodTex" filepath="assets/scenes/monza/textures/black_wood.jpeg" />
         <texture id="roadTex" filepath="assets/scenes/monza/textures/road.jpg" />
         <texture id="roadBumpTex" filepath="assets/scenes/monza/textures/roadBump.png" />
+        <texture id="wallTex" filepath="assets/scenes/monza/textures/wall.avif" />
+        <texture id="wallBumpTex" filepath="assets/scenes/monza/textures/wallBump.png" />
+        <texture id="windowTex" filepath="assets/scenes/monza/textures/window.jpg" />
     </textures> 
 
     <materials> 
@@ -70,22 +73,72 @@
 			specular="0 0 0 0" 
             shininess="20"
         />
+			
+        <material id="pitGroundApp" 
+            color="0.25 0.25 0.25 1.0" 
+            emissive="0.0 0.0 0.0 1" 
+			specular="0 0 0 0" 
+            shininess="20"
+        />
+			
+        <material id="wallApp" 
+            color="0.75 0.75 0.75 1.0" 
+            emissive="0.0 0.0 0.0 1" 
+			specular="0 0 0 0" 
+            shininess="20"
+            twosided="true"
+            textureref="wallTex" 
+            bumpref="wallBumpTex" 
+            bumpscale="0.01"
+            texlength_s="60"
+            texlength_t="100"
+        />
+			
+        <material id="windowApp" 
+            color="0.75 0.75 0.85 1.0" 
+            emissive="0.00 0.00 0.00 1" 
+			specular="0.5 0.5 0.5 1" 
+            shininess="50"
+            twosided="true"
+            textureref="windowTex" 
+            texlength_s="12"
+            texlength_t="12"
+        />
+			
+        <material id="seatApp" 
+            color="0.75 0.35 0.35 1.0" 
+            emissive="0.00 0.00 0.00 1" 
+			specular="0.5 0.5 0.5 1" 
+            shininess="50"
+            twosided="true"
+        />
     </materials> 
 
     <graph rootid="scene">
         <node id="scene" castshadows="true" receiveshadows="true">
             <children>
                 <noderef id="ground" />
-                <noderef id="outsideTrees" />
+                <noderef id="pit" />
+                <noderef id="grandstands" />
+                <noderef id="forest" />
+                <noderef id="houses" />
 
                 <noderef id="line1" />
                 <noderef id="line2" />
+
+                <directionallight id="sun"
+                    enabled="true"
+                    color="1 1 1 1"    
+                    intensity="2"
+                    position="300 500 -200"
+                    castshadow="true"
+                />  
             </children>
         </node>
 
         <node id="line1">
             <transforms>
-                <translate value3="0 0 -10" />
+                <translate value3="-230 0 -10" />
             </transforms> 
             <children>
                 <noderef id="tree1" />
@@ -94,7 +147,7 @@
 
         <node id="line2">
             <transforms>
-                <translate value3="0 0 10" />
+                <translate value3="-230 0 10" />
             </transforms> 
             <children>
                 <noderef id="tree1" />
@@ -109,15 +162,1387 @@
             <materialref id="groundApp" />
             <children>
                 <primitive>
-                    <rectangle xy1="0 0" xy2="1500 800" />
+                    <rectangle xy1="0 0" xy2="1500 1000" />
                 </primitive>
             </children>
         </node>
 
-        <node id="outsideTrees">
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~ GRANDSTANDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+        <node id="grandstands">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandParabolica1" />
+                <noderef id="grandstandParabolica2" />
+                <noderef id="grandstandAscari1" />
+                <noderef id="grandstandAscari2" />
+                <noderef id="grandstandAscari3" />
+                <noderef id="grandstandStraight1" />
+                <noderef id="grandstandStraight2" />
+                <noderef id="grandstandRettifilo" />
+                <noderef id="grandstandRoggia1" />
+                <noderef id="grandstandRoggia2" />
+            </children>
+        </node>
+
+        <node id="grandstandParabolica1">
+            <transforms>
+                <translate value3="-350 0 150" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandL" />
+            </children>
+        </node>
+
+        <node id="grandstandParabolica2">
+            <transforms>
+                <translate value3="-470 0 150" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandL" />
+            </children>
+        </node>
+
+        <node id="grandstandAscari1">
+            <transforms>
+                <translate value3="270 0 200" />
+                <rotate value3="0 130 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandS" />
+            </children>
+        </node>
+
+        <node id="grandstandAscari2">
+            <transforms>
+                <translate value3="110 0 90" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandL" />
+            </children>
+        </node>
+
+        <node id="grandstandAscari3">
+            <transforms>
+                <translate value3="-50 0 90" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandM" />
+            </children>
+        </node>
+
+        <node id="grandstandRettifilo">
+            <transforms>
+                <translate value3="300 0 -30" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandL" />
+            </children>
+        </node>
+
+        <node id="grandstandRoggia1">
+            <transforms>
+                <translate value3="480 0 350" />
+                <rotate value3="0 -40 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandS" />
+            </children>
+        </node>
+
+        <node id="grandstandRoggia2">
+            <transforms>
+                <translate value3="530 0 410" />
+                <rotate value3="0 -80 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandS" />
+            </children>
+        </node>
+
+        <node id="grandstandStraight1">
+            <transforms>
+                <translate value3="-100 0 -30" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandL" />
+            </children>
+        </node>
+
+        <node id="grandstandStraight2">
+            <transforms>
+                <translate value3="50 0 -30" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandM" />
+            </children>
+        </node>
+
+        <node id="grandstandS">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstand1" />
+                <noderef id="grandstand2" />
+            </children>
+        </node>
+
+        <node id="grandstandM">
+            <transforms>
+                <translate value3="0 0 0" />
+                <scale value3="0.6 0.6 0.6" />
+            </transforms> 
+            <children>
+                <noderef id="grandstand1" />
+                <noderef id="grandstand2" />
+                <noderef id="grandstand3" />
+                <noderef id="grandstand4" />
+            </children>
+        </node>
+
+        <node id="grandstandL">
+            <transforms>
+                <translate value3="0 0 0" />
+                <scale value3="0.6 0.6 0.6" />
+            </transforms> 
+            <children>
+                <noderef id="grandstand1" />
+                <noderef id="grandstand2" />
+                <noderef id="grandstand3" />
+                <noderef id="grandstand4" />
+                <noderef id="grandstand5" />
+                <noderef id="grandstand6" />
+            </children>
+        </node>
+
+        <node id="grandstand1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstand" />
+            </children>
+        </node>
+
+        <node id="grandstand2">
+            <transforms>
+                <translate value3="30 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstand" />
+            </children>
+        </node>
+
+        <node id="grandstand3">
+            <transforms>
+                <translate value3="60 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstand" />
+            </children>
+        </node>
+
+        <node id="grandstand4">
+            <transforms>
+                <translate value3="90 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstand" />
+            </children>
+        </node>
+
+        <node id="grandstand5">
+            <transforms>
+                <translate value3="120 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstand" />
+            </children>
+        </node>
+
+        <node id="grandstand6">
+            <transforms>
+                <translate value3="150 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstand" />
+            </children>
+        </node>
+
+        <node id="grandstand">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="grandstandTop" />
+                <noderef id="grandstandBack" />
+                <noderef id="grandstandPoleLeft" />
+                <noderef id="grandstandPoleRight" />
+                <noderef id="grandstandBlock1" />
+                <noderef id="grandstandBlock2" />
+                <noderef id="grandstandBlock3" />
+                <noderef id="grandstandBlock4" />
+            </children>
+        </node>
+
+        <node id="grandstandBack">
+            <transforms>
+                <translate value3="0 0 20" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="30 30 1" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="grandstandTop">
+            <transforms>
+                <translate value3="0 30 -1" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="30 0.5 22" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="grandstandPoleLeft">
+            <transforms>
+                <translate value3="30 15 0" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <cylinder base="0.5" top="0.5" height="30" slices="10" stacks="64" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="grandstandPoleRight">
+            <transforms>
+                <translate value3="0 15 0" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <cylinder base="0.5" top="0.5" height="30" slices="10" stacks="64" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="grandstandBlock1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <noderef id="seatGroup1" />
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="30 5 5" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="grandstandBlock2">
+            <transforms>
+                <translate value3="0 0 5" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <noderef id="seatGroup2" />
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="30 10 5" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="grandstandBlock3">
+            <transforms>
+                <translate value3="0 0 10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <noderef id="seatGroup3" />
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="30 15 5" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="grandstandBlock4">
+            <transforms>
+                <translate value3="0 0 15" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <noderef id="seatGroup4" />
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="30 20 5" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="seatGroup1">
+            <transforms>
+                <translate value3="0 5 0" />
+            </transforms> 
+            <children>
+                <noderef id="seatGroup" />
+            </children>
+        </node>
+
+        <node id="seatGroup2">
+            <transforms>
+                <translate value3="0 10 0" />
+            </transforms> 
+            <children>
+                <noderef id="seatGroup" />
+            </children>
+        </node>
+
+        <node id="seatGroup3">
+            <transforms>
+                <translate value3="0 15 0" />
+            </transforms> 
+            <children>
+                <noderef id="seatGroup" />
+            </children>
+        </node>
+
+        <node id="seatGroup4">
+            <transforms>
+                <translate value3="0 20 0" />
+            </transforms> 
+            <children>
+                <noderef id="seatGroup" />
+            </children>
+        </node>
+
+        <node id="seatGroup">
+            <transforms>
+                <translate value3="0.3 0 0" />
+            </transforms> 
+            <materialref id="seatApp" />
+            <children>
+                <noderef id="seat1" />
+                <noderef id="seat2" />
+                <noderef id="seat3" />
+                <noderef id="seat4" />
+                <noderef id="seat5" />
+                <noderef id="seat6" />
+            </children>
+        </node>
+
+        <node id="seat1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <materialref id="seatApp" />
+            <children>
+                <noderef id="seat" />
+            </children>
+        </node>
+
+        <node id="seat2">
+            <transforms>
+                <translate value3="5 0 0" />
+            </transforms> 
+            <materialref id="seatApp" />
+            <children>
+                <noderef id="seat" />
+            </children>
+        </node>
+
+        <node id="seat3">
+            <transforms>
+                <translate value3="10 0 0" />
+            </transforms> 
+            <materialref id="seatApp" />
+            <children>
+                <noderef id="seat" />
+            </children>
+        </node>
+
+        <node id="seat4">
+            <transforms>
+                <translate value3="15 0 0" />
+            </transforms> 
+            <materialref id="seatApp" />
+            <children>
+                <noderef id="seat" />
+            </children>
+        </node>
+
+        <node id="seat5">
+            <transforms>
+                <translate value3="20 0 0" />
+            </transforms> 
+            <materialref id="seatApp" />
+            <children>
+                <noderef id="seat" />
+            </children>
+        </node>
+
+        <node id="seat6">
+            <transforms>
+                <translate value3="25 0 0" />
+            </transforms> 
+            <materialref id="seatApp" />
+            <children>
+                <noderef id="seat" />
+            </children>
+        </node>
+
+        <node id="seat">
+            <transforms>
+                <rotate value3="0 180 0" />
+                <translate value3="4 0 4.3" />
+            </transforms> 
+            <materialref id="seatApp" />
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="3.5 0.2 4" />
+                </primitive>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="3.5 3 0.2" />
+                </primitive>
+            </children>
+        </node>
+
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~ PIT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+        <node id="pit">
             <transforms>
             </transforms> 
             <children>
+                <noderef id="pitGround" />
+                <noderef id="pitEntry" />
+                <noderef id="pitExit" />
+                <noderef id="pitBuildingGroup" />
+            </children>
+        </node>
+
+        <node id="pitGround">
+            <transforms>
+                <translate value3="-290 0.02 70" />
+                <rotate value3="-90 0 0" />
+            </transforms> 
+            <materialref id="pitGroundApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="250 50" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitEntry">
+            <transforms>
+                <translate value3="-320 0.01 10" />
+                <rotate value3="-90 0 -20" />
+            </transforms> 
+            <materialref id="pitGroundApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="90 20" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitExit">
+            <transforms>
+                <translate value3="-50 0.01 40" />
+                <rotate value3="-90 0 20" />
+            </transforms> 
+            <materialref id="pitGroundApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="90 20" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingGroup">
+            <transforms>
+                <translate value3="-220 0 60" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding1" />
+                <noderef id="pitBuilding2" />
+                <noderef id="pitBuilding3" />
+                <noderef id="pitBuilding4" />
+                <noderef id="pitBuilding5" />
+                <noderef id="pitBuilding6" />
+                <noderef id="pitBuilding7" />
+                <noderef id="pitBuilding8" />
+            </children>
+        </node>
+
+        <node id="pitBuilding1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding2">
+            <transforms>
+                <translate value3="20 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding3">
+            <transforms>
+                <translate value3="40 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding4">
+            <transforms>
+                <translate value3="60 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding5">
+            <transforms>
+                <translate value3="80 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding6">
+            <transforms>
+                <translate value3="100 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding7">
+            <transforms>
+                <translate value3="120 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding8">
+            <transforms>
+                <translate value3="140 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pitBuilding" />
+            </children>
+        </node>
+
+        <node id="pitBuilding">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="pitBuildingStructure" />
+                <noderef id="pitBuildingInside" />
+            </children>
+        </node>
+
+        <node id="pitBuildingInside">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="jumperCables" />
+                <noderef id="tireRack" />
+                <noderef id="handToolbox" />
+                <noderef id="tirePile" />
+                <noderef id="computer" />
+                <noderef id="toolbox" />
+                <noderef id="table" />
+            </children>
+        </node>
+
+        <node id="modelSample">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/SAMPLE.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="jumperCables">
+            <transforms>
+                <translate value3="8 0 -2" />
+                <rotate value3="0 0 0" />
+                <scale value3="2.0 2.0 2.0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/jumperCables.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tireRack">
+            <transforms>
+                <translate value3="-6 0 7" />
+            </transforms> 
+            <children>
+                <noderef id="rack" />
+                <noderef id="tireRackTire1" />
+                <noderef id="tireRackTire2" />
+                <noderef id="tireRackTire3" />
+            </children>
+        </node>
+
+        <node id="tireRackTire1">
+            <transforms>
+                <translate value3="2.8 2.9 0" />
+                <rotate value3="0 0 90" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms> 
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tireRackTire2">
+            <transforms>
+                <translate value3="1.3 2.9 0" />
+                <rotate value3="0 0 90" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms> 
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tireRackTire3">
+            <transforms>
+                <translate value3="-0.3 2.9 0" />
+                <rotate value3="0 0 90" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms> 
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="rack">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 -90 0" />
+                <scale value3="0.030 0.023 0.020" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/rack.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="handToolbox">
+            <transforms>
+                <translate value3="-6 0 0" />
+                <rotate value3="0 10 0" />
+                <scale value3="0.22 0.22 0.22" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/handToolbox.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tirePile">
+            <transforms>
+                <translate value3="-6.5 0 -6.0" />
+            </transforms> 
+            <children>
+                <noderef id="tire1" />
+                <noderef id="tire2" />
+                <noderef id="tire3" />
+                <noderef id="tire4" />
+            </children>
+        </node>
+
+        <node id="tire1">
+            <transforms>
+                <translate value3="0 0.0 0" />
+            </transforms>
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tire2">
+            <transforms>
+                <translate value3="0.1 1.32 0.05" />
+            </transforms>
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tire3">
+            <transforms>
+                <translate value3="-0.05 2.64 0.1" />
+            </transforms>
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tire4">
+            <transforms>
+                <rotate value3="-80 0 0" />
+                <translate value3="0 1.45 -1.7" />
+            </transforms>
+            <children>
+                <noderef id="tire" />
+            </children>
+        </node>
+
+        <node id="tire">
+            <transforms>
+                <translate value3="0 0.7 0" />
+                <rotate value3="00 0 90" />
+                <scale value3="0.18 0.16 0.18" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/tire.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="computer">
+            <transforms>
+                <translate value3="8 2.72 5" />
+                <rotate value3="0 -90 0" />
+                <scale value3="0.005 0.005 0.005" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/computer.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="table">
+            <transforms>
+                <translate value3="6 0 9"/>
+                <rotate value3="0 90 0"/>
+                <scale value3="0.6 0.6 0.6"/>
+            </transforms>            
+            <children>
+                <noderef id="tableTop"/>
+                <noderef id="tableLeg1"/>
+                <noderef id="tableLeg2"/>
+                <noderef id="tableLeg3"/>
+                <noderef id="tableLeg4"/>
+            </children>
+        </node>
+
+        <node id="tableTop">
+            <transforms>
+                <translate value3="0 4 0"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="11 0.5 6" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="tableLeg1">
+            <transforms>
+                <translate value3="1.5 0 1"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0.7 4 0.7" />
+                </primitive>
+            </children>
+        </node>
+        <node id="tableLeg2">
+            <transforms>
+                <translate value3="1.5 0 5"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0.7 4 0.7" />
+                </primitive>
+            </children>
+        </node>
+        <node id="tableLeg3">
+            <transforms>
+                <translate value3="9.5 0 5"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0.7 4 0.7" />
+                </primitive>
+            </children>
+        </node>
+        <node id="tableLeg4">
+            <transforms>
+                <translate value3="9.5 0 1"/>
+            </transforms> 
+            <materialref id="woodApp"/>           
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="0.7 4 0.7" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="toolbox">
+            <transforms>
+                <translate value3="-1 0 -15" />
+                <rotate value3="0 -80 0" />
+                <scale value3="4.0 4.0 4.0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/toolbox.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingStructure">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="pitBuildingWallLeft" />
+                <noderef id="pitBuildingWallRight" />
+                <noderef id="pitBuildingWallBack" />
+                <noderef id="pitBuildingFrontFrame" />
+                <noderef id="pitBuildingRoof" />
+                <noderef id="pitBuildingTriangleLeft" />
+                <noderef id="pitBuildingTriangleRight" />
+                <noderef id="pitBuildingFacade" />
+            </children>
+        </node>
+
+        <node id="pitBuildingRoof">
+            <transforms>
+                <rotate value3="-90 0 0" />
+                <translate value3="-10 25 10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 25" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFacade">
+            <transforms>
+                <rotate value3="-18.43 0 0" />
+                <translate value3="-10 10 -10" />
+            </transforms> 
+            <materialref id="windowApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 15.81" />
+                </primitive>
+                <noderef id="pitBuildingFacadeFrame" />
+            </children>
+        </node>
+
+        <node id="pitBuildingFacadeFrame">
+            <transforms>
+                <translate value3="0.00 0.00 -0.01" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <noderef id="pitBuildingFacadeFrameLeft" />
+                <noderef id="pitBuildingFacadeFrameRight" />
+                <noderef id="pitBuildingFacadeFrameTop" />
+            </children>
+        </node>
+
+        <node id="pitBuildingFacadeFrameTop">
+            <transforms>
+                <translate value3="0.00 15.00 0.00" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 1" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFacadeFrameLeft">
+            <transforms>
+                <translate value3="19.00 0.00 0.00" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="1 15.81" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFacadeFrameRight">
+            <transforms>
+                <translate value3="0.00 0.00 0.00" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="1 15.81" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingTriangleLeft">
+            <transforms>
+                <translate value3="10 10 -10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <triangle xyz1="0 0 0" xyz2="0 15 0" xyz3="0 15 -5" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingTriangleRight">
+            <transforms>
+                <translate value3="-10 10 -10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <triangle xyz1="0 0 0" xyz2="0 15 0" xyz3="0 15 -5" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingWallLeft">
+            <transforms>
+                <rotate value3="0 90 0" />
+                <translate value3="10 0 10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 25" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingWallRight">
+            <transforms>
+                <rotate value3="0 90 0" />
+                <translate value3="-10 0 10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 25" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingWallBack">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="-10 0 10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="20 25" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFrontFrame">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="0 0 -10" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <noderef id="pitBuildingFrontFrameLeft" />
+                <noderef id="pitBuildingFrontFrameRight" />
+                <noderef id="pitBuildingFrontFrameTop" />
+            </children>
+        </node>
+
+        <node id="pitBuildingFrontFrameLeft">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="7 0 0" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="3 10" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFrontFrameRight">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="-10 0 0" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="3 10" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pitBuildingFrontFrameTop">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="-7 7 0" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="16 3" />
+                </primitive>
+            </children>
+        </node>
+
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~ HOUSES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+        <node id="houses">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="house1" />
+                <noderef id="house2" />
+                <noderef id="house3" />
+                <noderef id="house4" />
+            </children>
+        </node>
+
+        <node id="house1">
+            <transforms>
+                <translate value3="550 0 100" />
+                <rotate value3="0 0 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="houseBasis" />
+            </children>
+        </node>
+
+        <node id="house2">
+            <transforms>
+                <translate value3="540 0 60" />
+                <rotate value3="0 90 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="houseBasis" />
+            </children>
+        </node>
+
+        <node id="house3">
+            <transforms>
+                <translate value3="580 0 150" />
+                <rotate value3="0 10 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="houseBasis" />
+            </children>
+        </node>
+
+        <node id="house4">
+            <transforms>
+                <translate value3="590 0 180" />
+                <rotate value3="0 100 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
+            <children>
+                <noderef id="houseBasis" />
+            </children>
+        </node>
+
+        <node id="houseBasis">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+                <scale value3="20.0 20.0 20.0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/houses.glb" />
+                </primitive>
+            </children>
+        </node>
+
+        <!--~~~~~~~~~~~~~~~~~~~~~~~~~ FOREST ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+        <node id="forest">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="forest1" />
+                <noderef id="forest2" />
+                <noderef id="forest3" />
+                <noderef id="forest4" />
+                <noderef id="forest5" />
+                <noderef id="forest6" />
+                <noderef id="forest7" />
+                <noderef id="forest8" />
+                <noderef id="forest9" />
+                <noderef id="forest10" />
+                <noderef id="forest11" />
+                <noderef id="forest12" />
+                <noderef id="forest13" />
+                <noderef id="forest14" />
+                <noderef id="forest15" />
+                <noderef id="forest16" />
+                <noderef id="forest17" />
+                <noderef id="forest18" />
+            </children>
+        </node>
+
+        <node id="forest1">
+            <transforms>
+                <translate value3="70 0 30" />
+            </transforms> 
+            <children>
+                <noderef id="forestM" />
+            </children>
+        </node>
+
+        <node id="forest2">
+            <transforms>
+                <translate value3="153 0 33" />
+                <rotate value3="0 -40 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest3">
+            <transforms>
+                <translate value3="230 0 60" />
+                <rotate value3="0 15 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest4">
+            <transforms>
+                <translate value3="360 0 30" />
+                <rotate value3="0 -30 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestS" />
+            </children>
+        </node>
+
+        <node id="forest5">
+            <transforms>
+                <translate value3="420 0 70" />
+                <rotate value3="0 -70 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest6">
+            <transforms>
+                <translate value3="450 0 220" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestS" />
+            </children>
+        </node>
+
+        <node id="forest7">
+            <transforms>
+                <translate value3="400 0 320" />
+                <rotate value3="0 80 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest8">
+            <transforms>
+                <translate value3="450 0 500" />
+                <rotate value3="0 110 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest9">
+            <transforms>
+                <translate value3="390 0 370" />
+                <rotate value3="0 40 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestM" />
+            </children>
+        </node>
+
+        <node id="forest10">
+            <transforms>
+                <translate value3="380 0 340" />
+                <rotate value3="0 120 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest11">
+            <transforms>
+                <translate value3="290 0 220" />
+                <rotate value3="0 80 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest12">
+            <transforms>
+                <translate value3="-300 0 90" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest13">
+            <transforms>
+                <translate value3="-530 0 60" />
+                <rotate value3="0 -70 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest14">
+            <transforms>
+                <translate value3="-490 0 -20" />
+                <rotate value3="0 -120 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest15">
+            <transforms>
+                <translate value3="-500 0 -100" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestL" />
+            </children>
+        </node>
+
+        <node id="forest16">
+            <transforms>
+                <translate value3="500 0 80" />
+                <rotate value3="0 90 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestS" />
+            </children>
+        </node>
+
+        <node id="forest17">
+            <transforms>
+                <translate value3="520 0 230" />
+                <rotate value3="0 90 0" />
+            </transforms> 
+            <children>
+                <noderef id="forestM" />
+            </children>
+        </node>
+
+        <node id="forestS">
+			<transforms>
+            </transforms> 
+            <children>             
+                <noderef id="treePatch1" />
+                <noderef id="treePatch2" />
+                <noderef id="treePatch3" />
+            </children> 
+        </node>
+
+        <node id="forestM">
+			<transforms>
+            </transforms> 
+            <children>             
+                <noderef id="treePatch1" />
+                <noderef id="treePatch2" />
+                <noderef id="treePatch3" />
+                <noderef id="treePatch4" />
+                <noderef id="treePatch5" />
+                <noderef id="treePatch6" />
+            </children> 
+        </node>
+
+        <node id="forestL">
+			<transforms>
+            </transforms> 
+            <children>             
                 <noderef id="treePatch1" />
                 <noderef id="treePatch2" />
                 <noderef id="treePatch3" />
@@ -125,7 +1550,10 @@
                 <noderef id="treePatch5" />
                 <noderef id="treePatch6" />
                 <noderef id="treePatch7" />
-            </children>
+                <noderef id="treePatch8" />
+                <noderef id="treePatch9" />
+                <noderef id="treePatch10" />
+            </children> 
         </node>
 
         <node id="treePatch">
@@ -140,7 +1568,7 @@
 
         <node id="treePatch1">
             <transforms>
-                <translate value3="150 0 0" />
+                <translate value3="0 0 0" />
                 <scale value3="1.0 1.2 1.0"/>
             </transforms> 
             <children>
@@ -150,8 +1578,9 @@
 
         <node id="treePatch2">
             <transforms>
-                <translate value3="155 0 30" />
+                <translate value3="25 0 0" />
                 <scale value3="1.2 1.4 1.2"/>
+                <rotate value3="0 -20 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -160,8 +1589,9 @@
 
         <node id="treePatch3">
             <transforms>
-                <translate value3="20 0 55" />
+                <translate value3="-8 0 25" />
                 <scale value3="1.3 1.2 1.3"/>
+                <rotate value3="0 60 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -170,7 +1600,7 @@
 
         <node id="treePatch4">
             <transforms>
-                <translate value3="150 0 50" />
+                <translate value3="50 0 0" />
                 <scale value3="1.2 1.3 1.2"/>
             </transforms> 
             <children>
@@ -180,7 +1610,7 @@
 
         <node id="treePatch5">
             <transforms>
-                <translate value3="-40 0 50" />
+                <translate value3="20 0 25" />
                 <scale value3="1.2 1.3 1.2"/>
                 <rotate value3="0 10 0"/>
             </transforms> 
@@ -191,9 +1621,9 @@
 
         <node id="treePatch6">
             <transforms>
-                <translate value3="-45 0 -40" />
+                <translate value3="60 0 30" />
                 <scale value3="1.2 1.3 1.2"/>
-                <rotate value3="0 -10 0"/>
+                <rotate value3="0 70 0"/>
             </transforms> 
             <children>
                 <noderef id="treePatch" />
@@ -202,7 +1632,7 @@
 
         <node id="treePatch7">
             <transforms>
-                <translate value3="-15 0 -45" />
+                <translate value3="40 0 50" />
                 <scale value3="1.2 1.3 1.2"/>
                 <rotate value3="0 -70 0"/>
             </transforms> 
@@ -213,9 +1643,31 @@
 
         <node id="treePatch8">
             <transforms>
-                <translate value3="78 0 -48" />
+                <translate value3="95 0 0" />
                 <scale value3="1.2 1.3 1.2"/>
                 <rotate value3="0 -100 0" />
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch9">
+            <transforms>
+                <translate value3="95 0 50" />
+                <scale value3="1.2 1.3 1.2"/>
+                <rotate value3="0 100 0" />
+            </transforms> 
+            <children>
+                <noderef id="treePatch" />
+            </children>
+        </node>
+
+        <node id="treePatch10">
+            <transforms>
+                <translate value3="55 0 55" />
+                <scale value3="1.1 1.2 1.2"/>
+                <rotate value3="0 130 0" />
             </transforms> 
             <children>
                 <noderef id="treePatch" />
