@@ -53,7 +53,7 @@ class GameView extends View {
 
     this.fireworks = new Fireworks(this.scene);
 
-    this.fireworks.launch(5, this.car.position);
+    this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
   }
 
   step() {
@@ -86,6 +86,9 @@ class GameView extends View {
     this.opponent.rotation.y = angle;
 
     this.fireworks.step();
+    if (this.fireworks.dest.length === 0) {
+      this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
+    }
   }
 
   loadOpponent() {
