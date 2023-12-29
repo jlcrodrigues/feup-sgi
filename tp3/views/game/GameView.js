@@ -5,6 +5,7 @@ import { TrackBuilder } from "./TrackBuilder.js";
 import { ModifierView } from "./ModifierView.js";
 import { App } from "../../App.js";
 import { Car } from "../../models/game/Car.js";
+import { Fireworks } from "../Fireworks.js";
 
 const dampingFactor = 0.1;
 const modifierAnimationDuration = 2;
@@ -21,7 +22,8 @@ class GameView extends View {
       1000
     );
     this.camera.position.z = -20;
-    this.camera.position.y = 400;
+    this.camera.position.x = -20;
+    this.camera.position.y = 30;
     this.mixers = [];
 
     // Load the track scene
@@ -48,6 +50,10 @@ class GameView extends View {
     this.loadModifiers();
 
     this.loadHud();
+
+    this.fireworks = new Fireworks(this.scene);
+
+    this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
   }
 
   step() {
@@ -78,6 +84,11 @@ class GameView extends View {
     direction.normalize();
     const angle = Math.atan2(direction.x, direction.z) - Math.PI / 2;
     this.opponent.rotation.y = angle;
+
+    this.fireworks.step();
+    if (this.fireworks.dest.length === 0) {
+      this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
+    }
   }
 
   loadOpponent() {
