@@ -26,7 +26,8 @@ class GarageController extends Controller {
       this.view.cleanup();
       return new GameState(this.settings);
     }else if (this.model.state === "menu"){
-        return new RaceMenuState();
+      this.view.cleanup();
+      return new RaceMenuState();
     }
     return null;
   }

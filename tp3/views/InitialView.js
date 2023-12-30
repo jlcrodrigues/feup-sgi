@@ -7,7 +7,7 @@ const dampingFactor = 0.1
 class InitialView extends View {
     constructor(model) {
         super(model);
-    
+  
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
             75,
@@ -22,22 +22,20 @@ class InitialView extends View {
         const menuPanelMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
         const menuPanel = new THREE.Mesh(menuPanelGeometry, menuPanelMaterial);
 
-        const fontLoader = new FontLoader(() => {
-            const playButton = new THREE.Group();
-            const playButtonArray = fontLoader.getMeshArray("PLAY");
-            playButton.add(...playButtonArray[0]);
-            playButton.scale.set(2, 2, 2);
-            playButton.position.set(this.model.playButtonPosition[0]-playButtonArray[1],this.model.playButtonPosition[1],this.model.playButtonPosition[2]);
-            menuPanel.add(playButton);
-        });
+        const playButton = new THREE.Group();
+        const playButtonArray = new FontLoader().getMeshArray("PLAY");
+        playButton.add(...playButtonArray[0]);
+        playButton.scale.set(2,2,2);
+        playButton.position.set(this.model.playButtonPosition[0]-playButtonArray[1],this.model.playButtonPosition[1],this.model.playButtonPosition[2]);
+        menuPanel.add(playButton);
 
-        // Create an Exit button
-        const exitButton = new THREE.Group()
-        const exitButtonArray = new FontLoader().getMeshArray("RULES");
-        exitButton.add(...exitButtonArray[0])
-        exitButton.scale.set(2,2,2);
-        exitButton.position.set(this.model.exitButtonPosition[0]-exitButtonArray[1]*1.7,this.model.exitButtonPosition[1],this.model.exitButtonPosition[2]);
-        menuPanel.add(exitButton);
+        // Create an about button
+        const aboutButton = new THREE.Group();
+        const aboutButtonArray = new FontLoader().getMeshArray("ABOUT");
+        aboutButton.add(...aboutButtonArray[0])
+        aboutButton.scale.set(2,2,2);
+        aboutButton.position.set(this.model.aboutButtonPosition[0]-aboutButtonArray[1]*1.7,this.model.aboutButtonPosition[1],this.model.aboutButtonPosition[2]);
+        menuPanel.add(aboutButton);
 
         // Create selection border
         const borderGeometry = new THREE.BoxGeometry(1.25, 0.03, 0.1);
@@ -57,7 +55,7 @@ class InitialView extends View {
         this.border.position.set(this.model.selectedPosition[0],this.model.selectedPosition[1]-0.15,0.01);
 
         const targetPosition = this.camera.position.clone();
-        targetPosition.x = this.model.selectedPosition[0]/2;
+        targetPosition.x = this.model.selectedPosition[0]/4;
 
         this.camera.position.lerp(targetPosition, dampingFactor);
 
