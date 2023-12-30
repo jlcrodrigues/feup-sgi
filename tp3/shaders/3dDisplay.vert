@@ -1,15 +1,15 @@
-uniform vec3 colorA;
-uniform vec3 colorB;
+varying vec2 vUv;
+varying vec3 vNormal;
 
-varying vec3 vUv;
-varying vec3 vColorA;
-varying vec3 vColorB;
+uniform sampler2D uSampler;
+uniform sampler2D uSamplerGray;
 
-void main(){
-    vUv=position;
-    vColorA=colorA;
-    vColorB=colorB;
-    
-    vec4 modelViewPosition=modelViewMatrix*vec4(position,1.);
-    gl_Position=projectionMatrix*modelViewPosition;
+void main() {
+    vNormal = normal;
+    vUv = uv;
+
+    vec3 modifiedPosition = position + normal * abs(texture2D(uSamplerGray, uv).b);
+
+    vec4 modelViewPosition = modelViewMatrix * vec4(modifiedPosition, 1.0);
+    gl_Position = projectionMatrix * modelViewPosition; 
 }

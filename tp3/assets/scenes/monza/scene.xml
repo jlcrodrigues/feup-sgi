@@ -25,6 +25,7 @@
         <texture id="wallTex" filepath="assets/scenes/monza/textures/wall.avif" />
         <texture id="wallBumpTex" filepath="assets/scenes/monza/textures/wallBump.png" />
         <texture id="windowTex" filepath="assets/scenes/monza/textures/window.jpg" />
+        <texture id="adTex" filepath="assets/scenes/monza/textures/ad.jpg" />
     </textures> 
 
     <materials> 
@@ -112,6 +113,25 @@
             shininess="50"
             twosided="true"
         />
+			
+        <material id="adApp" 
+            color="0.75 0.75 0.85 1.0" 
+            emissive="0.00 0.00 0.00 1" 
+			specular="0.5 0.5 0.5 1" 
+            shininess="50"
+            twosided="true"
+            textureref="adTex" 
+            texlength_s="1"
+            texlength_t="1"
+        />
+			
+        <material id="blackApp" 
+            color="0.10 0.10 0.10 1.0" 
+            emissive="0.00 0.00 0.00 1" 
+			specular="0.5 0.5 0.5 1" 
+            shininess="50"
+            twosided="true"
+        />
     </materials> 
 
     <graph rootid="scene">
@@ -120,7 +140,7 @@
                 <noderef id="ground" />
                 <noderef id="pit" />
                 <noderef id="grandstands" />
-                <!-- <noderef id="forest" /> -->
+                <noderef id="forest" />
                 <noderef id="houses" />
 
                 <noderef id="displays" />
@@ -175,19 +195,100 @@
                 <rotate value3="0 -90 0" />
             </transforms> 
             <children>
-                <noderef id="display" />
+                <noderef id="display1" />
+            </children>
+        </node>
+
+        <node id="display1">
+            <transforms>
+                <translate value3="30 0 -40" />
+                <rotate value3="0 -30 0" />
+            </transforms> 
+            <children>
+                <noderef id="displayScreen" />
+                <noderef id="displayCover" />
+                <noderef id="displayFrame" />
             </children>
         </node>
 
         <node id="display">
             <transforms>
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="displayScreen" />
+                <noderef id="displayCover" />
+                <noderef id="displayFrame" />
+            </children>
+        </node>
+
+        <node id="displayScreen">
+            <transforms>
+                <translate value3="0 6 0" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <tdDisplay xy1="0 0" xy2="15 10" lgray="assets/scenes/monza/textures/adLGray.png" image="assets/scenes/monza/textures/ad.jpg" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="displayCover">
+            <transforms>
+                <translate value3="-0.25 5.75 -0.1" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <materialref id="blackApp" />
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="15.5 10.5 0.1" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="displayFrame">
+            <transforms>
                 <translate value3="0 0 0" />
                 <rotate value3="0 0 0" />
             </transforms> 
-            <materialref id="groundApp" />
+            <children>
+                <noderef id="displayScaffoldLeft" />
+                <noderef id="displayScaffoldRight" />
+            </children>
+        </node>
+
+        <node id="displayScaffoldRight">
+            <transforms>
+                <translate value3="15.6 8 0" />
+                <rotate value3="90 0 0" />
+                <scale value3="0.8 0.8 0.65" />
+            </transforms> 
+            <children>
+                <noderef id="scaffold" />
+            </children>
+        </node>
+
+        <node id="displayScaffoldLeft">
+            <transforms>
+                <translate value3="-0.6 8 0" />
+                <rotate value3="90 0 0" />
+                <scale value3="0.8 0.8 0.65" />
+            </transforms> 
+            <children>
+                <noderef id="scaffold" />
+            </children>
+        </node>
+
+        <node id="scaffold">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+                <scale value3="1.0 1.0 1.0" />
+            </transforms>
             <children>
                 <primitive>
-                    <tdDisplay xy1="0 0" xy2="15 10" />
+                    <model3d filepath="assets/scenes/monza/models/scaffold.glb" />
                 </primitive>
             </children>
         </node>

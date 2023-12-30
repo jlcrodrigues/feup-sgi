@@ -197,7 +197,9 @@ class MySceneData  {
         // Added in TP3
 		this.descriptors["tdDisplay"] = [
 			{name: "xy1", type: "vector2"},
-			{name: "xy2", type: "vector2"}
+			{name: "xy2", type: "vector2"},
+			{name: "image", type: "string" },
+			{name: "lgray", type: "string" },
 		]
 
 		this.descriptors["spotlight"] = [

@@ -275,10 +275,6 @@ class MyPrimitiveBuilder {
   }
 
   static build3dDisplay(nodeData, material) {
-    const shaderLoader = new ShaderLoader(
-      "shaders/3dDisplay.vert",
-      "shaders/3dDisplay.frag"
-    );
     const representations = nodeData.representations;
     const width = Math.abs(
       representations[0].xy1[0] - representations[0].xy2[0]
@@ -289,25 +285,31 @@ class MyPrimitiveBuilder {
     const geometry = new THREE.PlaneGeometry(
       width,
       height,
-      representations[0].parts_x ?? 1,
-      representations[0].parts_y ?? 1
+      representations[0].parts_x ?? 1000,
+      representations[0].parts_y ?? 1000
     );
     const xMin = Math.min(representations[0].xy1[0], representations[0].xy2[0]);
     const yMin = Math.min(representations[0].xy1[1], representations[0].xy2[1]);
     geometry.translate(xMin + width / 2, yMin + height / 2, 0);
 
-    // Adjust texture
-    if (material !== undefined && material.map !== undefined) {
-      const texture = material.map;
-      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-      texture.repeat.set(
-        width / material.texlength_s,
-        height / material.texlength_t
-      );
-      material.map = texture;
-    }
+    const texture = new THREE.TextureLoader().load(
+      representations[0].image
+    );
+    const lGrayTexture = new THREE.TextureLoader().load(
+      representations[0].lgray
+    );
+
+    const shaderLoader = new ShaderLoader(
+      "shaders/3dDisplay.vert",
+      "shaders/3dDisplay.frag",
+      {
+        uSampler: { type: "sampler2D", value: texture },
+        uSamplerGray: { type: "sampler2D", value: lGrayTexture },
+      }
+    );
+
     material = shaderLoader.buildShader();
-    console.log("mat", material)
+    console.log("mat", material);
 
     return new THREE.Mesh(geometry, material);
   }
