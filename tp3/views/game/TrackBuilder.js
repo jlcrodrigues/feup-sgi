@@ -4,6 +4,7 @@ import * as THREE from "three";
 class TrackBuilder {
   build(track) {
     //Curve related attributes
+    this.track = track
     this.segments = 1000;
     this.width = track.width;
     this.textureRepeat = 1;
@@ -79,6 +80,18 @@ class TrackBuilder {
         sphere.position.set(point.x, 2, point.z);
         this.curve.add(sphere);
       });
+
+      for (let i = 0; i < this.track.route.points.length; i++) {
+        let sphereGeometry = new THREE.SphereGeometry(3, 32, 32);
+        let sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xff00ff });
+        let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere.position.set(
+          this.track.route.points[i][0],
+          2,
+          this.track.route.points[i][2]
+        );
+        this.curve.add(sphere);
+      }
     }
   }
 }

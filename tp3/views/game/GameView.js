@@ -22,8 +22,8 @@ class GameView extends View {
       1000
     );
     this.camera.position.z = -20;
-    this.camera.position.x = -20;
-    this.camera.position.y = 30;
+    this.camera.position.x = -150;
+    this.camera.position.y = 200;
     this.mixers = [];
 
     // Load the track scene
@@ -70,25 +70,14 @@ class GameView extends View {
       this.camera.lookAt(this.car.position);
     }
 
-    const currentPosition = this.opponent.position.clone();
-    this.mixers.forEach((mixer) => {
-      mixer.update(0.01);
-    });
-    const nextPosition = this.opponent.position.clone();
-
-    const direction = new THREE.Vector3().subVectors(
-      nextPosition,
-      currentPosition
-    );
-
-    direction.normalize();
-    const angle = Math.atan2(direction.x, direction.z) - Math.PI / 2;
-    this.opponent.rotation.y = angle;
-
     this.fireworks.step();
     if (this.fireworks.dest.length === 0) {
       this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
     }
+
+    this.mixers.forEach((mixer) => {
+      mixer.update(0.01);
+    });
   }
 
   loadOpponent() {
@@ -102,14 +91,67 @@ class GameView extends View {
       this.model.track.route.values
     );
 
+    let rotations = [0, 0, 0, 1];
+    const route = this.model.track.route.values;
+    for (let i = 0; i < route.length - 6; i += 3) {
+      const value = new THREE.Vector3(route[i], route[i + 1], route[i + 2]);
+      const nextValue = new THREE.Vector3(
+        route[i + 3],
+        route[i + 4],
+        route[i + 5]
+      );
+      const nextNextValue = new THREE.Vector3(
+        route[i + 6],
+        route[i + 7],
+        route[i + 8]
+      );
+      const q1 = this.getQuaternion(value, nextValue);
+      const q2 = this.getQuaternion(value, nextNextValue);
+
+      rotations.push(q1.x, q1.y, q1.z, q1.w);
+      rotations.push(q2.x, q2.y, q2.z, q2.w);
+    }
+
+    const times = this.model.track.route.times;
+    let qTimes = [];
+    for (let i = 0; i < times.length - 1; i++) {
+      qTimes.push(times[i], (times[i] + times[i + 1]) / 2);
+    }
+    rotations.push(0, 0, 0, 1);
+
+    const quaternionKF = new THREE.QuaternionKeyframeTrack(
+      ".quaternion",
+      qTimes,
+      rotations
+    );
+
     const limit =
       this.model.track.route.times[this.model.track.route.times.length - 1];
-    const clip = new THREE.AnimationClip("positionClip", limit, [positionKF]);
+    const positionClip = new THREE.AnimationClip("positionClip", limit, [
+      positionKF,
+    ]);
+    const rotationClip = new THREE.AnimationClip("rotationClip", limit, [
+      quaternionKF,
+    ]);
 
     const mixer = new THREE.AnimationMixer(this.opponent);
-    const action = mixer.clipAction(clip);
+    const positionAction = mixer.clipAction(positionClip);
+    const rotationAction = mixer.clipAction(rotationClip);
     this.mixers.push(mixer);
-    action.play();
+    positionAction.play();
+    rotationAction.play();
+  }
+
+  /**
+   * Get the quaternion to rotate from a to b.
+   */
+  getQuaternion(a, b) {
+    const yAxis = new THREE.Vector3(0, 1, 0);
+    const direction = new THREE.Vector3().subVectors(b, a);
+    direction.normalize();
+    const angle = Math.atan2(direction.x, direction.z) - Math.PI / 2;
+    const quaternion = new THREE.Quaternion().setFromAxisAngle(yAxis, angle);
+    return quaternion;
   }
 
   loadHud() {
@@ -150,7 +192,9 @@ class GameView extends View {
       document.querySelector("#modifierTime").innerHTML = "";
     }
 
-    document.querySelector("#speed").innerHTML = `<div>Speed</div><div>${Math.floor(
+    document.querySelector(
+      "#speed"
+    ).innerHTML = `<div>Speed</div><div>${Math.floor(
       this.model.car.speed * Car.speedConverter
     )} km/h</div>`;
   }
@@ -190,6 +234,7 @@ class GameView extends View {
     this.car.position.y = this.model.car.position.y;
 
     this.car.rotation.y = -this.model.car.rotation;
+    this.car.rotation.x = this.model.car.angularSpeed;
 
     this.checkCarPosition();
 
@@ -200,8 +245,10 @@ class GameView extends View {
       for (let i = 0; i < car.children.length; i++) {
         car.children[i].rotateZ(dist);
       }
-      this.car.wheel1.rotation.x = this.car.wheel1.originalRotationX + this.model.car.angularSpeed * 10;
-      this.car.wheel2.rotation.x = this.car.wheel2.originalRotationX + this.model.car.angularSpeed *  10;
+      this.car.wheel1.rotation.x =
+        this.car.wheel1.originalRotationX + this.model.car.angularSpeed * 10;
+      this.car.wheel2.rotation.x =
+        this.car.wheel2.originalRotationX + this.model.car.angularSpeed * 10;
     }
   }
 
