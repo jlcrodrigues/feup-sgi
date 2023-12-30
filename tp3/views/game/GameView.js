@@ -21,9 +21,9 @@ class GameView extends View {
       0.1,
       1000
     );
-    this.camera.position.z = -20;
-    this.camera.position.x = -150;
-    this.camera.position.y = 200;
+    this.camera.position.z = -15;
+    this.camera.position.x = -20;
+    this.camera.position.y = 20;
     this.mixers = [];
 
     // Load the track scene

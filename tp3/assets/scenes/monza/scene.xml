@@ -123,6 +123,8 @@
                 <!-- <noderef id="forest" /> -->
                 <noderef id="houses" />
 
+                <noderef id="displays" />
+
                 <noderef id="line1" />
                 <noderef id="line2" />
 
@@ -163,6 +165,29 @@
             <children>
                 <primitive>
                     <rectangle xy1="0 0" xy2="1500 1000" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="displays">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 -90 0" />
+            </transforms> 
+            <children>
+                <noderef id="display" />
+            </children>
+        </node>
+
+        <node id="display">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <materialref id="groundApp" />
+            <children>
+                <primitive>
+                    <tdDisplay xy1="0 0" xy2="15 10" />
                 </primitive>
             </children>
         </node>
