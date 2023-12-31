@@ -1,10 +1,11 @@
+import { MousePicker } from "../MousePicker.js";
 import { RaceMenuModel } from "../models/RaceMenuModel.js";
-import { GameState } from "../states/GameState.js";
 import { GarageState } from "../states/GarageState.js";
 import { InitialState } from "../states/InitalState.js";
 import { TracksState } from "../states/TracksState.js";
 import { RaceMenuView } from "../views/RaceMenuView.js";
 import { Controller } from "./Controller.js";
+import * as THREE from "three";
 
 class RaceMenuController extends Controller {
     constructor(settings) {
@@ -15,6 +16,13 @@ class RaceMenuController extends Controller {
 
         this.model = new RaceMenuModel();
         this.view = new RaceMenuView(this.model);
+
+        // Objects to be considered by the MousePicker
+        const objects = []
+        this.view.scene.children[0].children[1].children.slice(0,4).forEach(child => {
+            if(child instanceof THREE.Group) objects.push(child)
+        });
+        this.mousePicker = new MousePicker(objects,this.view.camera);
         
         document.addEventListener("keydown", (event) => {
             this.model.processInput(event.code);
@@ -24,8 +32,10 @@ class RaceMenuController extends Controller {
 
     
     step() {
-        // this.model.step();
+        this.mousePicker.step();
+        this.model.step(this.mousePicker);
         this.view.step();
+        
         if (this.model.state == 'garage'){
             return new GarageState(this.settings);
         }

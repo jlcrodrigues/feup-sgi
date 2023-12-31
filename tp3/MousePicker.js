@@ -4,7 +4,6 @@ class MousePicker{
     constructor(objects,camera){
         this.camera = camera;
         this.objects = objects;
-        console.log(objects)
         
         this.pickedObject = null;
 
@@ -17,13 +16,13 @@ class MousePicker{
             this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
         });
 
-        document.addEventListener("mousedown", (event) => {
+        document.addEventListener("mousedown", () => {
             if(this.pickedObject){
                 this.selectedObject = this.pickedObject.parent;
             }
         })
 
-        document.addEventListener("mouseup", (event) => {
+        document.addEventListener("mouseup", () => {
             this.selectedObject = null;
         })
     }

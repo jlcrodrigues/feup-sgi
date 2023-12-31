@@ -28,9 +28,9 @@ class InitialController extends Controller {
 
     
     step() {
+        this.mousePicker.step();
         this.model.step(this.mousePicker);
         this.view.step();
-        this.mousePicker.step();
         
         if (this.model.state == 'play'){
             return new RaceMenuState();

@@ -39,7 +39,39 @@ class RaceMenuModel extends Model {
 
   }
 
-  step(){}
+  step(mousePicker){
+    if (mousePicker.pickedObject){
+      if (mousePicker.pickedObject.position.y > 0){
+        if (mousePicker.pickedObject.position.x < 0){
+          this.selectedPosition = this.garageButtonPosition;
+        }
+        else{
+          this.selectedPosition = this.tracksButtonPosition;
+        }
+        this.border.scale.set(1,1,1);
+      }
+      else if (mousePicker.pickedObject.position.y < -1){
+        this.selectedPosition = this.raceButtonPosition;
+        this.border.scale.set(1,1,1);
+      }
+      else{
+        this.selectedPosition = this.lapsSelectorPosition;
+        this.border.scale.set(this.lapsSelectorSize[0]/(this.borderSize[0]-0.1),this.lapsSelectorSize[1]/(this.borderSize[1]-0.001),this.lapsSelectorSize[2]/this.buttonSize[2]);
+      }
+    }
+
+    if(mousePicker.selectedObject){
+      if (this.selectedPosition == this.garageButtonPosition){ 
+        this.state = 'garage'; 
+      } 
+      else if (this.selectedPosition == this.tracksButtonPosition){
+        this.state = 'tracks';
+      } 
+      else if (this.selectedPosition == this.raceButtonPosition){
+        this.state = 'race'
+      }
+    }
+  }
 
   processInput(key){
     const input = keyInputs[key];

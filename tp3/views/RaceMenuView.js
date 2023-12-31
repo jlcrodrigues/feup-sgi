@@ -51,17 +51,20 @@ class RaceMenuView extends View {
         contentsGroup.add(raceButton);
 
         // Create Laps Button Selector and Selection Frame
+        // Adapted to group to work for mouse picker
+        this.lapsSelectorGroup = new THREE.Group()
         const lapsSelectorGeometry = new THREE.BoxGeometry(...this.model.lapsSelectorSize);
         const lapsSelectorMaterial = new THREE.MeshBasicMaterial({ color: 0x666666 });
-        this.lapsSelector = new THREE.Mesh(lapsSelectorGeometry,lapsSelectorMaterial);
-        contentsGroup.add(this.lapsSelector);
+        const lapsSelector = new THREE.Mesh(lapsSelectorGeometry,lapsSelectorMaterial);
+        this.lapsSelectorGroup.add(lapsSelector);
+        contentsGroup.add(this.lapsSelectorGroup);
 
         const lapsFrameGeometry = new THREE.BoxGeometry(0.05,0.4,0.1);
         const lapsFrameMaterial = new THREE.MeshBasicMaterial({ color: 0x444444 });
         const lapsLineGeometry = new THREE.BoxGeometry(4,0.1,0.1);
         const lapsLineMaterial = new THREE.MeshBasicMaterial({ color: 0x444444 });
         
-        const lapsFrame = new THREE.Group();
+        const lapsDetails = new THREE.Group();
         const lapsLine = new THREE.Mesh(lapsLineGeometry,lapsLineMaterial);
         lapsLine.position.set(0,this.model.lapsSelectorPosition[1],0.01);
 
@@ -75,7 +78,7 @@ class RaceMenuView extends View {
         lapsFrame3.position.set(0,this.model.lapsSelectorPosition[1],0.01)
         lapsFrame4.position.set(1,this.model.lapsSelectorPosition[1],0.01)
         lapsFrame5.position.set(2,this.model.lapsSelectorPosition[1],0.01)
-        lapsFrame.add(lapsLine,lapsFrame1,lapsFrame2,lapsFrame3,lapsFrame4,lapsFrame5)
+        lapsDetails.add(lapsLine,lapsFrame1,lapsFrame2,lapsFrame3,lapsFrame4,lapsFrame5)
 
         const lapsNumbers = new THREE.Group();
         const lapsNumber1 = new FontLoader().getMeshArray("1")[0][0];
@@ -90,15 +93,15 @@ class RaceMenuView extends View {
         lapsNumber3.position.set(0,this.model.lapsSelectorPosition[1]/2-0.25,0.1)
         lapsNumber4.position.set(0.5,this.model.lapsSelectorPosition[1]/2-0.25,0.1)
         lapsNumber5.position.set(1,this.model.lapsSelectorPosition[1]/2-0.25,0.1)
-        contentsGroup.add(lapsNumbers);
+        lapsDetails.add(lapsNumbers);
 
         const lapsLabel = new THREE.Group()
         const lapsLabelArray = new FontLoader().getMeshArray("LAPS");
         lapsLabel.add(...lapsLabelArray[0])
         lapsLabel.scale.set(2,2,1.5);
         lapsLabel.position.set(this.model.lapsLabelPosition[0]-lapsLabelArray[1]*1.4,this.model.lapsLabelPosition[1],this.model.lapsLabelPosition[2]);
-        contentsGroup.add(lapsLabel);
-        contentsGroup.add(lapsFrame);
+        lapsDetails.add(lapsLabel);
+        contentsGroup.add(lapsDetails);
 
         // Create selection border 
         contentsGroup.add(this.model.border);
@@ -116,11 +119,11 @@ class RaceMenuView extends View {
     step() {
         //update border position
         this.model.border.position.set(this.model.selectedPosition[0],this.model.selectedPosition[1],this.model.selectedPosition[2]-0.01);
-        this.lapsSelector.position.set(this.model.lapsSelectorPosition[0],this.model.lapsSelectorPosition[1],this.model.lapsSelectorPosition[2]);
+        this.lapsSelectorGroup.position.set(this.model.lapsSelectorPosition[0],this.model.lapsSelectorPosition[1],this.model.lapsSelectorPosition[2]);
 
         const targetPosition = this.camera.position.clone();
-        targetPosition.x = this.model.selectedPosition[0]/2;
-        targetPosition.y = this.model.selectedPosition[1]/4;
+        targetPosition.x = this.model.selectedPosition[0]/4;
+        targetPosition.y = this.model.selectedPosition[1]/6;
 
         this.camera.position.lerp(targetPosition, dampingFactor);
 
