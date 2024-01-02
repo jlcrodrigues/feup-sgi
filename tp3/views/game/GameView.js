@@ -21,9 +21,9 @@ class GameView extends View {
       0.1,
       1000
     );
-    this.camera.position.z = -20;
-    this.camera.position.x = -150;
-    this.camera.position.y = 200;
+    this.camera.position.z = -15;
+    this.camera.position.x = -20;
+    this.camera.position.y = 20;
     this.mixers = [];
 
     // Load the track scene
@@ -59,6 +59,12 @@ class GameView extends View {
   step() {
     this.stepHud();
     this.stepCar();
+
+    if (!this.startTime) {
+      this.startTime = new Date();
+    }
+
+    this.stepShaders();
 
     const targetPosition = this.car.position.clone();
     targetPosition.y += 10;
@@ -167,6 +173,44 @@ class GameView extends View {
     document.querySelector("#bottom-right").innerHTML += '<p id="speed"></p>';
   }
 
+  stepShaders() {
+    // set time for each modifier
+    this.modifiers.forEach((modifier) => {
+      modifier.shader.updateUniformsValue(
+        "time",
+        (Date.now() - this.startTime) / 1000
+      );
+    });
+
+    if (this.scene.recursiveFrames === undefined) {
+      this.scene.recursiveFrames = [];
+      this.scene.traverse((object) => {
+        if (object.name == "tvDisplay") {
+          this.scene.recursiveFrames.push(object);
+        }
+      });
+    }
+
+    if (this.lastTvUpdate === undefined) {
+      this.lastTvUpdate = new Date();
+    }
+
+    if (new Date() - this.lastTvUpdate > 500) {
+      const tex = new THREE.CanvasTexture(
+        document.getElementById("canvas").firstChild
+      );
+      const app = App.getInstance();
+      const depthBuffer = app.depthTarget.depthTexture;
+      this.scene.recursiveFrames.forEach((tvDisplay) => {
+        tvDisplay.shader.updateUniformsValue("cameraNear", app.camera.near);
+        tvDisplay.shader.updateUniformsValue("cameraFar", app.camera.far);
+        tvDisplay.shader.updateUniformsValue("uSampler", tex);
+        tvDisplay.shader.updateUniformsValue("uSamplerGray", depthBuffer);
+      });
+      this.lastTvUpdate = new Date();
+    }
+  }
+
   stepHud() {
     document.querySelector("#laps").innerHTML = `Lap ${Math.floor(
       this.model.laps
@@ -200,9 +244,11 @@ class GameView extends View {
   }
 
   loadModifiers() {
+    this.modifiers = [];
     this.model.track.modifiers.forEach((modifier) => {
       const mesh = ModifierView.build(modifier);
       this.scene.add(mesh);
+      this.modifiers.push(mesh);
 
       const rotationKF = new THREE.NumberKeyframeTrack(
         ".rotation[y]",

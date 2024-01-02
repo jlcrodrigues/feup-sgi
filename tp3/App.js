@@ -9,7 +9,7 @@ import { GarageState } from "./states/GarageState.js";
  */
 class App {
   static instance = null;
-  static controlsActive = false;
+  static controlsActive = true;
 
   constructor() {
     this.renderer = null;
@@ -30,7 +30,7 @@ class App {
    * Creates the renderer and the inital state.
    */
   start() {
-    this.state = new InitialState();
+    this.state = new GameState();
 
     // Create a renderer with Antialiasing
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -41,6 +41,20 @@ class App {
 
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // Create depth buffer
+    this.depthTexture = new THREE.DepthTexture(
+      window.innerWidth,
+      window.innerHeight
+    );
+    this.depthTarget = new THREE.WebGLRenderTarget(
+      window.innerWidth,
+      window.innerHeight,
+      { depthBuffer: true, depthTexture: this.depthTexture }
+    );
+    this.depthTarget.depthTexture.format = THREE.DepthFormat;
+    this.depthTarget.depthTexture.type = THREE.UnsignedIntType;
+
 
     // Append Renderer to DOM
     document.getElementById("canvas").appendChild(this.renderer.domElement);
@@ -73,6 +87,7 @@ class App {
       this.state.getCamera().aspect = window.innerWidth / window.innerHeight;
       this.state.getCamera().updateProjectionMatrix();
       this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.depthTarget.setSize(window.innerWidth, window.innerHeight);
     }
   }
 
@@ -83,10 +98,13 @@ class App {
    */
   render() {
     this.state = this.state.step();
+    this.camera = this.state.getCamera(); 
     if (App.controlsActive) {
       this.controls.object = this.state.getCamera();
       this.controls.update();
     }
+
+    this.renderDepthTarget(); 
 
     // render the scene
     this.renderer.render(this.state.getScene(), this.state.getCamera());
@@ -97,6 +115,23 @@ class App {
 
   setState(state) {
     this.state = state;
+  }
+
+  /**
+   * Renders the depth buffer to the depthTarget.
+   */
+  renderDepthTarget() {
+    const scene = this.state.getScene();
+    this.renderer.setRenderTarget(this.depthTarget);
+    // Disable recursive objects to avoid infinite recursion
+    scene.recursiveFrames.forEach((obj) => {
+      obj.visible = false;
+    });
+    this.renderer.render(scene, this.state.getCamera());
+    scene.recursiveFrames.forEach((obj) => {
+      obj.visible = true;
+    });
+    this.renderer.setRenderTarget(null);
   }
 }
 

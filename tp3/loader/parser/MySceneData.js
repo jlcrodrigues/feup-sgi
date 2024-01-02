@@ -194,6 +194,14 @@ class MySceneData  {
             {name: "color_p", type: "rgba"} 
 		]
 
+        // Added in TP3
+		this.descriptors["tdDisplay"] = [
+			{name: "xy1", type: "vector2"},
+			{name: "xy2", type: "vector2"},
+			{name: "image", type: "string" },
+			{name: "lgray", type: "string" },
+		]
+
 		this.descriptors["spotlight"] = [
 			{name: "id", type: "string" },
 			{name: "color", type: "rgba"},
@@ -240,7 +248,7 @@ class MySceneData  {
 
         this.primaryNodeIds = ["globals", "fog", "skybox" ,"textures", "materials", "cameras", "graph"]
 
-        this.primitiveIds = ["cylinder", "rectangle", "triangle", "sphere", "nurbs" , "box", "model3d", "skybox", "lod", "polygon" ]
+        this.primitiveIds = ["cylinder", "rectangle", "triangle", "sphere", "nurbs" , "box", "model3d", "skybox", "lod", "polygon", "tdDisplay" ]
     }
 
     createCustomAttributeIfNotExists(obj) {

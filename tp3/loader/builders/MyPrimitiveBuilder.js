@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MyNurbsBuilder } from "./MyNurbsBuilder.js";
 import { MyTriangle } from "./objects/MyTriangle.js";
+import { ShaderLoader } from "../ShaderLoader.js";
 
 /**
  * Builds Three.js objects from parser data (primitives)
@@ -43,6 +44,7 @@ class MyPrimitiveBuilder {
       this.geometryBuilders.set("box", this.buildBox);
       this.geometryBuilders.set("polygon", this.buildPolygon);
       this.geometryBuilders.set("model3d", this.buildModel3d);
+      this.geometryBuilders.set("tdDisplay", this.build3dDisplay);
     }
 
     return this.geometryBuilders.get(nodeData.subtype)(nodeData, material);
@@ -270,6 +272,50 @@ class MyPrimitiveBuilder {
     const representations = nodeData.representations;
     const loader = new GLTFLoader();
     return loader.loadAsync(representations[0].filepath);
+  }
+
+  static build3dDisplay(nodeData, material) {
+    const representations = nodeData.representations;
+    const width = Math.abs(
+      representations[0].xy1[0] - representations[0].xy2[0]
+    );
+    const height = Math.abs(
+      representations[0].xy1[1] - representations[0].xy2[1]
+    );
+    const geometry = new THREE.PlaneGeometry(
+      width,
+      height,
+      representations[0].parts_x ?? 1000,
+      representations[0].parts_y ?? 1000
+    );
+    const xMin = Math.min(representations[0].xy1[0], representations[0].xy2[0]);
+    const yMin = Math.min(representations[0].xy1[1], representations[0].xy2[1]);
+    geometry.translate(xMin + width / 2, yMin + height / 2, 0);
+
+    const texture = new THREE.TextureLoader().load(
+      representations[0].image
+    );
+    const lGrayTexture = new THREE.TextureLoader().load(
+      representations[0].lgray
+    );
+
+    const shaderLoader = new ShaderLoader(
+      "shaders/3dDisplay.vert",
+      "shaders/3dDisplay.frag",
+      {
+        uSampler: { type: "sampler2D", value: texture },
+        uSamplerGray: { type: "sampler2D", value: lGrayTexture },
+        cameraNear: { type: "float", value: null },
+        cameraFar: { type: "float", value: null },
+      }
+    );
+
+    material = shaderLoader.buildShader();
+
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.name = "tvDisplay";
+    mesh.shader = shaderLoader;
+    return mesh;
   }
 }
 
