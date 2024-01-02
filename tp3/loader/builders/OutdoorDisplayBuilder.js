@@ -1,13 +1,16 @@
 import * as THREE from "three";
 
 const baseHeight = 3;
-const screenHeight = 15;
+const screenHeight = 16;
 
 class OutdoorDisplayBuilder {
   constructor(nodeData, material) {
     this.nodeData = nodeData;
     this.material =
       material ?? new THREE.MeshPhongMaterial({ color: 0x333333 });
+    this.secondaryMaterial = new THREE.MeshPhongMaterial({
+      color: 0x666666,
+    });
   }
 
   build() {
@@ -35,37 +38,78 @@ class OutdoorDisplayBuilder {
 
   buildSections() {
     const sections = new THREE.Group();
+
     // Game status (playing vs paused)
-    const statusGeometry = new THREE.BoxGeometry(4, 1, 2);
-    const statusMesh = new THREE.Mesh(statusGeometry, this.material);
-    statusMesh.position.set(0, baseHeight + 2, 0.01);
-    statusMesh.name = "status";
-    sections.add(statusMesh);
+    sections.add(this.buildGenericPlate(this.material, 2, "status"));
+
+    // Modifier information
+    sections.add(this.buildModifierPanel());
+
+    // Time
+    sections.add(this.buildGenericPlate(this.material, 9, "timeTitle"));
+    sections.add(this.buildGenericPlate(this.material, 8, "time"));
+
+    sections.add(this.buildSplitter(this.secondaryMaterial, 9.5));
+
+    // Lap
+    sections.add(this.buildGenericPlate(this.material, 11, "lapTitle"));
+    sections.add(this.buildGenericPlate(this.material, 10, "lap"));
+
+    // Speed
+    sections.add(this.buildGenericPlate(this.material, 13.5, "speedTitle"));
+    sections.add(this.buildGenericPlate(this.material, 12.5, "speed"));
+
+    sections.add(this.buildSplitter(this.secondaryMaterial, 14.5));
+
+    // Laps
+    sections.add(this.buildGenericPlate(this.material, 15, "laps"));
 
     return sections;
   }
 
+  /**
+   * Build a generic plate. This is a box where the text will be displayed.
+   * @param {*} material Material to use for the plate
+   * @param {*} y Height displacement
+   * @param {*} name Name to be used for text rendering id
+   * @returns Object3D representing the plate
+   */
+  buildGenericPlate(material, y, name) {
+    const geometry = new THREE.BoxGeometry(5, 1, 2);
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, baseHeight + y, 0.01);
+    mesh.name = name;
+    return mesh;
+  }
+
+  buildSplitter(material, y) {
+    const geometry = new THREE.BoxGeometry(5, 0.1, 2);
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, baseHeight + y, 0.02);
+    return mesh;
+  }
+
   buildModifierPanel() {
     const panel = new THREE.Group();
+    const panelMaterial = new THREE.MeshPhongMaterial({ color: 0x888888 });
 
     // Background
-    const bgGeometry = new THREE.BoxGeometry(1, 1, 2);
-    const bgMesh = new THREE.Mesh(
-      bgGeometry,
-      new THREE.MeshPhongMaterial({ color: this.material.color * 0.8 })
-    );
-    panel.add(bgMesh)
+    const bgGeometry = new THREE.BoxGeometry(5, 4, 2);
+    const bgMesh = new THREE.Mesh(bgGeometry, panelMaterial);
+    panel.add(bgMesh);
 
-    // Background
-    const timeRemainingGeometry = new THREE.BoxGeometry(1, 1, 2);
-    const timeRemainingMesh = new THREE.Mesh(
-      timeRemainingGeometry, this.material
-    );
-    timeRemainingMesh.name = "timeRemaining"
-    panel.add(timeRemainingMesh)
+    // Time remaining in modifier
+    panel.add(this.buildGenericPlate(panelMaterial, -4.5, "timeRemaining"));
 
-    panel.position.set(0, baseHeight + 4, 0.01);
-    panel.add(statusMesh);
+    // Modifier name
+    panel.add(this.buildGenericPlate(panelMaterial, -3.5, "modifier"));
+
+    // Max speed
+    panel.add(this.buildGenericPlate(panelMaterial, -2, "maxSpeed"));
+
+    panel.position.set(0, baseHeight + 5, 0.01);
+
+    return panel;
   }
 }
 

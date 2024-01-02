@@ -6,9 +6,19 @@ class OutdoorDisplaysView {
     this.scene = scene;
 
     this.text = new Map();
+
+    this.lastUpdate = Date.now();
+    this.updateRate = 100;
+
+    this.fontLoader = new FontLoader();
   }
 
   step() {
+    if (Date.now() - this.lastUpdate < this.updateRate) {
+      return;
+    }
+    this.lastUpdate = Date.now();
+
     if (!this.outdoorDisplays) {
       this.outdoorDisplays = [];
       this.scene.traverse((object) => {
@@ -23,7 +33,6 @@ class OutdoorDisplaysView {
             this.renderNode(display, name, text);
         });
     });
-    this.outdoorDisplays = [];
   }
 
   setText(node, text) {
@@ -31,16 +40,21 @@ class OutdoorDisplaysView {
   }
 
   renderNode(parent, name, text) {
-    const dZ = 0.52;
+    if (text == "") return;
     const dScale = 5;
 
     const node = parent.getObjectByName(name);
     const nodeGroup = new THREE.Group();
-    const nodeText = new FontLoader().getMeshArray(text);
+    const nodeText = this.fontLoader.getMeshArray(text);
     nodeGroup.add(...nodeText[0]);
     nodeGroup.scale.set(dScale, dScale, dScale);
-    console.log(nodeText[1]);
     nodeGroup.position.set((-nodeText[1] * dScale * 1.7) / 2, 0, -1.48);
+    nodeGroup.name = "text";
+    node.children.forEach((child) => {
+      if (child.name == "text") {
+        node.remove(child);
+      }
+    });
     node.add(nodeGroup);
   }
 }
