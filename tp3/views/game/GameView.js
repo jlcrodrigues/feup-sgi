@@ -64,13 +64,7 @@ class GameView extends View {
       this.startTime = new Date();
     }
 
-    // set time for each modifier
-    this.modifiers.forEach((modifier) => {
-      modifier.shader.updateUniformsValue(
-        "time",
-        (Date.now() - this.startTime) / 1000,
-      );
-    });
+    this.stepShaders();
 
     const targetPosition = this.car.position.clone();
     targetPosition.y += 10;
@@ -177,6 +171,44 @@ class GameView extends View {
       '<p id="modifierTime"></p>';
 
     document.querySelector("#bottom-right").innerHTML += '<p id="speed"></p>';
+  }
+
+  stepShaders() {
+    // set time for each modifier
+    this.modifiers.forEach((modifier) => {
+      modifier.shader.updateUniformsValue(
+        "time",
+        (Date.now() - this.startTime) / 1000
+      );
+    });
+
+    if (this.scene.recursiveFrames === undefined) {
+      this.scene.recursiveFrames = [];
+      this.scene.traverse((object) => {
+        if (object.name == "tvDisplay") {
+          this.scene.recursiveFrames.push(object);
+        }
+      });
+    }
+
+    if (this.lastTvUpdate === undefined) {
+      this.lastTvUpdate = new Date();
+    }
+
+    if (new Date() - this.lastTvUpdate > 500) {
+      const tex = new THREE.CanvasTexture(
+        document.getElementById("canvas").firstChild
+      );
+      const app = App.getInstance();
+      const depthBuffer = app.depthTarget.depthTexture;
+      this.scene.recursiveFrames.forEach((tvDisplay) => {
+        tvDisplay.shader.updateUniformsValue("cameraNear", app.camera.near);
+        tvDisplay.shader.updateUniformsValue("cameraFar", app.camera.far);
+        tvDisplay.shader.updateUniformsValue("uSampler", tex);
+        tvDisplay.shader.updateUniformsValue("uSamplerGray", depthBuffer);
+      });
+      this.lastTvUpdate = new Date();
+    }
   }
 
   stepHud() {

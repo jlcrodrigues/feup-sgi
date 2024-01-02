@@ -305,12 +305,17 @@ class MyPrimitiveBuilder {
       {
         uSampler: { type: "sampler2D", value: texture },
         uSamplerGray: { type: "sampler2D", value: lGrayTexture },
+        cameraNear: { type: "float", value: null },
+        cameraFar: { type: "float", value: null },
       }
     );
 
     material = shaderLoader.buildShader();
 
-    return new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.name = "tvDisplay";
+    mesh.shader = shaderLoader;
+    return mesh;
   }
 }
 
