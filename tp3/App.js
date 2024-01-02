@@ -104,8 +104,6 @@ class App {
       this.controls.update();
     }
 
-    this.renderDepthTarget(); 
-
     // render the scene
     this.renderer.render(this.state.getScene(), this.state.getCamera());
 
@@ -122,6 +120,8 @@ class App {
    */
   renderDepthTarget() {
     const scene = this.state.getScene();
+    if (scene.recursiveFrames === undefined) return;
+
     this.renderer.setRenderTarget(this.depthTarget);
     // Disable recursive objects to avoid infinite recursion
     scene.recursiveFrames.forEach((obj) => {

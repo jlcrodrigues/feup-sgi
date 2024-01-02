@@ -74,6 +74,7 @@ class FontLoader{
     }
 
     getMeshArray(string) {
+        this.charOffset = 0;
    
         const textMeshArray = []; 
 

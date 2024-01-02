@@ -6,6 +6,8 @@ import { ModifierView } from "./ModifierView.js";
 import { App } from "../../App.js";
 import { Car } from "../../models/game/Car.js";
 import { Fireworks } from "../Fireworks.js";
+import { FontLoader } from "../../loader/FontLoader.js";
+import { OutdoorDisplaysView } from "./OutdoorDisplayView.js";
 
 const dampingFactor = 0.1;
 const modifierAnimationDuration = 2;
@@ -59,6 +61,7 @@ class GameView extends View {
   step() {
     this.stepHud();
     this.stepCar();
+    this.stepOutdoorDisplays();
 
     if (!this.startTime) {
       this.startTime = new Date();
@@ -196,10 +199,11 @@ class GameView extends View {
     }
 
     if (new Date() - this.lastTvUpdate > 500) {
+      const app = App.getInstance();
+      app.renderDepthTarget();
       const tex = new THREE.CanvasTexture(
         document.getElementById("canvas").firstChild
       );
-      const app = App.getInstance();
       const depthBuffer = app.depthTarget.depthTexture;
       this.scene.recursiveFrames.forEach((tvDisplay) => {
         tvDisplay.shader.updateUniformsValue("cameraNear", app.camera.near);
@@ -315,6 +319,50 @@ class GameView extends View {
     if (intersects.length == 0) {
       this.model.setOutsideTrack();
     }
+  }
+
+  stepOutdoorDisplays() {
+    if (this.outdoorDisplaysView === undefined) {
+      this.outdoorDisplaysView = new OutdoorDisplaysView(this.scene);
+    }
+    // TODO: pause menu
+    this.outdoorDisplaysView.setText("status", "PLAYING");
+    this.outdoorDisplaysView.setText(
+      "timeRemaining",
+      `${(this.model.modifier == null
+        ? 0
+        : this.model.modifierDuration -
+          (new Date() - (this.model.modifierStart || new Date())) / 1000
+      ).toFixed(2)}s`
+    );
+    this.outdoorDisplaysView.setText("modifier", this.model.modifier ?? "");
+    this.outdoorDisplaysView.setText(
+      "maxSpeed",
+      `${Math.floor(this.model.car.maxSpeed * Car.speedConverter)} km/h`
+    );
+    this.outdoorDisplaysView.setText("timeTitle", "time");
+    this.outdoorDisplaysView.setText(
+      "time",
+      `${(new Date() - this.startTime) / 1000}`
+    );
+    this.outdoorDisplaysView.setText("lapTitle", "lap");
+    this.outdoorDisplaysView.setText(
+      "lap",
+      `${((new Date() - this.model.lapStart) / 1000).toFixed(2)}s`
+    );
+
+    this.outdoorDisplaysView.setText("speedTitle", "speed");
+    this.outdoorDisplaysView.setText(
+      "speed",
+      `${Math.floor(this.model.car.speed * Car.speedConverter)} km/h`
+    );
+
+    this.outdoorDisplaysView.setText(
+      "laps",
+      `lap ${Math.floor(this.model.laps)}/${this.model.settings.laps}`
+    );
+
+    this.outdoorDisplaysView.step();
   }
 
   cleanup() {
