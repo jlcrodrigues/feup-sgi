@@ -6,6 +6,8 @@ import { ModifierView } from "./ModifierView.js";
 import { App } from "../../App.js";
 import { Car } from "../../models/game/Car.js";
 import { Fireworks } from "../Fireworks.js";
+import { FontLoader } from "../../loader/FontLoader.js";
+import { OutdoorDisplaysView } from "./OutdoorDisplayView.js";
 
 const dampingFactor = 0.1;
 const modifierAnimationDuration = 2;
@@ -59,6 +61,7 @@ class GameView extends View {
   step() {
     this.stepHud();
     this.stepCar();
+    this.stepOutdoorDisplays();
 
     if (!this.startTime) {
       this.startTime = new Date();
@@ -315,6 +318,15 @@ class GameView extends View {
     if (intersects.length == 0) {
       this.model.setOutsideTrack();
     }
+  }
+
+  stepOutdoorDisplays() {
+    if (this.outdoorDisplaysView === undefined) {
+      this.outdoorDisplaysView = new OutdoorDisplaysView(this.scene);
+    }
+    // TODO: pause menu
+    this.outdoorDisplaysView.setText("status", "PLAYING");
+    this.outdoorDisplaysView.step();
   }
 
   cleanup() {

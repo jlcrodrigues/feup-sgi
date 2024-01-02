@@ -192,17 +192,29 @@
         <node id="displays">
             <transforms>
                 <translate value3="0 0 0" />
-                <rotate value3="0 -90 0" />
             </transforms> 
             <children>
                 <noderef id="display1" />
+                <noderef id="outdoorDisplay" />
+            </children>
+        </node>
+
+        <node id="outdoorDisplay">
+            <transforms>
+                <translate value3="5 0 5" />
+                <rotate value3="0 180 0" />
+            </transforms> 
+            <children>
+                <primitive>
+                    <outdoorDisplay />
+                </primitive>
             </children>
         </node>
 
         <node id="display1">
             <transforms>
-                <translate value3="30 0 -40" />
-                <rotate value3="0 -30 0" />
+                <translate value3="30 0 40" />
+                <rotate value3="0 -120 0" />
             </transforms> 
             <children>
                 <noderef id="displayScreen" />

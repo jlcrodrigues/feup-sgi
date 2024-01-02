@@ -202,6 +202,9 @@ class MySceneData  {
 			{name: "lgray", type: "string" },
 		]
 
+		this.descriptors["outdoorDisplay"] = [
+		]
+
 		this.descriptors["spotlight"] = [
 			{name: "id", type: "string" },
 			{name: "color", type: "rgba"},
@@ -248,7 +251,7 @@ class MySceneData  {
 
         this.primaryNodeIds = ["globals", "fog", "skybox" ,"textures", "materials", "cameras", "graph"]
 
-        this.primitiveIds = ["cylinder", "rectangle", "triangle", "sphere", "nurbs" , "box", "model3d", "skybox", "lod", "polygon", "tdDisplay" ]
+        this.primitiveIds = ["cylinder", "rectangle", "triangle", "sphere", "nurbs" , "box", "model3d", "skybox", "lod", "polygon", "tdDisplay", "outdoorDisplay" ]
     }
 
     createCustomAttributeIfNotExists(obj) {

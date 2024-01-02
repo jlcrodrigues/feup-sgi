@@ -3,6 +3,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MyNurbsBuilder } from "./MyNurbsBuilder.js";
 import { MyTriangle } from "./objects/MyTriangle.js";
 import { ShaderLoader } from "../ShaderLoader.js";
+import { OutdoorDisplayBuilder } from "./OutdoorDisplayBuilder.js";
 
 /**
  * Builds Three.js objects from parser data (primitives)
@@ -45,6 +46,7 @@ class MyPrimitiveBuilder {
       this.geometryBuilders.set("polygon", this.buildPolygon);
       this.geometryBuilders.set("model3d", this.buildModel3d);
       this.geometryBuilders.set("tdDisplay", this.build3dDisplay);
+      this.geometryBuilders.set("outdoorDisplay", this.buildOutdoorDisplay);
     }
 
     return this.geometryBuilders.get(nodeData.subtype)(nodeData, material);
@@ -316,6 +318,10 @@ class MyPrimitiveBuilder {
     mesh.name = "tvDisplay";
     mesh.shader = shaderLoader;
     return mesh;
+  }
+
+  static buildOutdoorDisplay(nodeData, material) {
+    return new OutdoorDisplayBuilder(nodeData, material).build();
   }
 }
 
