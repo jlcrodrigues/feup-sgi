@@ -51,6 +51,8 @@ class GameModel extends Model {
     this.modifier = null;
     this.modifierStart = null;
     this.modifierDuration = 5;
+
+    this.over = true;
   }
 
   step() {
@@ -84,7 +86,8 @@ class GameModel extends Model {
     }
 
     if (this.laps >= this.settings.laps) {
-      return true;
+      this.laps = this.settings.laps
+      this.over = true;
     }
 
     this.stepModifiers();

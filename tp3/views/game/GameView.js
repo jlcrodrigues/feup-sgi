@@ -51,33 +51,59 @@ class GameView extends View {
 
     this.loadHud();
 
-    this.fireworks = new Fireworks(this.scene);
+    this.loadOver();
 
-    this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
+    this.fireworks = new Fireworks(this.scene);
   }
 
   step() {
-    this.stepHud();
-    this.stepCar();
+    if (!this.model.over){
+      this.stepHud();
+      this.stepCar();
 
-    const targetPosition = this.car.position.clone();
-    targetPosition.y += 10;
-    targetPosition.x -= 10 * Math.cos(-this.car.rotation.y);
-    targetPosition.z -= 10 * Math.sin(-this.car.rotation.y);
+      const targetPosition = this.car.position.clone();
+      targetPosition.y += 10;
+      targetPosition.x -= 10 * Math.cos(-this.car.rotation.y);
+      targetPosition.z -= 10 * Math.sin(-this.car.rotation.y);
 
-    if (!App.controlsActive) {
-      this.camera.position.lerp(targetPosition, dampingFactor);
-      this.camera.lookAt(this.car.position);
+      if (!App.controlsActive && !this.model.over) {
+        this.camera.position.lerp(targetPosition, dampingFactor);
+        this.camera.lookAt(this.car.position);
+      }
+
+      this.mixers.forEach((mixer) => {
+        mixer.update(0.01);
+      });
     }
 
-    this.fireworks.step();
-    if (this.fireworks.dest.length === 0) {
-      this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
-    }
+    else {
+      this.loadOver();
+      const targetPosition = this.camera.position.clone();
+      targetPosition.x = -150
+      targetPosition.y = 60
+      targetPosition.z = -20
+      if (!App.controlsActive){
+        this.camera.position.lerp(targetPosition,dampingFactor);
+        this.camera.lookAt(-150,40,60);
+      }
 
-    this.mixers.forEach((mixer) => {
-      mixer.update(0.01);
-    });
+      this.fireworks.step();
+      if (this.fireworks.dest.length%10===0) {
+        this.fireworks.launch(2, new THREE.Vector3(-165, 50, 65));
+        this.fireworks.launch(2, new THREE.Vector3(-135, 50, 65));
+      }
+    }
+  }
+
+  loadOver(){
+    const panelGeometry = new THREE.BoxGeometry(40, 40, 0.1);
+    const panelMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
+    const panel = new THREE.Mesh(panelGeometry, panelMaterial);
+    panel.rotation.set(Math.PI/8,0,0);
+    panel.position.set(-150,50,60);
+
+    this.scene.add(panel);
+
   }
 
   loadOpponent() {
