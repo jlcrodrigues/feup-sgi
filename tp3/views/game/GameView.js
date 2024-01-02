@@ -60,6 +60,18 @@ class GameView extends View {
     this.stepHud();
     this.stepCar();
 
+    if (!this.startTime) {
+      this.startTime = new Date();
+    }
+
+    // set time for each modifier
+    this.modifiers.forEach((modifier) => {
+      modifier.shader.updateUniformsValue(
+        "time",
+        (Date.now() - this.startTime) / 1000,
+      );
+    });
+
     const targetPosition = this.car.position.clone();
     targetPosition.y += 10;
     targetPosition.x -= 10 * Math.cos(-this.car.rotation.y);
@@ -200,9 +212,11 @@ class GameView extends View {
   }
 
   loadModifiers() {
+    this.modifiers = [];
     this.model.track.modifiers.forEach((modifier) => {
       const mesh = ModifierView.build(modifier);
       this.scene.add(mesh);
+      this.modifiers.push(mesh);
 
       const rotationKF = new THREE.NumberKeyframeTrack(
         ".rotation[y]",

@@ -309,7 +309,6 @@ class MyPrimitiveBuilder {
     );
 
     material = shaderLoader.buildShader();
-    console.log("mat", material);
 
     return new THREE.Mesh(geometry, material);
   }
