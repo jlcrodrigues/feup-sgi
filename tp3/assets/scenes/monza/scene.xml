@@ -3,6 +3,7 @@
 	
     <globals background="0 0 0 1" ambient="0.2 0.2 0.2 1" /> 
 
+    <fog color="0.8 0.8 0.8 0.2" near="0.0" far="3200.0" />
 
     <cameras initial="Free Camera" > 
         <perspective id="Free Camera" 
@@ -13,19 +14,20 @@
             target="20 0 20" /> 
     </cameras> 
 
-    <skybox size="2000 2000 2000" center="0 50 0" emissive="0.7 0.7 0.7 1" intensity="5" up="assets/scenes/monza/textures/sky.jpeg" down="assets/scenes/monza/textures/snow_floor.jpeg" left="assets/scenes/monza/textures/snow_landscape.jpeg" right="assets/scenes/monza/textures/snow_landscape.jpeg" front="assets/scenes/monza/textures/snow_landscape.jpeg" back="assets/scenes/monza/textures/snow_landscape.jpeg"/>
+    <skybox size="2000 2000 2000" center="0 50 0" emissive="0.2 0.2 0.3 1" intensity="0.4" up="assets/scenes/monza/textures/skybox/Daylight Box_Top.bmp" down="assets/scenes/monza/textures/skybox/Daylight Box_Bottom.bmp" left="assets/scenes/monza/textures/skybox/Daylight Box_Left.bmp" right="assets/scenes/monza/textures/skybox/Daylight Box_Right.bmp" front="assets/scenes/monza/textures/skybox/Daylight Box_Front.bmp" back="assets/scenes/monza/textures/skybox/Daylight Box_Back.bmp"/>
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
     <textures>        
         <texture id="treeTex" filepath="assets/scenes/monza/textures/tree.jpeg" />
         <texture id="woodTex" filepath="assets/scenes/monza/textures/wood.png" />
         <texture id="blackWoodTex" filepath="assets/scenes/monza/textures/black_wood.jpeg" />
-        <texture id="roadTex" filepath="assets/scenes/monza/textures/road.jpg" />
+        <texture id="roadTex" filepath="assets/scenes/monza/textures/road.png" />
         <texture id="roadBumpTex" filepath="assets/scenes/monza/textures/roadBump.png" />
         <texture id="wallTex" filepath="assets/scenes/monza/textures/wall.avif" />
         <texture id="wallBumpTex" filepath="assets/scenes/monza/textures/wallBump.png" />
         <texture id="windowTex" filepath="assets/scenes/monza/textures/window.jpg" />
         <texture id="adTex" filepath="assets/scenes/monza/textures/ad.jpg" />
+        <texture id="grassTex" filepath="assets/scenes/monza/textures/grass.png" />
     </textures> 
 
     <materials> 
@@ -57,29 +59,26 @@
             texlength_s="1" 
             texlength_t="1" />
 			
-        <material id="roadApp" 
+        <material id="pitGroundApp" 
             color="0.5 0.5 0.5 1.0" 
             emissive="0.0 0.0 0.0 1" 
 			specular="0 0 0 0" 
             shininess="20"
             textureref="roadTex" 
             bumpref="roadBumpTex" 
-            texlength_s="4"
-            texlength_t="4"
+            bumpscale="0.4"
+            texlength_s="10"
+            texlength_t="10"
         />
 			
         <material id="groundApp" 
-            color="0.2 0.7 0.2 1.0" 
+            color="0.3 0.5 0.3 1.0" 
             emissive="0.0 0.0 0.0 1" 
 			specular="0 0 0 0" 
             shininess="20"
-        />
-			
-        <material id="pitGroundApp" 
-            color="0.25 0.25 0.25 1.0" 
-            emissive="0.0 0.0 0.0 1" 
-			specular="0 0 0 0" 
-            shininess="20"
+            textureref="grassTex" 
+            texlength_s="40"
+            texlength_t="40"
         />
 			
         <material id="wallApp" 

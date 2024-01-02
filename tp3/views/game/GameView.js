@@ -21,7 +21,7 @@ class GameView extends View {
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      1000
+      2000
     );
     this.camera.position.z = -15;
     this.camera.position.x = -20;
