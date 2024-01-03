@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 const accelerationDelta = 0.001;
 const dragFactor = 0.99;
-const reverseFactor = 0.3;
+const reverseFactor = 0.4;
 const gravity = -0.04;
 
 /**

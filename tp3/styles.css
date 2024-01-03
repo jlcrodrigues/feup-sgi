@@ -36,6 +36,13 @@ body {
   right: 0;
 }
 
+#center-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 #center-bottom {
   position: absolute;
   top: 70%;
@@ -71,6 +78,10 @@ body {
   color: #f38c06;
   text-shadow: rgb(255, 255, 255) 1px 1px 0px;
   font-size: 2.5rem;
+}
+
+.big {
+  font-size: 10rem;
 }
 
 .hud-menu {

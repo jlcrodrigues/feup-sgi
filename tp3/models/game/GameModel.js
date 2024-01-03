@@ -26,6 +26,7 @@ class GameModel extends Model {
       this.car = new Car();
     }
     this.car.position = this.track.start;
+    this.car.position.x -= 10;
 
     this.opponent = settings.opponent;
     if (this.opponent == null) {
@@ -44,7 +45,6 @@ class GameModel extends Model {
       this.track.start.z
     );
     this.start.x = this.start.x;
-    this.lapStart = new Date();
     this.lastLap = null;
 
     this.modifiers = this.track.modifiers;
@@ -54,9 +54,22 @@ class GameModel extends Model {
 
     this.selectedCamera = 0;
     this.cameras = 0;
+
+    this.startDelay = 5;
   }
 
   step() {
+    if (!this.startTime) {
+      this.startTime = new Date();
+    }
+
+    if (new Date() - this.startTime < this.startDelay * 1000) {
+      return;
+    }
+    if (!this.lapStart) {
+      this.lapStart = new Date();
+    }
+
     this.car.move();
 
     if (this.modifier != "slowDown") {

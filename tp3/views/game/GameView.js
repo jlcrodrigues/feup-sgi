@@ -58,7 +58,13 @@ class GameView extends View {
    */
   step() {
     this.stepHud();
+    this.stepCameras();
     this.stepCar();
+
+    if (new Date() - this.model.startTime < this.model.startDelay * 1000) {
+      return;
+    }
+
     this.stepOutdoorDisplays();
 
     if (!this.startTime) {
@@ -66,7 +72,6 @@ class GameView extends View {
     }
 
     this.stepShaders();
-    this.stepCameras();
 
     this.fireworks.step();
     if (this.fireworks.dest.length === 0) {
@@ -90,8 +95,8 @@ class GameView extends View {
       2000
     );
     this.camera.position.z = -15;
-    this.camera.position.x = -30;
-    this.camera.position.y = 20;
+    this.camera.position.x = -350;
+    this.camera.position.y = 50;
     this.cameras = [
       {
         camera: this.camera,
@@ -145,7 +150,9 @@ class GameView extends View {
    */
   loadOpponent() {
     this.opponent = this.model.opponent.model;
-    this.opponent.position.x = this.model.opponent.position.x - 100;
+    console.log(...this.model.track.route.points[0])
+    this.opponent.position.set(...this.model.track.route.points[0])
+    console.log(this.model.track)
     this.scene.add(this.opponent);
 
     const positionKF = new THREE.VectorKeyframeTrack(
@@ -228,6 +235,9 @@ class GameView extends View {
       '<p id="modifierTime"></p>';
 
     document.querySelector("#bottom-right").innerHTML += '<p id="speed"></p>';
+
+    document.querySelector("#center-center").innerHTML +=
+      '<p id="countdown" class="big"></p>';
   }
 
   /**
@@ -280,10 +290,12 @@ class GameView extends View {
     document.querySelector("#laps").innerHTML = `Lap ${Math.floor(
       this.model.laps
     )} / ${this.model.settings.laps}`;
-    document.querySelector("#elapsed-time").innerHTML = `${(
-      (new Date() - this.model.lapStart) /
-      1000
-    ).toFixed(3)} s`;
+    if (this.model.lapStart) {
+      document.querySelector("#elapsed-time").innerHTML = `${(
+        (new Date() - this.model.lapStart) /
+        1000
+      ).toFixed(3)} s`;
+    }
     if (this.model.lastLap) {
       document.querySelector(
         "#last-lap"
@@ -306,10 +318,19 @@ class GameView extends View {
     ).innerHTML = `<div>Speed</div><div>${Math.floor(
       this.model.car.speed * Car.speedConverter
     )} km/h</div>`;
+
+    if (new Date() - this.model.startTime < this.model.startDelay * 1000) {
+      document.querySelector("#countdown").innerHTML = `${
+        this.model.startDelay -
+        Math.floor((new Date() - this.model.startTime) / 1000)
+      }`;
+    } else {
+      document.querySelector("#countdown").innerHTML = "";
+    }
   }
 
   /**
-   * Loads modifier models. 
+   * Loads modifier models.
    * Creates the 3 animations: Shader pulsating radius, up and down positions and rotation.
    */
   loadModifiers() {
@@ -352,7 +373,7 @@ class GameView extends View {
     this.car.position.y = this.model.car.position.y;
 
     this.car.rotation.y = -this.model.car.rotation;
-    this.car.rotation.x = this.model.car.angularSpeed;
+    this.car.rotation.x = this.model.car.angularSpeed * 0.1;
 
     this.checkCarPosition();
 
@@ -445,6 +466,7 @@ class GameView extends View {
     document.querySelector("#top-left").innerHTML = "";
     document.querySelector("#bottom-left").innerHTML = "";
     document.querySelector("#bottom-right").innerHTML = "";
+    document.querySelector("#center-center").innerHTML = "";
   }
 }
 
