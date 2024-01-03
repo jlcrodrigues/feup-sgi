@@ -9,7 +9,7 @@ import { GarageState } from "./states/GarageState.js";
  */
 class App {
   static instance = null;
-  static controlsActive = true;
+  static controlsActive = false;
 
   constructor() {
     this.renderer = null;
@@ -39,8 +39,8 @@ class App {
     // Configure renderer size
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    //this.renderer.shadowMap.enabled = true;
+    //this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     // Create depth buffer
     this.depthTexture = new THREE.DepthTexture(

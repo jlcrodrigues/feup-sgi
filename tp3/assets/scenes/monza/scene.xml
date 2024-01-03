@@ -75,13 +75,14 @@
         />
 			
         <material id="groundApp" 
-            color="0.3 0.5 0.3 1.0" 
+            color="0.1 0.3 0.1 1.0" 
             emissive="0.0 0.0 0.0 1" 
 			specular="0 0 0 0" 
             shininess="20"
             textureref="grassTex" 
             texlength_s="40"
             texlength_t="40"
+            twosided="true"
         />
 			
         <material id="wallApp" 
@@ -348,6 +349,36 @@
         </node>
 
         <node id="terrain">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="terrain1" />
+                <noderef id="terrain2" />
+            </children>
+        </node>
+
+        <node id="terrain2">
+            <transforms>
+                <translate value3="900 -1 -400" />
+                <rotate value3="-90 0 180" />
+            </transforms> 
+            <children>
+                <noderef id="terrain2Aux" />
+            </children>
+        </node>
+
+        <node id="terrain2Aux">
+            <transforms>
+            </transforms> 
+            <materialref id="groundApp" />
+            <children>
+                <primitive>
+                    <terrain xy1="0 0" xy2="2000 200" parts_x="20" parts_y="20" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="terrain1">
             <transforms>
                 <translate value3="-750 -1 750" />
                 <rotate value3="-90 0 0" />
