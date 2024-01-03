@@ -205,6 +205,13 @@ class MySceneData  {
 		this.descriptors["outdoorDisplay"] = [
 		]
 
+		this.descriptors["terrain"] = [
+			{name: "xy1", type: "vector2"},
+			{name: "xy2", type: "vector2"},
+            {name: "parts_x", type: "integer", required: false, default: 1},
+			{name: "parts_y", type: "integer", required: false, default: 1},
+		]
+
 		this.descriptors["spotlight"] = [
 			{name: "id", type: "string" },
 			{name: "color", type: "rgba"},
@@ -251,7 +258,7 @@ class MySceneData  {
 
         this.primaryNodeIds = ["globals", "fog", "skybox" ,"textures", "materials", "cameras", "graph"]
 
-        this.primitiveIds = ["cylinder", "rectangle", "triangle", "sphere", "nurbs" , "box", "model3d", "skybox", "lod", "polygon", "tdDisplay", "outdoorDisplay" ]
+        this.primitiveIds = ["cylinder", "rectangle", "triangle", "sphere", "nurbs" , "box", "model3d", "skybox", "lod", "polygon", "tdDisplay", "outdoorDisplay", "terrain" ]
     }
 
     createCustomAttributeIfNotExists(obj) {

@@ -4,7 +4,7 @@ import * as THREE from "three";
 class TrackBuilder {
   build(track) {
     //Curve related attributes
-    this.track = track
+    this.track = track;
     this.segments = 1000;
     this.width = track.width;
     this.textureRepeat = 1;
@@ -35,12 +35,16 @@ class TrackBuilder {
    * Create materials for the curve elements: the mesh, the line and the wireframe
    */
   createCurveMaterialsTextures() {
-    this.material = new THREE.MeshBasicMaterial({ color: 0x444444 });
+    const texture = new THREE.TextureLoader().load("assets/scenes/monza/textures/road.png");
+    this.material = new THREE.MeshBasicMaterial({
+      color: 0x444444,
+      map: texture,
+    });
     /* TODO: add texture
-    this.material.map.repeat.set(3, 3);
+    */
+    this.material.map.repeat.set(20, 1.5);
     this.material.map.wrapS = THREE.RepeatWrapping;
     this.material.map.wrapT = THREE.RepeatWrapping;
-    */
 
     this.lineMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
   }
@@ -59,11 +63,10 @@ class TrackBuilder {
     this.mesh = new THREE.Mesh(geometry, this.material);
     //this.curve.rotateZ(Math.PI);
     this.mesh.scale.set(1, 0.001, 1);
-    this.mesh.translateY(0.01)
+    this.mesh.translateY(0.01);
 
     this.curve = new THREE.Group();
     this.curve.add(this.mesh);
-
 
     if (this.debug) {
       let points = this.path.getPoints(this.segments);
