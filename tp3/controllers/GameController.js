@@ -42,7 +42,7 @@ class GameController extends Controller {
       
       this.view.cleanup();
       if (!this.loadedObjects){
-        this.view.scene.children[13].children.forEach(child => {
+        this.view.scene.children[13].children.slice(7,9).forEach(child => {
           if(child instanceof THREE.Group) this.objects.push(child)
         });
         this.mousePicker = new MousePicker(this.objects,this.view.camera);
