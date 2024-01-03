@@ -137,6 +137,7 @@
         <node id="scene" castshadows="true" receiveshadows="true">
             <children>
                 <noderef id="ground" />
+                <noderef id="terrain" />
                 <noderef id="pit" />
                 <noderef id="grandstands" />
                 <noderef id="forest" />
@@ -184,6 +185,19 @@
             <children>
                 <primitive>
                     <rectangle xy1="0 0" xy2="1500 1000" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="terrain">
+            <transforms>
+                <translate value3="-750 -1 750" />
+                <rotate value3="-90 0 0" />
+            </transforms> 
+            <materialref id="groundApp" />
+            <children>
+                <primitive>
+                    <terrain xy1="0 0" xy2="1000 500" parts_x="10" parts_y="10" />
                 </primitive>
             </children>
         </node>

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+//import * as NOISE from "perlin";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MyNurbsBuilder } from "./MyNurbsBuilder.js";
 import { MyTriangle } from "./objects/MyTriangle.js";
@@ -47,6 +48,7 @@ class MyPrimitiveBuilder {
       this.geometryBuilders.set("model3d", this.buildModel3d);
       this.geometryBuilders.set("tdDisplay", this.build3dDisplay);
       this.geometryBuilders.set("outdoorDisplay", this.buildOutdoorDisplay);
+      this.geometryBuilders.set("terrain", this.buildTerrain);
     }
 
     return this.geometryBuilders.get(nodeData.subtype)(nodeData, material);
@@ -294,9 +296,7 @@ class MyPrimitiveBuilder {
     const yMin = Math.min(representations[0].xy1[1], representations[0].xy2[1]);
     geometry.translate(xMin + width / 2, yMin + height / 2, 0);
 
-    const texture = new THREE.TextureLoader().load(
-      representations[0].image
-    );
+    const texture = new THREE.TextureLoader().load(representations[0].image);
     const lGrayTexture = new THREE.TextureLoader().load(
       representations[0].lgray
     );
@@ -322,6 +322,59 @@ class MyPrimitiveBuilder {
 
   static buildOutdoorDisplay(nodeData, material) {
     return new OutdoorDisplayBuilder(nodeData, material).build();
+  }
+
+  static buildTerrain(nodeData, material) {
+    const representations = nodeData.representations;
+    const width = Math.abs(
+      representations[0].xy1[0] - representations[0].xy2[0]
+    );
+    const height = Math.abs(
+      representations[0].xy1[1] - representations[0].xy2[1]
+    );
+    const geometry = new THREE.PlaneGeometry(
+      width,
+      height,
+      representations[0].parts_x ?? 1,
+      representations[0].parts_y ?? 1
+    );
+    const xMin = Math.min(representations[0].xy1[0], representations[0].xy2[0]);
+    const yMin = Math.min(representations[0].xy1[1], representations[0].xy2[1]);
+    geometry.translate(xMin + width / 2, yMin + height / 2, 0);
+
+    // Adjust texture
+    /*
+    if (material !== undefined && material.map !== undefined) {
+      const texture = material.map;
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(
+        width / material.texlength_s,
+        height / material.texlength_t
+      );
+      material.map = texture;
+    }
+    */
+
+    // Generate random terrain
+    perlin.seed();
+    const RATIO = 900;
+    const vertices = Array.from(geometry.attributes.position.array);
+    for (let i = 0; i < vertices.length; i += 3) {
+      // closer to the border, closer to 0
+      const r = (((width - vertices[i]) / width) * ((height - vertices[i + 1]) / height));
+      vertices[i + 2] += parseInt(
+        1.0 + perlin.get(vertices[i] / width, vertices[i + 1] / height) * r * RATIO
+      );
+    }
+    geometry.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(vertices, 3)
+    );
+    geometry.attributes.position.needsUpdate = true;
+    geometry.computeVertexNormals();
+
+    const mesh = new THREE.Mesh(geometry, material);
+    return mesh;
   }
 }
 

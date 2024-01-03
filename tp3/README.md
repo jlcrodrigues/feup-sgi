@@ -26,3 +26,7 @@
  - Houses by Quaternius (https://poly.pizza/m/vCoDG5hFyI)
  - "Low Poly-F1" (https://skfb.ly/oLEwV) by salasilma13 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
  - Scaffolding by lakescorp (https://poly.pizza/m/AYQd5RQ8w4)
+
+## Dependencies
+
+ - [Perlin Noise Generation](https://github.com/joeiddon/perlin/tree/master)
