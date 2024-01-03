@@ -46,6 +46,7 @@ class GameModel extends Model {
     this.start.x = this.start.x;
     this.lapStart = new Date();
     this.lastLap = null;
+    this.lapsTotal = 0;
 
     this.modifiers = this.track.modifiers;
     this.modifier = null;
@@ -82,6 +83,7 @@ class GameModel extends Model {
       this.laps - Math.floor(this.laps) != 0
     ) {
       this.lastLap = (new Date() - this.lapStart) / 1000;
+      this.lapsTotal += this.lastLap
       this.lapStart = new Date();
       this.laps += 0.5;
     }
@@ -100,19 +102,21 @@ class GameModel extends Model {
 
     this.stepModifiers();
 
-    if (mousePicker.pickedObject){
-      if (mousePicker.pickedObject.position.x > 0){
-        this.selectedPosition = this.playAgainPos;
+    if (mousePicker)  {
+      if (mousePicker.pickedObject){
+        if (mousePicker.pickedObject.position.x > 0){
+          this.selectedPosition = this.playAgainPos;
+        }
+        else{
+          this.selectedPosition = this.backPos;
+        }
       }
-      else{
-        this.selectedPosition = this.backPos;
+      if(mousePicker.selectedObject){
+        if (this.selectedPosition == this.playAgainPos)
+            this.state = 'play';
+          if (this.selectedPosition == this.backPos)
+            this.state = 'initial';
       }
-    }
-    if(mousePicker.selectedObject){
-      if (this.selectedPosition == this.playAgainPos)
-          this.state = 'play';
-        if (this.selectedPosition == this.backPos)
-          this.state = 'menu';
     }
   }
 
