@@ -37,7 +37,7 @@ class App {
    */
   start() {
     //this.state = new PickerState(new GameState());
-    this.state = new GameState();
+    this.state = new InitialState();
 
     // Create a renderer with Antialiasing
     this.renderer = new THREE.WebGLRenderer({ antialias: true });

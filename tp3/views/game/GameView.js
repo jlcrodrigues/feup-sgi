@@ -388,7 +388,7 @@ class GameView extends View {
       const dist = this.model.car.speed;
       let car = this.car.getObjectByName("Car");
       for (let i = 0; i < car.children.length; i++) {
-        car.children[i].rotateZ(dist);
+        car.children[i].rotateZ(-dist);
       }
       this.car.wheel1.rotation.x =
         this.car.wheel1.originalRotationX + this.model.car.angularSpeed * 10;

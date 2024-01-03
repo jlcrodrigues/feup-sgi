@@ -1,14 +1,6 @@
 {
     "cars": [
         {
-            "name": "Popis",
-            "description": "Vroom vroooom",
-            "path": "models/popis/popis.xml",
-            "maxSpeed": 1.4,
-            "defaultAngularSpeed": 0.02,
-            "maxAcceleration": 0.04
-        },
-        {
             "name": "Toyota AE86",
             "description": "A legendary drift machine with razor-sharp handling and relentless speed.",
             "path": "models/ae86/ae86.xml",
