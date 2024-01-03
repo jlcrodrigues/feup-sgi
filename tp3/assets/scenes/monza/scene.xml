@@ -28,6 +28,9 @@
         <texture id="windowTex" filepath="assets/scenes/monza/textures/window.jpg" />
         <texture id="adTex" filepath="assets/scenes/monza/textures/ad.jpg" />
         <texture id="grassTex" filepath="assets/scenes/monza/textures/grass.png" />
+        <texture id="checkerTex" filepath="assets/scenes/monza/textures/checker.jpg" />
+        <texture id="pirelliAdTex" filepath="assets/scenes/monza/textures/pirelli.png" />
+        <texture id="heinekenAdTex" filepath="assets/scenes/monza/textures/heineken.png" />
     </textures> 
 
     <materials> 
@@ -131,6 +134,39 @@
             shininess="50"
             twosided="true"
         />
+			
+        <material id="checkerApp" 
+            color="0.60 0.60 0.60 1.0" 
+            emissive="0.00 0.00 0.00 1" 
+			specular="0.0 0.0 0.0 1" 
+            shininess="40"
+            textureref="checkerTex" 
+            twosided="true"
+            texlength_s="5"
+            texlength_t="5"
+        />
+			
+        <material id="pirelliApp" 
+            color="0.70 0.70 0.50 1.0" 
+            emissive="0.00 0.00 0.00 1" 
+			specular="0.0 0.0 0.0 1" 
+            shininess="60"
+            textureref="pirelliAdTex" 
+            twosided="false"
+            texlength_s="10"
+            texlength_t="3"
+        />
+			
+        <material id="heinekenApp" 
+            color="0.50 0.70 0.50 1.0" 
+            emissive="0.00 0.00 0.00 1" 
+			specular="0.0 0.0 0.0 1" 
+            shininess="60"
+            textureref="heinekenAdTex" 
+            twosided="false"
+            texlength_s="10"
+            texlength_t="3"
+        />
     </materials> 
 
     <graph rootid="scene">
@@ -142,11 +178,11 @@
                 <noderef id="grandstands" />
                 <noderef id="forest" />
                 <noderef id="houses" />
+                <noderef id="walls" />
 
                 <noderef id="displays" />
 
-                <noderef id="line1" />
-                <noderef id="line2" />
+                <noderef id="finishLine" />
 
                 <directionallight id="sun"
                     enabled="true"
@@ -158,21 +194,143 @@
             </children>
         </node>
 
-        <node id="line1">
+        <node id="heinekenAd">
             <transforms>
-                <translate value3="-230 0 -10" />
+                <translate value3="0 0 -5" />
+                <rotate value3="0 -90 0" />
             </transforms> 
+            <materialref id="heinekenApp" />
             <children>
-                <noderef id="tree1" />
+                <primitive>
+                    <rectangle xy1="0 0" xy2="10 3" />
+                </primitive>
             </children>
         </node>
 
-        <node id="line2">
+        <node id="pirelliAd">
             <transforms>
-                <translate value3="-230 0 10" />
+                <translate value3="0 0 -5" />
+                <rotate value3="0 -90 0" />
+            </transforms> 
+            <materialref id="pirelliApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="10 3" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="pirelliAdGroup">
+            <transforms>
+                <translate value3="0 0 0" />
             </transforms> 
             <children>
-                <noderef id="tree1" />
+                <noderef id="pirelliAd1" />
+                <noderef id="pirelliAd2" />
+                <noderef id="pirelliAd3" />
+            </children>
+        </node>
+
+        <node id="pirelliAd3">
+            <transforms>
+                <translate value3="0 0 10" />
+            </transforms> 
+            <children>
+                <noderef id="pirelliAd" />
+            </children>
+        </node>
+
+        <node id="pirelliAd2">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="pirelliAd" />
+            </children>
+        </node>
+
+        <node id="pirelliAd1">
+            <transforms>
+                <translate value3="0 0 -10" />
+            </transforms> 
+            <children>
+                <noderef id="pirelliAd" />
+            </children>
+        </node>
+
+        <node id="finishLine">
+            <transforms>
+                <translate value3="-230 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="lineAds" />
+                <noderef id="lineChecker" />
+                <noderef id="scaffoldLineTop1" />
+                <noderef id="scaffoldLineTop2" />
+                <noderef id="scaffoldLineLeft" />
+                <noderef id="scaffoldLineRight" />
+            </children>
+        </node>
+
+        <node id="lineAds">
+            <transforms>
+                <translate value3="-2 15 0" />
+            </transforms> 
+            <children>
+                <noderef id="pirelliAdGroup" />
+            </children>
+        </node>
+
+        <node id="lineChecker">
+            <transforms>
+                <translate value3="0 0.04 -12" />
+                <rotate value3="90 0 0" />
+            </transforms> 
+            <materialref id="checkerApp" />
+            <children>
+                <primitive>
+                    <rectangle xy1="0 0" xy2="2 24" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="scaffoldLineTop1">
+            <transforms>
+                <translate value3="0 17 -8" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="scaffold" />
+            </children>
+        </node>
+
+        <node id="scaffoldLineTop2">
+            <transforms>
+                <translate value3="0 17 8" />
+                <rotate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="scaffold" />
+            </children>
+        </node>
+
+        <node id="scaffoldLineLeft">
+            <transforms>
+                <translate value3="0 5 -20" />
+                <rotate value3="90 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="scaffold" />
+            </children>
+        </node>
+
+        <node id="scaffoldLineRight">
+            <transforms>
+                <translate value3="0 5 20" />
+                <rotate value3="90 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="scaffold" />
             </children>
         </node>
 
@@ -773,16 +931,469 @@
             </children>
         </node>
 
+
+        <node id="walls">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="straightPirelliWall" />
+                <noderef id="backStraightHeinekenWall"/>
+            </children>
+        </node>
+
+
+        <node id="backStraightHeinekenWall">
+            <transforms>
+                <rotate value3="0 0 0" />
+                <translate value3="-500 0 145" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroupXXL" />
+            </children>
+        </node>
+
+        <node id="straightPirelliWall">
+            <transforms>
+                <rotate value3="0 180 0" />
+                <translate value3="130 0 -25" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroupXXL" />
+            </children>
+        </node>
+
+        <!-- pirelli section -->
+
+        <node id="fenceWallPirelliGroupXXL">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroupXL1" />
+                <noderef id="fenceWallPirelliGroupXL2" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroupXL1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroupXL" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroupXL2">
+            <transforms>
+                <translate value3="270 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroupXL" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroupXL">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroupL1" />
+                <noderef id="fenceWallPirelliGroupL2" />
+                <noderef id="fenceWallPirelliGroupL3" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroupL1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroupL" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroupL2">
+            <transforms>
+                <translate value3="90 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroupL" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroupL3">
+            <transforms>
+                <translate value3="180 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroupL" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroupL">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroup1" />
+                <noderef id="fenceWallPirelliGroup2" />
+                <noderef id="fenceWallPirelliGroup3" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroup1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroup" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroup2">
+            <transforms>
+                <translate value3="30 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroup" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroup3">
+            <transforms>
+                <translate value3="60 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliGroup" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliGroup">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelli1" />
+                <noderef id="fenceWallPirelli2" />
+                <noderef id="fenceWallPirelli3" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelli1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelli" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelli2">
+            <transforms>
+                <translate value3="10 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelli" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelli3">
+            <transforms>
+                <translate value3="20 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelli" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelli">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallPirelliAd" />
+                <noderef id="wallFence" />
+                <noderef id="wallBase" />
+            </children>
+        </node>
+
+        <node id="fenceWallPirelliAd">
+            <transforms>
+                <rotate value3="0 -90 0" />
+                <translate value3="0 0 -1.01" />
+            </transforms> 
+            <children>
+                <noderef id="pirelliAd" />
+            </children>
+        </node>
+
+        <!-- heineken section -->
+
+        <node id="fenceWallHeinekenGroupXXL">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroupXL1" />
+                <noderef id="fenceWallHeinekenGroupXL2" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroupXL1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroupXL" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroupXL2">
+            <transforms>
+                <translate value3="270 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroupXL" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroupXL">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroupL1" />
+                <noderef id="fenceWallHeinekenGroupL2" />
+                <noderef id="fenceWallHeinekenGroupL3" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroupL1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroupL" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroupL2">
+            <transforms>
+                <translate value3="90 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroupL" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroupL3">
+            <transforms>
+                <translate value3="180 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroupL" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroupL">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup1" />
+                <noderef id="fenceWallHeinekenGroup2" />
+                <noderef id="fenceWallHeinekenGroup3" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroup1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroup2">
+            <transforms>
+                <translate value3="30 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroup3">
+            <transforms>
+                <translate value3="60 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenGroup">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeineken1" />
+                <noderef id="fenceWallHeineken2" />
+                <noderef id="fenceWallHeineken3" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeineken1">
+            <transforms>
+                <translate value3="0 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeineken" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeineken2">
+            <transforms>
+                <translate value3="10 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeineken" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeineken3">
+            <transforms>
+                <translate value3="20 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeineken" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeineken">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenAd" />
+                <noderef id="wallFence" />
+                <noderef id="wallBase" />
+            </children>
+        </node>
+
+        <node id="fenceWallHeinekenAd">
+            <transforms>
+                <rotate value3="0 -90 0" />
+                <translate value3="0 0 -1.01" />
+            </transforms> 
+            <children>
+                <noderef id="heinekenAd" />
+            </children>
+        </node>
+
+        <node id="wallFence">
+            <transforms>
+                <translate value3="0 3.1 0" />
+            </transforms> 
+            <children>
+                <noderef id="fence" />
+            </children>
+        </node>
+
+        <node id="wallBase">
+            <transforms>
+                <translate value3="-5 0 -1" />
+            </transforms> 
+            <materialref id="wallApp" />
+            <children>
+                <primitive>
+                    <box xyz1="0 0 0" xyz2="10 3 2" />
+                </primitive>
+            </children>
+        </node>
+
+        <node id="fence">
+            <transforms>
+                <translate value3="0 0 0" />
+                <rotate value3="0 0 0" />
+                <scale value3="1.25 1.2 1.0" />
+            </transforms>
+            <children>
+                <primitive>
+                    <model3d filepath="assets/scenes/monza/models/fence.glb" />
+                </primitive>
+            </children>
+        </node>
+
         <!--~~~~~~~~~~~~~~~~~~~~~~~~~ PIT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
         <node id="pit">
             <transforms>
             </transforms> 
             <children>
+                <noderef id="pitWall" />
                 <noderef id="pitGround" />
                 <noderef id="pitEntry" />
                 <noderef id="pitExit" />
                 <noderef id="pitBuildingGroup" />
+            </children>
+        </node>
+
+        <node id="pitWall">
+            <transforms>
+                <translate value3="-230 0 15" />
+            </transforms> 
+            <children>
+                <noderef id="pitWall1" />
+                <noderef id="pitWall2" />
+                <noderef id="pitWall3" />
+                <noderef id="pitWall4" />
+                <noderef id="pitWall5" />
+                <noderef id="pitWall6" />
+            </children>
+        </node>
+
+        <node id="pitWall1">
+            <transforms>
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup" />
+            </children>
+        </node>
+
+        <node id="pitWall2">
+            <transforms>
+                <translate value3="30 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup" />
+            </children>
+        </node>
+
+        <node id="pitWall3">
+            <transforms>
+                <translate value3="60 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup" />
+            </children>
+        </node>
+
+        <node id="pitWall4">
+            <transforms>
+                <translate value3="90 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup" />
+            </children>
+        </node>
+
+        <node id="pitWall5">
+            <transforms>
+                <translate value3="120 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup" />
+            </children>
+        </node>
+
+        <node id="pitWall6">
+            <transforms>
+                <translate value3="150 0 0" />
+            </transforms> 
+            <children>
+                <noderef id="fenceWallHeinekenGroup" />
             </children>
         </node>
 
