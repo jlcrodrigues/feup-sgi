@@ -17,6 +17,10 @@ class App {
     this.state = null;
   }
 
+  /**
+   * Get the singleton instance of the App class. <br>
+   * This is used to provide global access to app properties (e.g. renderer and state)
+   */
   static getInstance() {
     if (App.instance === null) {
       App.instance = new App();

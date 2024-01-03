@@ -9,23 +9,17 @@ import { Fireworks } from "../Fireworks.js";
 import { FontLoader } from "../../loader/FontLoader.js";
 import { OutdoorDisplaysView } from "./OutdoorDisplayView.js";
 
-const dampingFactor = 0.1;
-const modifierAnimationDuration = 2;
-
+/**
+ * The view for the game state.
+ * @extends View
+ * Defines all game object such as track, car, modifiers, etc.
+ */
 class GameView extends View {
   constructor(model) {
     super(model);
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      2000
-    );
-    this.camera.position.z = -15;
-    this.camera.position.x = -30;
-    this.camera.position.y = 20;
+    this.loadCameras();
     this.mixers = [];
 
     // Load the track scene
@@ -58,6 +52,10 @@ class GameView extends View {
     this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
   }
 
+  /**
+   * Called in a requestAnimationFrame loop. <br>
+   * Handles all the changes happening in the game scene.
+   */
   step() {
     this.stepHud();
     this.stepCar();
@@ -68,16 +66,7 @@ class GameView extends View {
     }
 
     this.stepShaders();
-
-    const targetPosition = this.car.position.clone();
-    targetPosition.y += 10;
-    targetPosition.x -= 10 * Math.cos(-this.car.rotation.y);
-    targetPosition.z -= 10 * Math.sin(-this.car.rotation.y);
-
-    if (!App.controlsActive) {
-      this.camera.position.lerp(targetPosition, dampingFactor);
-      this.camera.lookAt(this.car.position);
-    }
+    this.stepCameras();
 
     this.fireworks.step();
     if (this.fireworks.dest.length === 0) {
@@ -89,6 +78,71 @@ class GameView extends View {
     });
   }
 
+  /**
+   * Loads the cameras. By clicking V, the player can change between different views.
+   * What actually changes is the distance to the car and the target position.
+   */
+  loadCameras() {
+    this.camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      2000
+    );
+    this.camera.position.z = -15;
+    this.camera.position.x = -30;
+    this.camera.position.y = 20;
+    this.cameras = [
+      {
+        camera: this.camera,
+        posDelta: 15,
+        lookAtDelta: 10,
+        yDelta: 10,
+      },
+      {
+        camera: this.camera,
+        posDelta: -5,
+        lookAtDelta: 17,
+        yDelta: 8,
+      },
+      {
+        camera: this.camera,
+        posDelta: -8,
+        lookAtDelta: 20,
+        yDelta: 5,
+      },
+    ];
+    this.model.cameras = this.cameras.length;
+  }
+
+  /**
+   * Step the cameras. Lerp between position and target.
+   * Change camera if necessary.
+   */
+  stepCameras() {
+    const dampingFactor = 0.25;
+
+    const cData = this.cameras[this.model.selectedCamera];
+    this.camera = cData.camera;
+
+    const targetPosition = this.car.position.clone();
+    targetPosition.y += cData.yDelta;
+    targetPosition.x -= cData.posDelta * Math.cos(-this.car.rotation.y);
+    targetPosition.z -= cData.posDelta * Math.sin(-this.car.rotation.y);
+
+    if (!App.controlsActive) {
+      this.camera.position.lerp(targetPosition, dampingFactor);
+      const targetLookAt = this.car.position.clone();
+      targetLookAt.x += cData.lookAtDelta * Math.cos(-this.car.rotation.y);
+      targetLookAt.z += cData.lookAtDelta * Math.sin(-this.car.rotation.y);
+      this.camera.lookAt(targetLookAt);
+    }
+  }
+
+  /**
+   * Loads the opponent.
+   * This includes its two animations: position and quaternion.
+   */
   loadOpponent() {
     this.opponent = this.model.opponent.model;
     this.opponent.position.x = this.model.opponent.position.x - 100;
@@ -176,6 +230,9 @@ class GameView extends View {
     document.querySelector("#bottom-right").innerHTML += '<p id="speed"></p>';
   }
 
+  /**
+   * Step the shaders. Updates uniforms values.
+   */
   stepShaders() {
     // set time for each modifier
     this.modifiers.forEach((modifier) => {
@@ -198,7 +255,8 @@ class GameView extends View {
       this.lastTvUpdate = new Date();
     }
 
-    if (new Date() - this.lastTvUpdate > 500) {
+    const tvUpdateRate = 1000;
+    if (new Date() - this.lastTvUpdate > tvUpdateRate) {
       const app = App.getInstance();
       app.renderDepthTarget();
       const tex = new THREE.CanvasTexture(
@@ -215,6 +273,9 @@ class GameView extends View {
     }
   }
 
+  /**
+   * Step the HUD. Updates every necessary html element.
+   */
   stepHud() {
     document.querySelector("#laps").innerHTML = `Lap ${Math.floor(
       this.model.laps
@@ -247,6 +308,10 @@ class GameView extends View {
     )} km/h</div>`;
   }
 
+  /**
+   * Loads modifier models. 
+   * Creates the 3 animations: Shader pulsating radius, up and down positions and rotation.
+   */
   loadModifiers() {
     this.modifiers = [];
     this.model.track.modifiers.forEach((modifier) => {
@@ -278,6 +343,9 @@ class GameView extends View {
     });
   }
 
+  /**
+   * Update the car according to the model.
+   */
   stepCar() {
     this.car.position.x = this.model.car.position.x;
     this.car.position.z = this.model.car.position.z;
@@ -321,6 +389,9 @@ class GameView extends View {
     }
   }
 
+  /**
+   * Updates information on the outdoor displays.
+   */
   stepOutdoorDisplays() {
     if (this.outdoorDisplaysView === undefined) {
       this.outdoorDisplaysView = new OutdoorDisplaysView(this.scene);
@@ -365,6 +436,9 @@ class GameView extends View {
     this.outdoorDisplaysView.step();
   }
 
+  /**
+   * To be called on state exit. This is done to clear the HUD.
+   */
   cleanup() {
     document.querySelector("#top-left").innerHTML = "";
     document.querySelector("#top-center").innerHTML = "";

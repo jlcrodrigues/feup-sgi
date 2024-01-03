@@ -51,6 +51,9 @@ class GameModel extends Model {
     this.modifier = null;
     this.modifierStart = null;
     this.modifierDuration = 5;
+
+    this.selectedCamera = 0;
+    this.cameras = 0;
   }
 
   step() {
@@ -98,6 +101,12 @@ class GameModel extends Model {
   }
 
   processInput(code, down) {
+    // Change camera
+    if (code == "KeyV" && down) {
+      this.selectedCamera = (this.selectedCamera + 1) % this.cameras;
+      return;
+    }
+
     const direction = movements[code];
     if (direction) {
       this.car.processInput(direction, down);
