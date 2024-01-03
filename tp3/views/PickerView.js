@@ -1,6 +1,7 @@
 import { View } from "./View.js";
 import { FontLoader } from "../loader/FontLoader.js";
 import * as THREE from "three";
+import { TrackBuilder } from "./game/TrackBuilder.js";
 
 const dampingFactor = 0.1;
 
@@ -59,6 +60,23 @@ class PickerView extends View {
     this.border = new THREE.Mesh(borderGeometry, borderMaterial);
     menuPanel.add(this.border);
 
+    const trackButton = new THREE.SphereGeometry(0.1, 32, 32);
+    this.trackButton = new THREE.Mesh(trackButton, borderMaterial);
+    this.trackButton.position.set(100, 0, 0);
+    menuPanel.add(this.trackButton);
+
+    this.track = new TrackBuilder().build(
+      this.model.gameState.controller.model.track,
+      true
+    );
+    this.track.scale.set(0.007, 0.007, 0.007);
+    this.track.rotation.x = -Math.PI / 2;
+    this.track.rotation.z = Math.PI;
+    this.track.position.y = -2.0;
+    this.track.position.x = 0.5;
+    this.track.name = "track";
+    menuPanel.add(this.track);
+
     this.scene.add(menuPanel);
 
     // ambient light
@@ -69,6 +87,13 @@ class PickerView extends View {
   step() {
     //update border position
     this.border.position.set(this.model.selectedModifier * 2.6 - 5.4, 2, 0.1);
+
+    if (this.model.coords)
+      this.trackButton.position.set(
+        0.6 + this.model.coords[0] * 7.7,
+        -0.24 + this.model.coords[1] * 3.8,
+        0.1
+      );
 
     const targetPosition = this.camera.position.clone();
     //targetPosition.x = this.model.selectedPosition[0]/4;

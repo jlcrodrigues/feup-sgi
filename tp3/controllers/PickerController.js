@@ -34,8 +34,14 @@ class PickerController extends Controller {
     this.model.step(this.mousePicker);
     this.view.step();
 
-    if (this.model.state) { // over
+    if (this.model.state) {
+      // over
       if (this.model.state == "continue") {
+        if (this.model.coords == null) return;
+        this.gameState.addModifier(
+          this.model.modifiers[this.model.selectedModifier],
+          this.model.coords
+        );
         return this.gameState;
       }
     }

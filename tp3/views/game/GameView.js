@@ -150,7 +150,7 @@ class GameView extends View {
    */
   loadOpponent() {
     this.opponent = this.model.opponent.model;
-    this.opponent.position.set(...this.model.track.route.points[0])
+    this.opponent.position.set(...this.model.track.route.points[0]);
     this.scene.add(this.opponent);
 
     const positionKF = new THREE.VectorKeyframeTrack(
@@ -338,32 +338,36 @@ class GameView extends View {
   loadModifiers() {
     this.modifiers = [];
     this.model.track.modifiers.forEach((modifier) => {
-      const mesh = ModifierView.build(modifier);
-      this.scene.add(mesh);
-      this.modifiers.push(mesh);
-
-      const rotationKF = new THREE.NumberKeyframeTrack(
-        ".rotation[y]",
-        [0, 3],
-        [0, Math.PI * 2]
-      );
-
-      const positionKF = new THREE.NumberKeyframeTrack(
-        ".position[y]",
-        [0, 1.5, 3],
-        [3, 4, 3]
-      );
-
-      const clip = new THREE.AnimationClip("positionClip", 3, [
-        rotationKF,
-        positionKF,
-      ]);
-
-      const mixer = new THREE.AnimationMixer(mesh);
-      const action = mixer.clipAction(clip);
-      this.mixers.push(mixer);
-      action.play();
+      this.loadModifier(modifier);
     });
+  }
+
+  loadModifier(modifier) {
+    const mesh = ModifierView.build(modifier);
+    this.scene.add(mesh);
+    this.modifiers.push(mesh);
+
+    const rotationKF = new THREE.NumberKeyframeTrack(
+      ".rotation[y]",
+      [0, 3],
+      [0, Math.PI * 2]
+    );
+
+    const positionKF = new THREE.NumberKeyframeTrack(
+      ".position[y]",
+      [0, 1.5, 3],
+      [3, 4, 3]
+    );
+
+    const clip = new THREE.AnimationClip("positionClip", 3, [
+      rotationKF,
+      positionKF,
+    ]);
+
+    const mixer = new THREE.AnimationMixer(mesh);
+    const action = mixer.clipAction(clip);
+    this.mixers.push(mixer);
+    action.play();
   }
 
   /**

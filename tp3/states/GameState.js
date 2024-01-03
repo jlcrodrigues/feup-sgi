@@ -59,6 +59,16 @@ class GameState extends State {
     this.settings.car.name = "default"
     this.settings.opponent = CarLoader.load(data.cars[1]);
   }
+
+  addModifier(type, coords) {
+    const modifier = {
+      type: type,
+      position: {x: (coords[0] * (-1) + 0.42) * 1088 - 480, y: 2, z: (coords[1] + 0.42) * 600 }
+    }
+    console.log("game", modifier)
+    this.controller.model.modifiers.push(modifier)
+    this.controller.view.loadModifier(modifier)
+  }
 }
 
 export { GameState };

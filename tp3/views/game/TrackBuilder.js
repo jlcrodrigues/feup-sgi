@@ -2,9 +2,10 @@ import { Object3D } from "three";
 import * as THREE from "three";
 
 class TrackBuilder {
-  build(track) {
+  build(track, display = false) {
     //Curve related attributes
     this.track = track;
+    this.display = display;
     this.segments = 1000;
     this.width = track.width;
     this.textureRepeat = 1;
@@ -35,16 +36,25 @@ class TrackBuilder {
    * Create materials for the curve elements: the mesh, the line and the wireframe
    */
   createCurveMaterialsTextures() {
-    const texture = new THREE.TextureLoader().load("assets/scenes/monza/textures/road.png");
-    this.material = new THREE.MeshBasicMaterial({
-      color: 0x444444,
-      map: texture,
-    });
-    /* TODO: add texture
-    */
-    this.material.map.repeat.set(20, 1.5);
-    this.material.map.wrapS = THREE.RepeatWrapping;
-    this.material.map.wrapT = THREE.RepeatWrapping;
+    if (this.display) {
+      this.material = new THREE.MeshBasicMaterial({
+        color: 0xbbbbbb,
+      });
+    } else {
+      const texture = new THREE.TextureLoader().load(
+        "assets/scenes/monza/textures/road.png"
+      );
+      this.material = new THREE.MeshBasicMaterial({
+        color: 0x444444,
+        map: texture,
+      });
+
+      /* TODO: add texture
+       */
+      this.material.map.repeat.set(20, 1.5);
+      this.material.map.wrapS = THREE.RepeatWrapping;
+      this.material.map.wrapT = THREE.RepeatWrapping;
+    }
 
     this.lineMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
   }
