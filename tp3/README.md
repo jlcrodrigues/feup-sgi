@@ -1,4 +1,4 @@
-# SGI 2023/2024 - TP2
+# SGI 2023/2024 - TP3
 
 ## Group: T08G10
 
@@ -9,6 +9,23 @@
 
 ----
 ## Project information
+
+### FEUP Fury GP
+We present FEUP Fury GP, a fun and interactive game of a racing match between you and an AI Master Driver
+
+<p align="center">
+  <img src='screenshots/initRace.png' width=700px>
+</p>
+
+A Race Menu and a presentation page
+
+<p align="center">
+  <img src='screenshots/raceMenu.png' width=700px>
+</p>
+
+<p align="center">
+  <img src='screenshots/about.png' width=700px>
+</p>
 
 ## models
 
@@ -32,3 +49,8 @@
 ## Dependencies
 
  - [Perlin Noise Generation](https://github.com/joeiddon/perlin/tree/master)
+
+## Issues/Problems
+
+- some minor bugs in the phase of selection of power-ups
+- difficulty levels not implemented

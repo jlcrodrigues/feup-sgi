@@ -29,6 +29,6 @@ This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest
   <img src='tp2/screenshots/sofaView.png' width=400px>
 </p>
 
-### [TP3 - ...](tp3)
-- (items briefly describing main strong points)
+### [TP3 - FEUP Fury GP](tp3)
+- [TP3](tp3/index.html)
 
