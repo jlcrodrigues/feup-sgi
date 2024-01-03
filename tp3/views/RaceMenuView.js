@@ -15,7 +15,7 @@ class RaceMenuView extends View {
             0.1,
             1000
         );
-        this.camera.position.z = 5;
+        this.camera.position.z = 3;
 
         const menuPanelGroup = new THREE.Group();
         const contentsGroup = new THREE.Group();
@@ -124,6 +124,7 @@ class RaceMenuView extends View {
         const targetPosition = this.camera.position.clone();
         targetPosition.x = this.model.selectedPosition[0]/4;
         targetPosition.y = this.model.selectedPosition[1]/6;
+        targetPosition.z = 5;
 
         this.camera.position.lerp(targetPosition, dampingFactor);
 

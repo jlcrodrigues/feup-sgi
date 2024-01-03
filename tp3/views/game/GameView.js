@@ -14,6 +14,10 @@ import { OutdoorDisplaysView } from "./OutdoorDisplayView.js";
  * @extends View
  * Defines all game object such as track, car, modifiers, etc.
  */
+
+const dampingFactor = 0.1;
+const modifierAnimationDuration = 2;
+
 class GameView extends View {
   constructor(model) {
     super(model);
@@ -49,7 +53,8 @@ class GameView extends View {
 
     this.fireworks = new Fireworks(this.scene);
 
-    this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
+    this.loadedOver = false;
+
   }
 
   /**
@@ -57,30 +62,158 @@ class GameView extends View {
    * Handles all the changes happening in the game scene.
    */
   step() {
-    this.stepHud();
-    this.stepCameras();
-    this.stepCar();
 
     if (new Date() - this.model.startTime < this.model.startDelay * 1000) {
       return;
     }
 
-    this.stepOutdoorDisplays();
-
-    if (!this.startTime) {
-      this.startTime = new Date();
-    }
-
-    this.stepShaders();
-
     this.fireworks.step();
-    if (this.fireworks.dest.length === 0) {
-      this.fireworks.launch(5, new THREE.Vector3(5, 0, 0));
+    if(this.fireworks.dest.length%5===0){
+      this.fireworks.launch(2, new THREE.Vector3(-170, 35, 60));
+      this.fireworks.launch(2, new THREE.Vector3(-130, 35, 60));
+    }
+    if (!this.model.over){
+      this.stepHud();
+      this.stepCameras();
+      this.stepCar();
+
+      this.stepOutdoorDisplays();
+
+      if (!this.startTime) {
+        this.startTime = new Date();
+      }
+
+      const targetPosition = this.car.position.clone();
+      targetPosition.y += 10;
+      targetPosition.x -= 10 * Math.cos(-this.car.rotation.y);
+      targetPosition.z -= 10 * Math.sin(-this.car.rotation.y);
+
+      if (!App.controlsActive && !this.model.over) {
+        this.camera.position.lerp(targetPosition, dampingFactor);
+        this.camera.lookAt(this.car.position);
+      }
+
+      this.mixers.forEach((mixer) => {
+        mixer.update(0.01);
+      });
+      this.stepShaders();
+
     }
 
-    this.mixers.forEach((mixer) => {
-      mixer.update(0.01);
-    });
+    else {
+      if (!this.loadedOver){
+        this.loadOver();
+        console.log(this.scene)
+        this.loadedOver = true;
+      }
+          
+      this.model.border.position.set(this.model.selectedPosition[0],this.model.selectedPosition[1]-1,this.model.selectedPosition[2]-0.1)
+
+      const targetPosition = this.camera.position.clone();
+      targetPosition.x = -150
+      targetPosition.y = 60
+      targetPosition.z = 10
+      if (!App.controlsActive){
+        this.camera.position.lerp(targetPosition,dampingFactor);
+        this.camera.lookAt(-150,45,60);
+      }
+    }
+  }
+
+
+  loadOver(){
+    this.panelGroup = new THREE.Group()
+
+    const panelGeometry = new THREE.BoxGeometry(40, 40, 0.1);
+    const panelMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
+    const panel = new THREE.Mesh(panelGeometry, panelMaterial);
+    this.panelGroup.add(panel)
+
+    const playerCar = new THREE.Group();
+    const playerCarArray = new FontLoader().getMeshArray("Player Car: "+this.model.car.name);
+    playerCar.add(...playerCarArray[0]);
+    playerCar.rotation.set(0,Math.PI,0);
+    playerCar.scale.set(11,11,1);
+    playerCar.position.set(17,16,0);
+    this.panelGroup.add(playerCar);
+
+    const opponentCar = new THREE.Group();
+    const opponentCarArray = new FontLoader().getMeshArray("Opponent Car: "+this.model.car.name);
+    opponentCar.add(...opponentCarArray[0]);
+    opponentCar.rotation.set(0,Math.PI,0);
+    opponentCar.scale.set(11,11,1);
+    opponentCar.position.set(17,13,0);
+    this.panelGroup.add(opponentCar);
+
+    const playerTime = new THREE.Group();
+    const playerTimeString = this.model.lapsTotal
+    const playerTimeArray = new FontLoader().getMeshArray("Player Time: "+playerTimeString);
+    playerTime.add(...playerTimeArray[0]);
+    playerTime.rotation.set(0,Math.PI,0);
+    playerTime.scale.set(11,11,1);
+    playerTime.position.set(17,7,0);
+    this.panelGroup.add(playerTime);
+  
+    const opponentTime = new THREE.Group();
+    const opponentTimeString = 96.853 * this.model.settings.laps
+
+    const opponentTimeArray = new FontLoader().getMeshArray("Opponent Time: "+opponentTimeString);
+    opponentTime.add(...opponentTimeArray[0]);
+    opponentTime.rotation.set(0,Math.PI,0);
+    opponentTime.scale.set(11,11,1);
+    opponentTime.position.set(17,4,0);
+    this.panelGroup.add(opponentTime);
+
+    var winnerString = ""
+    var loserString = ""
+    if (playerTimeString<opponentTimeString) {
+      winnerString = this.model.settings.playerName
+      loserString = "AI Master Drifter"
+    }
+    else{
+      winnerString = "AI Master Drifter"
+      loserString = this.model.settings.playerName
+    } 
+
+    const winner = new THREE.Group();
+    const winnerArray = new FontLoader().getMeshArray("Winner: "+winnerString);
+    winner.add(...winnerArray[0]);
+    winner.rotation.set(0,Math.PI,0);
+    winner.scale.set(12,12,1);
+    winner.position.set(16,-2,0);
+    this.panelGroup.add(winner);
+
+    const loser = new THREE.Group();
+    const loserArray = new FontLoader().getMeshArray("Loser: "+loserString);
+    loser.add(...loserArray[0]);
+    loser.rotation.set(0,Math.PI,0);
+    loser.scale.set(12,12,1);
+    loser.position.set(16,-5,0);
+    this.panelGroup.add(loser);
+
+    const playButton = new THREE.Group();
+    const playButtonArray = new FontLoader().getMeshArray("PLAY AGAIN");
+    playButton.add(...playButtonArray[0]);
+    playButton.rotation.set(0,Math.PI,0);
+    playButton.scale.set(15,15,1);
+    playButton.position.set(this.model.playAgainPos[0]+playButtonArray[1]*12,this.model.playAgainPos[1],this.model.playAgainPos[2]);
+    this.panelGroup.add(playButton);
+
+    const backButton = new THREE.Group();
+    const backButtonArray = new FontLoader().getMeshArray("MAIN MENU");
+    backButton.add(...backButtonArray[0]);
+    backButton.rotation.set(0,Math.PI,0);
+    backButton.scale.set(15,15,1);
+    backButton.position.set(this.model.backPos[0]+backButtonArray[1]*12,this.model.backPos[1],this.model.backPos[2]);
+    this.panelGroup.add(backButton);
+
+    this.panelGroup.add(this.model.border);
+
+    this.panelGroup.rotation.set(Math.PI/8,0,0);
+    this.panelGroup.position.set(-150,50,60);
+
+    this.scene.add(this.panelGroup);
+
   }
 
   /**
@@ -193,12 +326,12 @@ class GameView extends View {
       rotations
     );
 
-    const limit =
+    this.limit =
       this.model.track.route.times[this.model.track.route.times.length - 1];
-    const positionClip = new THREE.AnimationClip("positionClip", limit, [
+    const positionClip = new THREE.AnimationClip("positionClip", this.limit, [
       positionKF,
     ]);
-    const rotationClip = new THREE.AnimationClip("rotationClip", limit, [
+    const rotationClip = new THREE.AnimationClip("rotationClip", this.limit, [
       quaternionKF,
     ]);
 

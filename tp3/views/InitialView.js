@@ -15,7 +15,7 @@ class InitialView extends View {
             0.1,
             1000
         );
-        this.camera.position.z = 5;
+        this.camera.position.z = 3;
 
         // Create a menu panel
         const menuPanelGeometry = new THREE.BoxGeometry(4, 2, 0.1);
@@ -56,6 +56,7 @@ class InitialView extends View {
 
         const targetPosition = this.camera.position.clone();
         targetPosition.x = this.model.selectedPosition[0]/4;
+        targetPosition.z = 5
 
         this.camera.position.lerp(targetPosition, dampingFactor);
 

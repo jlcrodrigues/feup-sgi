@@ -2,10 +2,10 @@ import { AboutController } from "../controllers/AboutController.js";
 import { State } from "./State.js";
 
 class AboutState extends State{
-    constructor(){
+    constructor(settings){
         super();
 
-        this.controller = new AboutController();
+        this.controller = new AboutController(settings);
     }
 
     step(){

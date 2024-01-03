@@ -46,6 +46,7 @@ class GameModel extends Model {
     );
     this.start.x = this.start.x;
     this.lastLap = null;
+    this.lapsTotal = 0;
 
     this.modifiers = this.track.modifiers;
     this.modifier = null;
@@ -56,9 +57,18 @@ class GameModel extends Model {
     this.cameras = 0;
 
     this.startDelay = 5;
+    
+    this.over = false;
+    this.playAgainPos = [10,-15,0]
+    this.backPos = [-10,-15,0]
+    this.selectedPosition = this.playAgainPos;
+
+    const borderGeometry = new THREE.BoxGeometry(17, 0.2, 0.1);
+    const borderMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    this.border = new THREE.Mesh(borderGeometry, borderMaterial);
   }
 
-  step() {
+  step(mousePicker) {
     if (!this.startTime) {
       this.startTime = new Date();
     }
@@ -69,7 +79,6 @@ class GameModel extends Model {
     if (!this.lapStart) {
       this.lapStart = new Date();
     }
-
     this.car.move();
 
     if (this.modifier != "slowDown") {
@@ -88,6 +97,7 @@ class GameModel extends Model {
       this.laps - Math.floor(this.laps) != 0
     ) {
       this.lastLap = (new Date() - this.lapStart) / 1000;
+      this.lapsTotal += this.lastLap
       this.lapStart = new Date();
       this.laps += 0.5;
     }
@@ -100,10 +110,28 @@ class GameModel extends Model {
     }
 
     if (this.laps >= this.settings.laps) {
-      return true;
+      this.laps = this.settings.laps
+      this.over = true;
     }
 
     this.stepModifiers();
+
+    if (mousePicker)  {
+      if (mousePicker.pickedObject){
+        if (mousePicker.pickedObject.position.x > 0){
+          this.selectedPosition = this.playAgainPos;
+        }
+        else{
+          this.selectedPosition = this.backPos;
+        }
+      }
+      if(mousePicker.selectedObject){
+        if (this.selectedPosition == this.playAgainPos)
+            this.state = 'play';
+          if (this.selectedPosition == this.backPos)
+            this.state = 'initial';
+      }
+    }
   }
 
   setOutsideTrack() {

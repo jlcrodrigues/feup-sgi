@@ -4,10 +4,10 @@ import { GarageState } from "./GarageState.js";
 import { TracksState } from "./TracksState.js";
 
 class RaceMenuState extends State {
-  constructor() {
+  constructor(settings) {
     super();
 
-    this.controller = new RaceMenuController();
+    this.controller = new RaceMenuController(settings);
   }
 
   step() {

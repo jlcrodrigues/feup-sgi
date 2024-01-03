@@ -7,12 +7,18 @@ import { Controller } from "./Controller.js";
 import * as THREE from "three";
 
 class InitialController extends Controller {
-    constructor() {
+    constructor(settings) {
         super();
 
+        this.settings = settings ?? {}
         this.model = new InitialModel();
         this.view = new InitialView(this.model);
-        
+
+        if (!this.settings.playerName){
+            var playerName = prompt("Please enter your name:");
+            this.settings.playerName = playerName
+        }
+
         //Objects to be considered by the MousePicker
         const objects = []
         this.view.scene.children[0].children.forEach(child => {
@@ -33,10 +39,10 @@ class InitialController extends Controller {
         this.view.step();
         
         if (this.model.state == 'play'){
-            return new RaceMenuState();
+            return new RaceMenuState(this.settings);
         }
         if (this.model.state == 'about'){
-            return new AboutState();
+            return new AboutState(this.settings);
         }
         return null;
     }

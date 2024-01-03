@@ -4,9 +4,10 @@ import { AboutView } from "../views/AboutView.js";
 import { Controller } from "./Controller.js";
 
 class AboutController extends Controller {
-    constructor() {
+    constructor(settings) {
         super();
 
+        this.settings = settings ?? {}
         this.model = new AboutModel();
         this.view = new AboutView(this.model);
         
@@ -20,7 +21,7 @@ class AboutController extends Controller {
         // this.model.step();
         this.view.step();
         if (this.model.state == 'initial')
-            return new InitialState();
+            return new InitialState(this.settings);
         return null;
     }
 }
