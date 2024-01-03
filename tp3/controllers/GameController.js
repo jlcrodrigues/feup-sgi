@@ -36,6 +36,10 @@ class GameController extends Controller {
       this.view.cleanup();
       return "pause";
     }
+    if (this.model.state == "picker") {
+      this.view.cleanup();
+      return "picker";
+    }
     return null;
   }
 }

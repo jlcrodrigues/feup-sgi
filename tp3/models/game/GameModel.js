@@ -155,6 +155,9 @@ class GameModel extends Model {
         } else if (this.modifiers[i].type == "switcheroo") {
           this.setModifier("switcheroo");
           this.car.switched = true;
+        } else if (this.modifiers[i].type == "plus") {
+          this.setModifier("plus", 5);
+          this.state = "picker";
         }
       }
     }

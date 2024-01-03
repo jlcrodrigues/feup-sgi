@@ -7,4 +7,5 @@ void main(){
     //TODO: fix color
     //gl_FragColor = vec4(instanceColor, 1.0);
     gl_FragColor = vec4(vColor, 1.0);
+    gl_FragColor = vec4(0.8588, 0.6275, 0.1255, 1.0);
 }

@@ -29,7 +29,6 @@ class PauseModel extends Model {
 
     if (mousePicker.selectedObject) {
       if (this.selectedPosition == this.continueButtonPosition) {
-        console.log("continue");
         this.state = "continue";
       }
       if (this.selectedPosition == this.menuButtonPosition)

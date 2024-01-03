@@ -29,6 +29,7 @@ class ModifierView {
     }, 3000);
     mesh.shader = shaderLoader;
 
+    console.log("in here",modifier.position.x)
     mesh.position.x = modifier.position.x;
     mesh.position.y = modifier.position.y;
     mesh.position.z = modifier.position.z;
