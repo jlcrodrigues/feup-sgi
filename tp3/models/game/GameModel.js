@@ -52,10 +52,18 @@ class GameModel extends Model {
     this.modifierStart = null;
     this.modifierDuration = 5;
 
-    this.over = true;
+    this.over = false;
+    this.playAgainPos = [10,-15,0]
+    this.backPos = [-10,-15,0]
+    this.selectedPosition = this.playAgainPos;
+
+    const borderGeometry = new THREE.BoxGeometry(17, 0.2, 0.1);
+    const borderMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    this.border = new THREE.Mesh(borderGeometry, borderMaterial);
+
   }
 
-  step() {
+  step(mousePicker) {
     this.car.move();
 
     if (this.modifier != "slowDown") {
@@ -91,6 +99,21 @@ class GameModel extends Model {
     }
 
     this.stepModifiers();
+
+    if (mousePicker.pickedObject){
+      if (mousePicker.pickedObject.position.x > 0){
+        this.selectedPosition = this.playAgainPos;
+      }
+      else{
+        this.selectedPosition = this.backPos;
+      }
+    }
+    if(mousePicker.selectedObject){
+      if (this.selectedPosition == this.playAgainPos)
+          this.state = 'play';
+        if (this.selectedPosition == this.backPos)
+          this.state = 'menu';
+    }
   }
 
   setOutsideTrack() {

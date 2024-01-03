@@ -6,6 +6,7 @@ import { ModifierView } from "./ModifierView.js";
 import { App } from "../../App.js";
 import { Car } from "../../models/game/Car.js";
 import { Fireworks } from "../Fireworks.js";
+import { FontLoader } from "../../loader/FontLoader.js";
 
 const dampingFactor = 0.1;
 const modifierAnimationDuration = 2;
@@ -21,9 +22,12 @@ class GameView extends View {
       0.1,
       1000
     );
-    this.camera.position.z = -20;
-    this.camera.position.x = -150;
-    this.camera.position.y = 200;
+    // this.camera.position.z = -20;
+    // this.camera.position.x = -150;
+    // this.camera.position.y = 200;
+    this.camera.position.x = 0;
+    this.camera.position.y = 30;
+    this.camera.position.z = -20;   
     this.mixers = [];
 
     // Load the track scene
@@ -53,7 +57,6 @@ class GameView extends View {
 
     this.loadOver();
 
-    this.fireworks = new Fireworks(this.scene);
   }
 
   step() {
@@ -77,32 +80,57 @@ class GameView extends View {
     }
 
     else {
-      this.loadOver();
+      this.panelGroup.position.set(-150,50,60);
+      this.model.border.position.set(this.model.selectedPosition[0],this.model.selectedPosition[1]-1,this.model.selectedPosition[2]-0.1)
+
       const targetPosition = this.camera.position.clone();
       targetPosition.x = -150
       targetPosition.y = 60
-      targetPosition.z = -20
+      targetPosition.z = 10
       if (!App.controlsActive){
         this.camera.position.lerp(targetPosition,dampingFactor);
-        this.camera.lookAt(-150,40,60);
+        this.camera.lookAt(-150,45,60);
       }
-
+      this.fireworks = new Fireworks(this.scene);
+      console.log("here")
       this.fireworks.step();
-      if (this.fireworks.dest.length%10===0) {
-        this.fireworks.launch(2, new THREE.Vector3(-165, 50, 65));
-        this.fireworks.launch(2, new THREE.Vector3(-135, 50, 65));
+      if (this.fireworks.dest.length%5===0) {
+        this.fireworks.launch(2, new THREE.Vector3(-170, 35, 70));
+        this.fireworks.launch(2, new THREE.Vector3(-130, 35, 70));
       }
     }
   }
 
   loadOver(){
+    this.panelGroup = new THREE.Group()
+
     const panelGeometry = new THREE.BoxGeometry(40, 40, 0.1);
     const panelMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
     const panel = new THREE.Mesh(panelGeometry, panelMaterial);
-    panel.rotation.set(Math.PI/8,0,0);
-    panel.position.set(-150,50,60);
+    this.panelGroup.add(panel)
 
-    this.scene.add(panel);
+    const playButton = new THREE.Group();
+    const playButtonArray = new FontLoader().getMeshArray("PLAY AGAIN");
+    playButton.add(...playButtonArray[0]);
+    playButton.rotation.set(0,Math.PI,0);
+    playButton.scale.set(15,15,1);
+    playButton.position.set(this.model.playAgainPos[0]+playButtonArray[1]*12,this.model.playAgainPos[1],this.model.playAgainPos[2]);
+    this.panelGroup.add(playButton);
+
+    const backButton = new THREE.Group();
+    const backButtonArray = new FontLoader().getMeshArray("RACE MENU");
+    backButton.add(...backButtonArray[0]);
+    backButton.rotation.set(0,Math.PI,0);
+    backButton.scale.set(15,15,1);
+    backButton.position.set(this.model.backPos[0]+backButtonArray[1]*12,this.model.backPos[1],this.model.backPos[2]);
+    this.panelGroup.add(backButton);
+
+    this.panelGroup.add(this.model.border);
+
+    this.panelGroup.rotation.set(Math.PI/8,0,0);
+    this.panelGroup.position.set(0,-50,0);
+
+    this.scene.add(this.panelGroup);
 
   }
 
