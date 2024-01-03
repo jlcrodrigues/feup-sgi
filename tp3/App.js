@@ -4,6 +4,7 @@ import { InitialState } from "./states/InitalState.js";
 import { GameState } from "./states/GameState.js";
 import { GarageState } from "./states/GarageState.js";
 import { PauseState } from "./states/PauseState.js";
+import { PickerState } from "./states/PickerState.js";
 
 /**
  * The main App class. This is a singleton class.
@@ -35,7 +36,7 @@ class App {
    * Creates the renderer and the inital state.
    */
   start() {
-    this.state = new GameState();
+    this.state = new PickerState(new GameState());
 
     // Create a renderer with Antialiasing
     this.renderer = new THREE.WebGLRenderer({ antialias: true });

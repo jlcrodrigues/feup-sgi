@@ -11,13 +11,16 @@ class PickerController extends Controller {
 
     this.gameState = gameState;
 
-    this.model = new PickerModel();
+    this.model = new PickerModel(gameState);
     this.view = new PickerView(this.model);
 
     //Objects to be considered by the MousePicker
     const objects = [];
-    this.view.scene.children[0].children.forEach((child) => {
-      if (child instanceof THREE.Group) objects.push(child);
+    this.view.scene.traverse((child) => {
+      if (child.name != "") {
+        console.log(child.name);
+        objects.push(child);
+      }
     });
     this.mousePicker = new MousePicker(objects, this.view.camera);
 
@@ -34,9 +37,6 @@ class PickerController extends Controller {
     if (this.model.state) { // over
       if (this.model.state == "continue") {
         return this.gameState;
-      }
-      if (this.model.state == "menu") {
-        return new InitialState();
       }
     }
     return null;

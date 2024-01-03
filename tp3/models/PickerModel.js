@@ -9,30 +9,24 @@ const keyInputs = {
 };
 
 class PickerModel extends Model {
-  constructor() {
+  constructor(gameState) {
     super();
 
-    this.continueButtonPosition = [-0.9, 0, 0.05];
-    this.menuButtonPosition = [1.2, 0, 0.05];
+    this.gameState = gameState;
+    this.modifiers = ["jump", "plus", "slowDown", "speedUp", "switcheroo"]
 
-    this.selectedPosition = this.continueButtonPosition;
+    this.selectedModifier = 0;
   }
 
   step(mousePicker) {
-    if (mousePicker.pickedObject) {
-      if (mousePicker.pickedObject.position.x < 0) {
-        this.selectedPosition = this.continueButtonPosition;
-      } else {
-        this.selectedPosition = this.menuButtonPosition;
-      }
-    }
-
     if (mousePicker.selectedObject) {
-      if (this.selectedPosition == this.continueButtonPosition) {
+      if (this.modifiers.includes(mousePicker.pickedObject.name)) {
+        this.selectedModifier = this.modifiers.indexOf(mousePicker.pickedObject.name);
+      }
+
+      if (mousePicker.pickedObject.name == "continue") {
         this.state = "continue";
       }
-      if (this.selectedPosition == this.menuButtonPosition)
-        this.state = "menu";
     }
   }
 
@@ -40,16 +34,14 @@ class PickerModel extends Model {
     const input = keyInputs[key];
     switch (input) {
       case "left":
-        this.selectedPosition = this.continueButtonPosition;
+        this.selectedModifier = (this.selectedModifier + this.modifiers.length - 1) % this.modifiers.length;
         break;
       case "right":
-        this.selectedPosition = this.menuButtonPosition;
+        this.selectedModifier = (this.selectedModifier + 1) % this.modifiers.length;
         break;
       case "enter":
-        if (this.selectedPosition == this.continueButtonPosition)
-          this.state = "continue";
-        if (this.selectedPosition == this.menuButtonPosition)
-          this.state = "menu";
+        // TODO: handle exit
+        break;
     }
   }
 }
