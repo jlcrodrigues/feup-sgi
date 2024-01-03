@@ -8,7 +8,7 @@ const keyInputs = {
   Enter: "enter",
 };
 
-class PauseModel extends Model {
+class PickerModel extends Model {
   constructor() {
     super();
 
@@ -54,4 +54,4 @@ class PauseModel extends Model {
   }
 }
 
-export { PauseModel };
+export { PickerModel };

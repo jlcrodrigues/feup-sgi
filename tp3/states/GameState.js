@@ -2,6 +2,7 @@ import { GameController } from "../controllers/GameController.js";
 import { CarLoader } from "../loader/CarLoader.js";
 import { Car } from "../models/game/Car.js";
 import { PauseState } from "./PauseState.js";
+import { PickerState } from "./PickerState.js";
 import { State } from "./State.js";
 
 class GameState extends State {
@@ -19,13 +20,25 @@ class GameState extends State {
     this.settings.laps = this.settings.laps ?? 3;
 
     this.controller = new GameController(this.settings);
+
+    this.picking = false;
   }
 
   step() {
+    if (this.picking) {
+      this.picking = false;
+      this.controller.model.setModifier("plus");
+      this.controller.model.state = null;
+    }
+
     const state = this.controller.step();
     if (state) {
       if (state == "pause") {
         return new PauseState(this);
+      }
+      else if (state == "picker") {
+        this.picking = true;
+        return new PickerState(this);
       }
       return state;
     }

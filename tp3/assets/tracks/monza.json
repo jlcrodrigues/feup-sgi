@@ -83,6 +83,7 @@
         { "type": "speedUp", "position": { "x": 70, "y": 2, "z": 0 }},
         { "type": "jump", "position": { "x": 50, "y": 2, "z": -5 }},
         { "type": "slowDown", "position": { "x": 20, "y": 2, "z": 5 }},
-        { "type": "switcheroo", "position": { "x": 10, "y": 2, "z": 5 }}
+        { "type": "switcheroo", "position": { "x": 10, "y": 2, "z": 5 }},
+        { "type": "plus", "position": { "x": -200, "y": 2, "z": 5 }}
     ]
 }
