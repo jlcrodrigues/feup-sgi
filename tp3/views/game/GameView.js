@@ -150,9 +150,7 @@ class GameView extends View {
    */
   loadOpponent() {
     this.opponent = this.model.opponent.model;
-    console.log(...this.model.track.route.points[0])
     this.opponent.position.set(...this.model.track.route.points[0])
-    console.log(this.model.track)
     this.scene.add(this.opponent);
 
     const positionKF = new THREE.VectorKeyframeTrack(
@@ -287,6 +285,10 @@ class GameView extends View {
    * Step the HUD. Updates every necessary html element.
    */
   stepHud() {
+    if (document.querySelector("#laps") === null) {
+      this.loadHud();
+    }
+
     document.querySelector("#laps").innerHTML = `Lap ${Math.floor(
       this.model.laps
     )} / ${this.model.settings.laps}`;

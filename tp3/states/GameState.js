@@ -1,6 +1,7 @@
 import { GameController } from "../controllers/GameController.js";
 import { CarLoader } from "../loader/CarLoader.js";
 import { Car } from "../models/game/Car.js";
+import { PauseState } from "./PauseState.js";
 import { State } from "./State.js";
 
 class GameState extends State {
@@ -23,6 +24,9 @@ class GameState extends State {
   step() {
     const state = this.controller.step();
     if (state) {
+      if (state == "pause") {
+        return new PauseState(this);
+      }
       return state;
     }
     return this;
