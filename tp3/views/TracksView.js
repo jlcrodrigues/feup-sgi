@@ -18,7 +18,7 @@ class TracksView extends View{
             0.1,
             1000
         );
-        this.camera.position.z = 2;
+        this.camera.position.z = 3;
 
         const monza = new THREE.Group(); 
         const title = new THREE.Group();

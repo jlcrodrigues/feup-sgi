@@ -55,11 +55,18 @@ class GameView extends View {
 
     this.loadHud();
 
+    this.fireworks = new Fireworks(this.scene);
+
     this.loadedOver = false;
 
   }
 
   step() {
+    this.fireworks.step();
+    if(this.fireworks.dest.length%5===0){
+      this.fireworks.launch(2, new THREE.Vector3(-170, 35, 60));
+      this.fireworks.launch(2, new THREE.Vector3(-130, 35, 60));
+    }
     if (!this.model.over){
       this.stepHud();
       this.stepCar();
@@ -95,12 +102,6 @@ class GameView extends View {
         this.camera.position.lerp(targetPosition,dampingFactor);
         this.camera.lookAt(-150,45,60);
       }
-      this.fireworks = new Fireworks(this.scene);
-      this.fireworks.step();
-      if (this.fireworks.dest.length%5===0) {
-        this.fireworks.launch(2, new THREE.Vector3(-170, 35, 60));
-        this.fireworks.launch(2, new THREE.Vector3(-130, 35, 60));
-      }
     }
   }
 
@@ -129,7 +130,8 @@ class GameView extends View {
     this.panelGroup.add(opponentCar);
 
     const playerTime = new THREE.Group();
-    const playerTimeArray = new FontLoader().getMeshArray("Player Time: "+this.model.lapsTotal);
+    const playerTimeString = this.model.lapsTotal
+    const playerTimeArray = new FontLoader().getMeshArray("Player Time: "+playerTimeString);
     playerTime.add(...playerTimeArray[0]);
     playerTime.rotation.set(0,Math.PI,0);
     playerTime.scale.set(11,11,1);
@@ -137,15 +139,28 @@ class GameView extends View {
     this.panelGroup.add(playerTime);
   
     const opponentTime = new THREE.Group();
-    const opponentTimeArray = new FontLoader().getMeshArray("Opponent Time: ");
+    const opponentTimeString = 46.853 * this.model.settings.laps
+
+    const opponentTimeArray = new FontLoader().getMeshArray("Opponent Time: "+opponentTimeString);
     opponentTime.add(...opponentTimeArray[0]);
     opponentTime.rotation.set(0,Math.PI,0);
     opponentTime.scale.set(11,11,1);
     opponentTime.position.set(17,4,0);
     this.panelGroup.add(opponentTime);
 
+    var winnerString = ""
+    var loserString = ""
+    if (playerTimeString<opponentTimeString) {
+      winnerString = this.model.settings.playerName
+      loserString = "AI Master Drifter"
+    }
+    else{
+      winnerString = "AI Master Drifter"
+      loserString = this.model.settings.playerName
+    } 
+
     const winner = new THREE.Group();
-    const winnerArray = new FontLoader().getMeshArray("Winner: ");
+    const winnerArray = new FontLoader().getMeshArray("Winner: "+winnerString);
     winner.add(...winnerArray[0]);
     winner.rotation.set(0,Math.PI,0);
     winner.scale.set(12,12,1);
@@ -153,7 +168,7 @@ class GameView extends View {
     this.panelGroup.add(winner);
 
     const loser = new THREE.Group();
-    const loserArray = new FontLoader().getMeshArray("Loser: ");
+    const loserArray = new FontLoader().getMeshArray("Loser: "+loserString);
     loser.add(...loserArray[0]);
     loser.rotation.set(0,Math.PI,0);
     loser.scale.set(12,12,1);
@@ -230,12 +245,12 @@ class GameView extends View {
       rotations
     );
 
-    const limit =
+    this.limit =
       this.model.track.route.times[this.model.track.route.times.length - 1];
-    const positionClip = new THREE.AnimationClip("positionClip", limit, [
+    const positionClip = new THREE.AnimationClip("positionClip", this.limit, [
       positionKF,
     ]);
-    const rotationClip = new THREE.AnimationClip("rotationClip", limit, [
+    const rotationClip = new THREE.AnimationClip("rotationClip", this.limit, [
       quaternionKF,
     ]);
 

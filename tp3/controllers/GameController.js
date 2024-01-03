@@ -31,9 +31,10 @@ class GameController extends Controller {
   step() {
     
     if (this.model.over) {
+      
       this.view.cleanup();
-      if (this.view.loadedOver && !this.loadedObjects){
-        this.view.scene.children[10].children.forEach(child => {
+      if (!this.loadedObjects){
+        this.view.scene.children[11].children.forEach(child => {
           if(child instanceof THREE.Group) this.objects.push(child)
         });
         this.mousePicker = new MousePicker(this.objects,this.view.camera);

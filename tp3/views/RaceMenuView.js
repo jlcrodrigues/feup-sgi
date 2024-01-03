@@ -15,7 +15,7 @@ class RaceMenuView extends View {
             0.1,
             1000
         );
-        this.camera.position.z = 2;
+        this.camera.position.z = 3;
 
         const menuPanelGroup = new THREE.Group();
         const contentsGroup = new THREE.Group();

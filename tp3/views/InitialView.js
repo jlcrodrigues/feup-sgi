@@ -15,7 +15,7 @@ class InitialView extends View {
             0.1,
             1000
         );
-        this.camera.position.z = 2;
+        this.camera.position.z = 3;
 
         // Create a menu panel
         const menuPanelGeometry = new THREE.BoxGeometry(4, 2, 0.1);
