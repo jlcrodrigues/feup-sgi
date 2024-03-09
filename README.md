@@ -1,4 +1,8 @@
-# SGI 2023/2024
+# Interactive Graphics Systems
+
+This project is part of the Information Processing and Retrieval Curricular Unit @ FEUP.
+
+It is comprised of three major tasks that explore the design of interactive systems using ThreeJS.
 
 ## Group T08G10
 
@@ -13,7 +17,7 @@
 
 ### [TP1 - Central Perk](tp1)
 
-> You can play the scene [here](tp1/index.html)
+> You can play the scene [here](https://jlcrodrigues.github.io/feup-sgi/tp1/index.html)
 
 This [scene](tp1/index.html) is based on the TV show [Friends](https://pt.wikipedia.org/wiki/Friends), more specifically the coffee shop [Central Perk](https://friends.fandom.com/wiki/Central_Perk).
 It includes the infamous couches and table, as well as some background table and chair sets and a counter.
@@ -25,7 +29,7 @@ It includes the infamous couches and table, as well as some background table and
 
 ### [TP2 - Santa's Village](tp2)
 
-> You can play the scene [here](tp2/index.html)
+> You can play the scene [here](https://jlcrodrigues.github.io/feup-sgi/tp2/index.html)
 
 This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest from his big and busy night. Apart from the house includes a road, pine trees all around, lamps, as well as his sled.
 
@@ -36,7 +40,7 @@ This [scene](tp2/index.html) resembles Santa's remote house when he needs a rest
 
 ### [TP3 - FEUP Fury GP](tp3)
 
-> You can play the game [here](tp3/index.html)
+> You can play the game [here](https://jlcrodrigues.github.io/feup-sgi/tp3/index.html)
 
 We present FEUP Fury GP, a fun and interactive game of a racing match between you and an AI Master Driver
 
